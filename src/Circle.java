@@ -53,7 +53,7 @@ public class Circle {
     }
 
     public static void main(String[] args) {
-        CanvasWindow canvas = new CanvasWindow("Test", 1000, 1000);
+        CanvasWindow canvas = new CanvasWindow("Test", 2000, 1000);
         for (int i = 0; i < 100; i++) {
             Circle circle = new Circle(canvas);
         }
