@@ -9,8 +9,6 @@ public class Circle {
     private CanvasWindow canvas;
 
     private static final double CIRCLE_RAIDUS = 10;
-    private static final int LOWER_BOUND = 80;
-    private static final int UPPER_BOUND = 120;
 
     private Ellipse circleShape;
     private double posX, posY;
@@ -53,7 +51,7 @@ public class Circle {
     }
 
     public static void main(String[] args) {
-        CanvasWindow canvas = new CanvasWindow("Test", 2000, 1000);
+        CanvasWindow canvas = new CanvasWindow("Test", 1000, 500);
         for (int i = 0; i < 100; i++) {
             Circle circle = new Circle(canvas);
         }
