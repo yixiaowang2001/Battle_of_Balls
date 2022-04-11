@@ -21,17 +21,21 @@ public class Circle {
     }
 
     public void create() {
-        Point randPoint = createRandPos(canvas);
+        Point randPoint = createRandPos();
         circleShape = new Ellipse(randPoint.getX(), randPoint.getY(), CIRCLE_RAIDUS, CIRCLE_RAIDUS);
         circleShape.setFillColor(createRandColor());
         circleShape.setStroked(false);
         canvas.add(circleShape);
     }
 
-    private Point createRandPos(CanvasWindow canvasWindow) {
+    private Point createRandPos() {
         Random rand = new Random();
-        double randomX = CIRCLE_RAIDUS + (canvasWindow.getWidth() - CIRCLE_RAIDUS * 2) * rand.nextDouble();
-        double randomY = CIRCLE_RAIDUS + (canvasWindow.getHeight() - CIRCLE_RAIDUS * 2) * rand.nextDouble();
+        double minX = -4.5 * canvas.getWidth() + CIRCLE_RAIDUS;
+        double maxX = 5.5 * canvas.getWidth() - CIRCLE_RAIDUS;
+        double minY = -4.5 * canvas.getHeight() + CIRCLE_RAIDUS;
+        double maxY = 5.5 * canvas.getWidth() - CIRCLE_RAIDUS;
+        double randomX = minX + (maxX - minX) * rand.nextDouble();
+        double randomY = minY + (maxY - minY) * rand.nextDouble();
         return new Point(randomX, randomY);
     }
 
@@ -52,7 +56,7 @@ public class Circle {
 
     public static void main(String[] args) {
         CanvasWindow canvas = new CanvasWindow("Test", 1000, 500);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10000; i++) {
             Circle circle = new Circle(canvas);
         }
     }

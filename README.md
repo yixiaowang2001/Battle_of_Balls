@@ -18,3 +18,16 @@
 
 4. 剩余部分
   + Game Logistics
+
+
+Circle Class:
+单个小球（资源的创建）；全图
+
+玩家窗口大小：1000，500
+实际窗口大小：10000，5000
+
+-----
+
+Part3:
++ CircleControl：差创建List（HashMap），总数控制
++ Ball：差Resize

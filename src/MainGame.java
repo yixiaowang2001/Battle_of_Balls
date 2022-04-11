@@ -13,7 +13,7 @@ public class MainGame {
     // UserInterface
     
     public MainGame() {
-        canvas = new CanvasWindow("Test", 2000, 1000);
+        canvas = new CanvasWindow("Test", 1000, 500);
     }
 
     public static void main(String[] args) {
