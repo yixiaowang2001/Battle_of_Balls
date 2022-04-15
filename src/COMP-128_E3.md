@@ -1,4 +1,4 @@
-##COMP 128 Exam 3
+## COMP 128 Exam 3
 **Eric Wang**
 
 ### LG6: Maps
