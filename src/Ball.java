@@ -15,4 +15,6 @@ public class Ball {
     public void collision() {
 
     }
+
+    
 }
