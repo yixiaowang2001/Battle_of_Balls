@@ -1,6 +1,9 @@
 ## COMP 128 Exam 3
 **Eric Wang**
 
+### Honor statement for this exam:
+![1](WechatIMG765.jpeg)
+
 ### LG6: Maps
 ```Java
 import java.util.HashMap;
