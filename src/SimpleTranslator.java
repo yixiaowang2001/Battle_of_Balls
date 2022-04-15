@@ -4,21 +4,21 @@ import java.util.List;
 import java.util.Map;
 
 public class SimpleTranslator {
-    private Map<String, String> dictonary;
+    private Map<String, String> dictionary;
 
     public SimpleTranslator() {
-        dictonary = new HashMap<String, String>();
+        dictionary = new HashMap<>();
     }
 
     public void addTranslation(String word, String translation) {
-        dictonary.put(word, translation);
+        dictionary.put(word, translation);
     }
 
     public void translateWords(List<String> phrase) {
         StringBuilder sb = new StringBuilder();
         for (String word : phrase) {
-            if (dictonary.containsKey(word)) {
-                sb.append(dictonary.get(word));
+            if (dictionary.containsKey(word)) {
+                sb.append(dictionary.get(word));
                 sb.append(" ");
             } else {
                 sb.append(word);
