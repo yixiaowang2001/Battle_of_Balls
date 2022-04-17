@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
@@ -10,8 +12,10 @@ public class PlayerBall {
     private CanvasWindow canvas;
     private double posX, posY;
     private Ellipse circleShape;
+    private CircleControl cc;
 
     public PlayerBall(CanvasWindow canvas) {
+        cc = new CircleControl(canvas);
         this.canvas = canvas;
         posX = 0;
         posY = 0;
@@ -60,5 +64,11 @@ public class PlayerBall {
     
     }
 
-    
+    public void collisionCircle(List<Circle> circleList) {
+        for (Circle cir : circleList) {
+            if (new Point(posX, posY).distance(cir.getPos()) <= CIRCLE_RAIDUS - cir.getR()) {
+                cc.ifCollision(cir);
+            }
+        }
+    }
 }
