@@ -48,16 +48,16 @@ public class Circle {
         canvas.remove(circleShape);
     }
 
-    public double getX() {
-        return posX;
-    }
-
-    public double getY() {
-        return posY;
+    public Point getPos() {
+        return new Point(posX, posY);
     }
 
     public Ellipse getShape() {
         return circleShape;
+    }
+
+    public double getR() {
+        return CIRCLE_RAIDUS;
     }
 
     public static void main(String[] args) {
