@@ -13,6 +13,8 @@ public class PlayerBall {
     private double posX, posY;
     private Ellipse circleShape;
     private CircleControl cc;
+    private AIBall aiBall;
+    private Boolean flag;
 
     public PlayerBall(CanvasWindow canvas) {
         cc = new CircleControl(canvas);
@@ -71,4 +73,18 @@ public class PlayerBall {
             }
         }
     }
+
+    public void collisionBall() {
+        //check for collision with other balls
+        for (Point point : aiBall.aiBallPoint) {
+            if (Math.sqrt(Math.pow(point.getX() - circleShape.getX(), 2) + Math.pow(point.getY() - circleShape.getY(), 2)) 
+            <= (getDiameter() / 2 + aiBall.getDiameter() / 2)){
+                flag  = true;
+            }
+        }
+        }
+
+        public double getDiameter() {
+            return circleShape.getHeight();
+        }
 }
