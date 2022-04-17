@@ -1,4 +1,3 @@
-import java.awt.Paint;
 import java.util.Random;
 import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
@@ -7,7 +6,7 @@ import edu.macalester.graphics.Point;
 
 public class PlayerBall {
     
-    private static final int CIRCLE_RAIDUS = 0;
+    private static final int CIRCLE_RAIDUS = 10;
     private CanvasWindow canvas;
     private double posX, posY;
     private Ellipse circleShape;
