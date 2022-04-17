@@ -1,19 +1,18 @@
-import java.util.List;
+import java.awt.Paint;
 import java.util.Random;
-
-import edu.macalester.graphics.*;
 import java.awt.Color;
+import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.Ellipse;
+import edu.macalester.graphics.Point;
 
-public class Circle {
+public class PlayerBall {
     
+    private static final int CIRCLE_RAIDUS = 0;
     private CanvasWindow canvas;
-
-    private static final double CIRCLE_RAIDUS = 10;
-
-    private Ellipse circleShape;
     private double posX, posY;
+    private Ellipse circleShape;
 
-    public Circle(CanvasWindow canvas) {
+    public PlayerBall(CanvasWindow canvas) {
         this.canvas = canvas;
         posX = 0;
         posY = 0;
@@ -46,18 +45,21 @@ public class Circle {
         return color;
     }
 
-    public double getX() {
-        return posX;
+
+    public void move() {
+    //move the ball in the canvas
+    
     }
 
-    public double getY() {
-        return posY;
+    public void resize() {
+    //resize the ball in the canvas
+
     }
 
-    public static void main(String[] args) {
-        CanvasWindow canvas = new CanvasWindow("Test", 1000, 500);
-        for (int i = 0; i < 10000; i++) {
-            Circle circle = new Circle(canvas);
-        }
+    public void collision() {
+    //check for collision with other balls
+    
     }
+
+    
 }
