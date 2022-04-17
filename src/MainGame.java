@@ -7,7 +7,7 @@ import edu.macalester.graphics.ui.Button;
 
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
-    public static final int CANVAS_HEIGHT = 500;
+    public static final int CANVAS_HEIGHT = 750;
 
     private CanvasWindow canvas;
     private GameMap map;
@@ -15,12 +15,10 @@ public class MainGame {
     private int score1, score2;
     private GraphicsText scoreBoard1, scoreBoard2, gameOver, caption;
     private String winner;
-    // canvas
-    // hex & ball collision
-    // UserInterface
+    private Image window;
     
     public MainGame() {
-        canvas = new CanvasWindow("Test", 1000, 500);
+        canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
     public void run() {
@@ -34,10 +32,20 @@ public class MainGame {
     private void createMap() {
         map = new GameMap();
         canvas.add(map.getGraphcs());
+        
     }
 
     private void resetGame() {
         canvas.removeAll();
+
+        window = new Image("Background.jpg");
+        canvas.add(window);
+
+        caption = new GraphicsText("BATTLE OF BALLS");
+        caption.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0675);
+        caption.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.4);
+        canvas.add(caption);
+
 
         canvas.add(start);
         start.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.8375);

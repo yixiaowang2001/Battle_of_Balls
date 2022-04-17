@@ -6,14 +6,16 @@ public class GameMap {
 
         public LineSeg(double x1, double y1, double x2, double y2) {
             super(x1, y1, x2, y2);
-            setStrokeColor(Color.GRAY);
+            float[] hsb = Color.RGBtoHSB(212, 211, 211, null);
+            Color color = Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
+            setStrokeColor(color);
             setStrokeWidth(1);
         }
 
     }
 
-    public static final int MAP_WIDTH = 10000;
-    public static final int MAP_HEIGHT = 5000;
+    public static final int MAP_WIDTH = 10 * MainGame.CANVAS_WIDTH;
+    public static final int MAP_HEIGHT = 10 * MainGame.CANVAS_HEIGHT;
     private GraphicsGroup group;
 
     public GameMap() {
