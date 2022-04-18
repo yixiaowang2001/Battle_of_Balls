@@ -6,7 +6,7 @@ import java.util.Random;
 import edu.macalester.graphics.CanvasWindow;
 
 public class CircleControl {
-    
+
     private static final int LOWER_BOUND = 9500;
     private static final int UPPER_BOUND = 10000;
 

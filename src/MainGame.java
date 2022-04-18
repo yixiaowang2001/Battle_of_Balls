@@ -16,7 +16,7 @@ public class MainGame {
     private GraphicsText scoreBoard1, scoreBoard2, gameOver, caption;
     private String winner;
     private Image window;
-    
+
     public MainGame() {
         canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
     }
@@ -26,13 +26,28 @@ public class MainGame {
         start = new Button("Start Game");
         quit = new Button("Quit");
 
+        start.onClick(() -> {
+            canvas.removeAll();
+            startGame();
+            menu.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.95);
+            canvas.add(menu);
+        });
+
+        quit.onClick(() -> {
+            canvas.closeWindow();
+        });
+
+        menu.onClick(() -> {
+            resetGame();
+        });
+
         resetGame();
     }
 
     private void createMap() {
         map = new GameMap();
         canvas.add(map.getGraphcs());
-        
+
     }
 
     private void resetGame() {
@@ -45,7 +60,6 @@ public class MainGame {
         caption.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0675);
         caption.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.4);
         canvas.add(caption);
-
 
         canvas.add(start);
         start.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.8375);
@@ -64,7 +78,7 @@ public class MainGame {
 
     private void inGame() {
         canvas.animate(() -> {
-            
+
         });
     }
 
@@ -97,7 +111,6 @@ public class MainGame {
         quit.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.65);
         canvas.add(quit);
     }
-
 
     public static void main(String[] args) {
         MainGame game = new MainGame();
