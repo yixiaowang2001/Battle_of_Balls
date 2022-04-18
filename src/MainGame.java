@@ -51,6 +51,7 @@ public class MainGame {
     private void createMap() {
         map = new GameMap();
         graphicsGroup.add(map.getGraphcs());
+        map.getGraphcs().setCenter(5 * CANVAS_WIDTH, 5 * CANVAS_HEIGHT);
     }
 
     private void createCirs() {
@@ -59,6 +60,7 @@ public class MainGame {
 
     private void resetGame() {
         canvas.removeAll();
+        graphicsGroup.removeAll();
 
         window = new Image("Background.jpg");
         canvas.add(window);
