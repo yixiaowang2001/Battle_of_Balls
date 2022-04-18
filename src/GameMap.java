@@ -21,14 +21,14 @@ public class GameMap {
     public GameMap() {
         group = new GraphicsGroup();
 
-        for (int i = 0; i < MAP_WIDTH; i++) {
+        for (int i = 0; i <= MAP_WIDTH; i++) {
             if (i % 50 == 0) {
                 LineSeg newLine = new LineSeg(i, 0, i, MAP_HEIGHT);
                 group.add(newLine);
             }
         }
 
-        for (int i = 0; i < MAP_HEIGHT; i++) {
+        for (int i = 0; i <= MAP_HEIGHT; i++) {
             if (i % 50 == 0) {
                 LineSeg newLine = new LineSeg(0, i, MAP_WIDTH, i);
                 group.add(newLine);

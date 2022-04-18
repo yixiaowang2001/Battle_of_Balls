@@ -8,7 +8,7 @@ import edu.macalester.graphics.ui.Button;
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 750;
-    public static final int BALL_SPEED = 1;
+    public static final int BALL_SPEED = 5;
 
     private CanvasWindow canvas;
     private GameMap map;
@@ -51,7 +51,7 @@ public class MainGame {
     private void createMap() {
         map = new GameMap();
         graphicsGroup.add(map.getGraphcs());
-        map.getGraphcs().setCenter(5 * CANVAS_WIDTH, 5 * CANVAS_HEIGHT);
+        map.getGraphcs().setCenter(0.5 * CANVAS_WIDTH, 0.5 * CANVAS_HEIGHT);
     }
 
     private void createCirs() {
