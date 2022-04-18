@@ -26,6 +26,8 @@ public class MainGame {
         menu = new Button("Back to Menu");
         start = new Button("Start Game");
         quit = new Button("Quit");
+        graphicsGroup = new GraphicsGroup();
+        resetGame();
 
         start.onClick(() -> {
             canvas.removeAll();
@@ -42,12 +44,11 @@ public class MainGame {
             resetGame();
         });
 
-        resetGame();
+        inGame();
     }
 
     private void createMap() {
         map = new GameMap();
-        canvas.add(map.getGraphcs());
         graphicsGroup.add(map.getGraphcs());
     }
 
@@ -73,13 +74,12 @@ public class MainGame {
 
     private void startGame() {
         createMap();
+        canvas.add(graphicsGroup);
 
     }
 
     private void inGame() {
-        canvas.animate(() -> {
-
-        });
+        
         canvas.onMouseMove(event -> {
             double cos = (event.getPosition().getX() - canvas.getCenter().getX()) / event.getPosition().distance(canvas.getCenter());
             double sin = (event.getPosition().getY() - canvas.getCenter().getY()) / event.getPosition().distance(canvas.getCenter());
