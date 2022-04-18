@@ -8,7 +8,7 @@ import edu.macalester.graphics.ui.Button;
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 750;
-    public static final int BALL_SPEED = 10;
+    public static final int BALL_SPEED = 1;
 
     private CanvasWindow canvas;
     private GameMap map;
