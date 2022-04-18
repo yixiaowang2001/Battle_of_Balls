@@ -17,6 +17,7 @@ public class MainGame {
     private GraphicsText scoreBoard1, scoreBoard2, gameOver, caption;
     private Image window;
     private GraphicsGroup graphicsGroup;
+    private CircleControl cc;
 
     public MainGame() {
         canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -52,6 +53,10 @@ public class MainGame {
         graphicsGroup.add(map.getGraphcs());
     }
 
+    private void createCirs() {
+        cc = new CircleControl(canvas, graphicsGroup);
+    }
+
     private void resetGame() {
         canvas.removeAll();
 
@@ -74,6 +79,7 @@ public class MainGame {
 
     private void startGame() {
         createMap();
+        createCirs();
         canvas.add(graphicsGroup);
 
     }

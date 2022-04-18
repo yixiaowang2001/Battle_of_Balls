@@ -13,14 +13,10 @@ public class Circle {
 
     public Circle(CanvasWindow canvas) {
         this.canvas = canvas;
-    }
-
-    public void addToCanvas() {
         Point randPoint = createRandPos();
         circleShape = new Ellipse(randPoint.getX(), randPoint.getY(), CIRCLE_RAIDUS, CIRCLE_RAIDUS);
         circleShape.setFillColor(createRandColor());
         circleShape.setStroked(false);
-        canvas.add(circleShape);
     }
 
     private Point createRandPos() {
@@ -40,10 +36,6 @@ public class Circle {
                 null);
         Color color = Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
         return color;
-    }
-
-    public void removeFromCanvas() {
-        canvas.remove(circleShape);
     }
 
     public Point getPos() {

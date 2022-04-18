@@ -17,8 +17,8 @@ public class PlayerBall {
     private AIBall aiBall;
     private Boolean flag;
 
-    public PlayerBall(CanvasWindow canvas) {
-        cc = new CircleControl(canvas);
+    public PlayerBall(CanvasWindow canvas, GraphicsGroup gg) {
+        cc = new CircleControl(canvas, gg);
         this.canvas = canvas;
         posX = 0;
         posY = 0;

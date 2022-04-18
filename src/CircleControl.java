@@ -25,16 +25,18 @@ public class CircleControl {
     private void initialize() {
         for (int i = 0; i < randInBound(); i++) {
             Circle cir = new Circle(canvas);
-            circleList.add(cir);
             gg.add(cir.getShape());
+            circleList.add(cir);
         }
     }
 
     public void controlNum() {
         if (circleList.size() < LOWER_BOUND) {
-            Circle cir = new Circle(canvas);
-            circleList.add(cir);
-            gg.add(cir.getShape());
+            for (int i = 0; i < randInBound() - circleList.size(); i++) {
+                Circle cir = new Circle(canvas);
+                gg.add(cir.getShape());
+                circleList.add(cir);
+            }
         }
     }
 
@@ -44,16 +46,11 @@ public class CircleControl {
     }
 
     public void ifCollision(Circle cir) {
-        cir.removeFromCanvas();
+        gg.remove(cir.getShape());
         circleList.remove(cir);
     }
 
     public List<Circle> getCircleList() {
         return circleList;
     }
-
-    // public static void main(String[] args) {
-    //     CanvasWindow canvas = new CanvasWindow("Test", 1000, 500);
-    //     CircleControl cc = new CircleControl(canvas);
-    // }
 }
