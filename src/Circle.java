@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.*;
@@ -17,10 +16,9 @@ public class Circle {
         this.canvas = canvas;
         posX = 0;
         posY = 0;
-        create();
     }
 
-    public void create() {
+    public void addToCanvas() {
         Point randPoint = createRandPos();
         circleShape = new Ellipse(randPoint.getX(), randPoint.getY(), CIRCLE_RAIDUS, CIRCLE_RAIDUS);
         circleShape.setFillColor(createRandColor());
@@ -46,12 +44,20 @@ public class Circle {
         return color;
     }
 
-    public double getX() {
-        return posX;
+    public void removeFromCanvas() {
+        canvas.remove(circleShape);
     }
 
-    public double getY() {
-        return posY;
+    public Point getPos() {
+        return new Point(posX, posY);
+    }
+
+    public Ellipse getShape() {
+        return circleShape;
+    }
+
+    public double getR() {
+        return CIRCLE_RAIDUS;
     }
 
     public static void main(String[] args) {
