@@ -12,9 +12,8 @@ public class MainGame {
     private CanvasWindow canvas;
     private GameMap map;
     private Button start, menu, quit;
-    private int score1, score2;
+    private int score;
     private GraphicsText scoreBoard1, scoreBoard2, gameOver, caption;
-    private String winner;
     private Image window;
 
     public MainGame() {
@@ -67,8 +66,7 @@ public class MainGame {
         canvas.add(quit);
         quit.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.8875);
 
-        score1 = 0;
-        score2 = 0;
+        score = 0;
     }
 
     private void startGame() {
@@ -94,13 +92,8 @@ public class MainGame {
      */
     private void endGame() {
         canvas.removeAll();
-        if (score1 > score2) {
-            winner = "Player 1";
-        } else {
-            winner = "Player 2";
-        }
 
-        gameOver = new GraphicsText("Game Over! " + winner + " wins!");
+        gameOver = new GraphicsText("Game Over! Your score is: " + score);
         gameOver.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.06);
         gameOver.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.45);
         canvas.add(gameOver);
