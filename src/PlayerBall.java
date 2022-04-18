@@ -4,6 +4,7 @@ import java.util.Random;
 import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
+import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Point;
 
 public class PlayerBall {
@@ -57,8 +58,11 @@ public class PlayerBall {
     }
 
     public void resize() {
-        // resize the ball in the canvas
-
+    //resize the ball in the canvas
+    if (flag) {
+        circleShape.setSize(circleShape.getWidth() + 10, circleShape.getHeight() + 10);
+        flag =  false;
+    }
     }
 
     public void collision() {
