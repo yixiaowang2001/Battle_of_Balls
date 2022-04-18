@@ -72,7 +72,7 @@ public class PlayerBall {
 
     public void collisionCircle(List<Circle> circleList) {
         for (Circle cir : circleList) {
-            if (new Point(posX, posY).distance(cir.getPos()) <= CIRCLE_RAIDUS - cir.getR()) {
+            if (circleShape.getCenter().distance(cir.getPos()) <= CIRCLE_RAIDUS - cir.getR()) {
                 cc.ifCollision(cir);
             }
         }

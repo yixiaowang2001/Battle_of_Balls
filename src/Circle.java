@@ -10,12 +10,9 @@ public class Circle {
     private static final double CIRCLE_RAIDUS = 10;
 
     private Ellipse circleShape;
-    private double posX, posY;
 
     public Circle(CanvasWindow canvas) {
         this.canvas = canvas;
-        posX = 0;
-        posY = 0;
     }
 
     public void addToCanvas() {
@@ -50,7 +47,7 @@ public class Circle {
     }
 
     public Point getPos() {
-        return new Point(posX, posY);
+        return circleShape.getCenter();
     }
 
     public Ellipse getShape() {
