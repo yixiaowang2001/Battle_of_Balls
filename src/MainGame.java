@@ -18,6 +18,8 @@ public class MainGame {
     private Image window;
     private GraphicsGroup graphicsGroup;
     private CircleControl cc;
+    private PlayerBall pb;
+    private boolean isStart;
 
     public MainGame() {
         canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -28,6 +30,7 @@ public class MainGame {
         start = new Button("Start Game");
         quit = new Button("Quit");
         graphicsGroup = new GraphicsGroup();
+        isStart = false;
         resetGame();
 
         start.onClick(() -> {
@@ -58,6 +61,11 @@ public class MainGame {
         cc = new CircleControl(canvas, graphicsGroup);
     }
 
+    private void createPB() {
+        pb = new PlayerBall(canvas, graphicsGroup);
+        pb.create();
+    }
+
     private void resetGame() {
         canvas.removeAll();
         graphicsGroup.removeAll();
@@ -83,15 +91,21 @@ public class MainGame {
         createMap();
         createCirs();
         canvas.add(graphicsGroup);
-
+        createPB();
+        isStart = true;
     }
 
     private void inGame() {
-        
+
         canvas.onMouseMove(event -> {
-            double cos = (event.getPosition().getX() - canvas.getCenter().getX()) / event.getPosition().distance(canvas.getCenter());
-            double sin = (event.getPosition().getY() - canvas.getCenter().getY()) / event.getPosition().distance(canvas.getCenter());
-            graphicsGroup.moveBy(-cos * BALL_SPEED, -sin * BALL_SPEED);
+            if (isStart) {
+                double cos = (event.getPosition().getX() - canvas.getCenter().getX())
+                        / event.getPosition().distance(canvas.getCenter());
+                double sin = (event.getPosition().getY() - canvas.getCenter().getY())
+                        / event.getPosition().distance(canvas.getCenter());
+                graphicsGroup.moveBy(-cos * BALL_SPEED, -sin * BALL_SPEED);
+                pb.collisionCircle();
+            }
         });
     }
 

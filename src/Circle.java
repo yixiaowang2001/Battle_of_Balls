@@ -24,7 +24,7 @@ public class Circle {
         double minX = -4.5 * canvas.getWidth() + CIRCLE_RAIDUS;
         double maxX = 5.5 * canvas.getWidth() - CIRCLE_RAIDUS;
         double minY = -4.5 * canvas.getHeight() + CIRCLE_RAIDUS;
-        double maxY = 5.5 * canvas.getWidth() - CIRCLE_RAIDUS;
+        double maxY = 5.5 * canvas.getHeight() - CIRCLE_RAIDUS;
         double randomX = minX + (maxX - minX) * rand.nextDouble();
         double randomY = minY + (maxY - minY) * rand.nextDouble();
         return new Point(randomX, randomY);
@@ -48,12 +48,5 @@ public class Circle {
 
     public double getR() {
         return CIRCLE_RAIDUS;
-    }
-
-    public static void main(String[] args) {
-        CanvasWindow canvas = new CanvasWindow("Test", 1000, 500);
-        for (int i = 0; i < 10000; i++) {
-            Circle circle = new Circle(canvas);
-        }
     }
 }
