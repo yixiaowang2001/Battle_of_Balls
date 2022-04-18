@@ -8,6 +8,7 @@ import edu.macalester.graphics.ui.Button;
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 750;
+    public static final int BALL_SPEED = 10;
 
     private CanvasWindow canvas;
     private GameMap map;
@@ -15,6 +16,7 @@ public class MainGame {
     private int score;
     private GraphicsText scoreBoard1, scoreBoard2, gameOver, caption;
     private Image window;
+    private GraphicsGroup graphicsGroup;
 
     public MainGame() {
         canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -77,6 +79,11 @@ public class MainGame {
     private void inGame() {
         canvas.animate(() -> {
 
+        });
+        canvas.onMouseMove(event -> {
+            double cos = (event.getPosition().getX() - canvas.getCenter().getX()) / event.getPosition().distance(canvas.getCenter());
+            double sin = (event.getPosition().getY() - canvas.getCenter().getY()) / event.getPosition().distance(canvas.getCenter());
+            graphicsGroup.moveBy(-cos * BALL_SPEED, -sin * BALL_SPEED);
         });
     }
 
