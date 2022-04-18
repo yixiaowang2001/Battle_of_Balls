@@ -9,6 +9,7 @@ public class CircleControl {
     
     private static final int LOWER_BOUND = 9500;
     private static final int UPPER_BOUND = 10000;
+    private static final double SPEED = 10;
 
     private List<Circle> circleList;
     private CanvasWindow canvas;
@@ -47,6 +48,10 @@ public class CircleControl {
 
     public List<Circle> getCircleList() {
         return circleList;
+    }
+
+    public void moveCircle() {
+        
     }
 
     public static void main(String[] args) {

@@ -7,7 +7,7 @@ import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.Point;
 
 public class PlayerBall {
-    
+
     private static final int CIRCLE_RAIDUS = 10;
     private CanvasWindow canvas;
     private double posX, posY;
@@ -45,25 +45,25 @@ public class PlayerBall {
 
     public Color createRandColor() {
         Random rand = new Random();
-        float[] hsb = Color.RGBtoHSB(rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, null);
+        float[] hsb = Color.RGBtoHSB(rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0,
+                null);
         Color color = Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
         return color;
     }
 
-
     public void move() {
-    //move the ball in the canvas
-    
+        // move the ball in the canvas
+
     }
 
     public void resize() {
-    //resize the ball in the canvas
+        // resize the ball in the canvas
 
     }
 
     public void collision() {
-    //check for collision with other balls
-    
+        // check for collision with other balls
+
     }
 
     public void collisionCircle(List<Circle> circleList) {
@@ -75,16 +75,17 @@ public class PlayerBall {
     }
 
     public void collisionBall() {
-        //check for collision with other balls
+        // check for collision with other balls
         for (Point point : aiBall.aiBallPoint) {
-            if (Math.sqrt(Math.pow(point.getX() - circleShape.getX(), 2) + Math.pow(point.getY() - circleShape.getY(), 2)) 
-            <= (getDiameter() / 2 + aiBall.getDiameter() / 2)){
-                flag  = true;
+            if (Math.sqrt(Math.pow(point.getX() - circleShape.getX(), 2)
+                    + Math.pow(point.getY() - circleShape.getY(), 2)) <= (getDiameter() / 2
+                            + aiBall.getDiameter() / 2)) {
+                flag = true;
             }
         }
-        }
+    }
 
-        public double getDiameter() {
-            return circleShape.getHeight();
-        }
+    public double getDiameter() {
+        return circleShape.getHeight();
+    }
 }
