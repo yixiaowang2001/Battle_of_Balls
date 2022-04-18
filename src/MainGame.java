@@ -48,7 +48,7 @@ public class MainGame {
     private void createMap() {
         map = new GameMap();
         canvas.add(map.getGraphcs());
-
+        graphicsGroup.add(map.getGraphcs());
     }
 
     private void resetGame() {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.GraphicsGroup;
 
 public class CircleControl {
 
@@ -12,8 +13,10 @@ public class CircleControl {
 
     private List<Circle> circleList;
     private CanvasWindow canvas;
+    private GraphicsGroup gg;
 
-    public CircleControl(CanvasWindow canvas) {
+    public CircleControl(CanvasWindow canvas, GraphicsGroup gg) {
+        this.gg = gg;
         this.canvas = canvas;
         circleList = new ArrayList<>();
         initialize();
@@ -23,7 +26,7 @@ public class CircleControl {
         for (int i = 0; i < randInBound(); i++) {
             Circle cir = new Circle(canvas);
             circleList.add(cir);
-            cir.addToCanvas();
+            gg.add(cir.getShape());
         }
     }
 
@@ -31,7 +34,7 @@ public class CircleControl {
         if (circleList.size() < LOWER_BOUND) {
             Circle cir = new Circle(canvas);
             circleList.add(cir);
-            cir.addToCanvas();
+            gg.add(cir.getShape());
         }
     }
 
@@ -49,8 +52,8 @@ public class CircleControl {
         return circleList;
     }
 
-    public static void main(String[] args) {
-        CanvasWindow canvas = new CanvasWindow("Test", 1000, 500);
-        CircleControl cc = new CircleControl(canvas);
-    }
+    // public static void main(String[] args) {
+    //     CanvasWindow canvas = new CanvasWindow("Test", 1000, 500);
+    //     CircleControl cc = new CircleControl(canvas);
+    // }
 }
