@@ -9,7 +9,7 @@ import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.Point;
 
 public class AIBall {
-    
+
     private static final double CIRCLE_RAIDUS = 20;
     private CanvasWindow canvas;
     private double posX, posY;
@@ -36,7 +36,7 @@ public class AIBall {
         canvas.add(circleShape);
         aiBallRadius.add(count, CIRCLE_RAIDUS);
         aiBallPoint.add(count, randPoint);
-        count ++;
+        count++;
     }
 
     private Point createRandPos() {
@@ -52,27 +52,27 @@ public class AIBall {
 
     private Color createRandColor() {
         Random rand = new Random();
-        float[] hsb = Color.RGBtoHSB(rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, null);
+        float[] hsb = Color.RGBtoHSB(rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0,
+                null);
         Color color = Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
-        nColor = Color.getHSBColor((float)(hsb[0] * 0.8), (float)(hsb[1] * 0.8), (float)(hsb[2] * 0.8));
+        nColor = Color.getHSBColor((float) (hsb[0] * 0.8), (float) (hsb[1] * 0.8), (float) (hsb[2] * 0.8));
         return color;
     }
 
-
     private void move() {
-    Random rand = new Random();
-    double dx = rand.nextDouble() * 5;
-    double dy = rand.nextDouble() * 5;
-    circleShape.moveBy(dx, dy);
-    aiBallPoint.add(count, new Point(circleShape.getX() + dx, circleShape.getY() + dy));
+        Random rand = new Random();
+        double dx = rand.nextDouble() * 5;
+        double dy = rand.nextDouble() * 5;
+        circleShape.moveBy(dx, dy);
+        aiBallPoint.add(count, new Point(circleShape.getX() + dx, circleShape.getY() + dy));
     }
 
     private void resize() {
-    if (flag) {
-        circleShape.setSize(getDiameter() + 10, getDiameter() + 10);
-        aiBallRadius.add(count, (getDiameter() + 10) / 2);
-        flag = false;
-    }
+        if (flag) {
+            circleShape.setSize(getDiameter() + 10, getDiameter() + 10);
+            aiBallRadius.add(count, (getDiameter() + 10) / 2);
+            flag = false;
+        }
     }
 
     public double getDiameter() {

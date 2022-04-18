@@ -4,7 +4,7 @@ import edu.macalester.graphics.*;
 import java.awt.Color;
 
 public class Circle {
-    
+
     private CanvasWindow canvas;
 
     private static final double CIRCLE_RAIDUS = 10;
@@ -39,7 +39,8 @@ public class Circle {
 
     private Color createRandColor() {
         Random rand = new Random();
-        float[] hsb = Color.RGBtoHSB(rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, null);
+        float[] hsb = Color.RGBtoHSB(rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0,
+                null);
         Color color = Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
         return color;
     }
