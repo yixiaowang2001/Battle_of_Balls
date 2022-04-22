@@ -47,7 +47,6 @@ public class CircleControl {
 
     public void ifCollision(Circle cir) {
         gg.remove(cir.getShape());
-        circleList.remove(cir);
     }
 
     public List<Circle> getCircleList() {

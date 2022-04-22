@@ -99,12 +99,12 @@ public class MainGame {
 
         canvas.onMouseMove(event -> {
             if (isStart) {
+                pb.collisionCircle();
                 double cos = (event.getPosition().getX() - canvas.getCenter().getX())
                         / event.getPosition().distance(canvas.getCenter());
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
                         / event.getPosition().distance(canvas.getCenter());
                 graphicsGroup.moveBy(-cos * BALL_SPEED, -sin * BALL_SPEED);
-                pb.collisionCircle();
             }
         });
     }

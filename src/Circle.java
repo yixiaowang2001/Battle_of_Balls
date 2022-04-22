@@ -38,7 +38,7 @@ public class Circle {
         return color;
     }
 
-    public Point getPos() {
+    public Point getCtr() {
         return circleShape.getCenter();
     }
 
