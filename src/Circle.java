@@ -47,6 +47,6 @@ public class Circle {
     }
 
     public double getR() {
-        return CIRCLE_RAIDUS;
+        return CIRCLE_RAIDUS / 2;
     }
 }

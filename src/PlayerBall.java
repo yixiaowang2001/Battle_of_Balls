@@ -64,17 +64,26 @@ public class PlayerBall {
 
     public void collisionCircle() {
 
-        Iterator<Circle> itrCir = cc.getCircleList().iterator(); 
-        while(itrCir.hasNext()) {
-            Circle cir = itrCir.next();
-            if (circleShape.getCenter().distance(cir.getCtr()) <= CIRCLE_RAIDUS - cir.getR()) {
-                System.out.println(cc.getCircleList().size());
+        // Iterator<Circle> itrCir = cc.getCircleList().iterator(); 
+        // while(itrCir.hasNext()) {
+        //     Circle cir = itrCir.next();
+        //     if (circleShape.getCenter().distance(cir.getPos()) <= CIRCLE_RAIDUS - cir.getR()) {
+        //         cc.ifCollision(cir);
+        //         System.out.println("P3");
+        //         itrCir.remove();
+        //     }
+        // }
+
+        for(int i = 0; i < cc.getCircleList().size(); i++) {
+            Circle cir = cc.getCircleList().get(i);
+            if (circleShape.getCenter().distance(cir.getPos()) <= CIRCLE_RAIDUS / 2 - cir.getR()) {
                 cc.ifCollision(cir);
                 System.out.println("P3");
-                itrCir.remove();
-                System.out.println(cc.getCircleList().size());
+                // cc.getCircleList().remove(i);
+                // i -= 1;
             }
         }
+
     }
 
     public void collisionBall() {

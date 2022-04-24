@@ -96,6 +96,11 @@ public class MainGame {
     }
 
     private void inGame() {
+        // canvas.animate(() -> {
+        //     if (isStart) {
+        //         pb.collisionCircle();
+        //     }
+        // });
 
         canvas.onMouseMove(event -> {
             if (isStart) {
@@ -104,6 +109,7 @@ public class MainGame {
                         / event.getPosition().distance(canvas.getCenter());
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
                         / event.getPosition().distance(canvas.getCenter());
+                if(event.getPosition()!=canvas.getCenter())
                 graphicsGroup.moveBy(-cos * BALL_SPEED, -sin * BALL_SPEED);
             }
         });
