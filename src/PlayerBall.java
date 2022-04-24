@@ -74,7 +74,7 @@ public class PlayerBall {
         for(int i = 0; i < cc.getCircleList().size(); i++) {
             Circle cir = cc.getCircleList().get(i);
             if (circleShape.getCenter().distance(cir.getCtr()) <= CIRCLE_RAIDUS - cir.getR()) {
-                cc.ifCollision(cir);
+                // cc.ifCollision(cir);
                 System.out.println("P3");
                 // cc.getCircleList().remove(i);
                 // i -= 1;
