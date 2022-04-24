@@ -12,9 +12,8 @@ import edu.macalester.graphics.Point;
 
 public class PlayerBall {
 
-    private static final int CIRCLE_RAIDUS = 40;
+    private static final int CIRCLE_RAIDUS = 20;
     private CanvasWindow canvas;
-    private double posX, posY;
     private Ellipse circleShape;
     private CircleControl cc;
     private AIBall aiBall;
@@ -23,14 +22,12 @@ public class PlayerBall {
     public PlayerBall(CanvasWindow canvas, GraphicsGroup gg) {
         cc = new CircleControl(canvas, gg);
         this.canvas = canvas;
-        posX = 0;
-        posY = 0;
         create();
     }
 
     public void create() {
         Point randPoint = new Point(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
-        circleShape = new Ellipse(randPoint.getX(), randPoint.getY(), CIRCLE_RAIDUS, CIRCLE_RAIDUS);
+        circleShape = new Ellipse(randPoint.getX(), randPoint.getY(), CIRCLE_RAIDUS * 2, CIRCLE_RAIDUS * 2);
         circleShape.setFillColor(createRandColor());
         circleShape.setStroked(false);
         canvas.add(circleShape);
@@ -76,7 +73,7 @@ public class PlayerBall {
 
         for(int i = 0; i < cc.getCircleList().size(); i++) {
             Circle cir = cc.getCircleList().get(i);
-            if (circleShape.getCenter().distance(cir.getPos()) <= CIRCLE_RAIDUS / 2 - cir.getR()) {
+            if (circleShape.getCenter().distance(cir.getCtr()) <= CIRCLE_RAIDUS - cir.getR()) {
                 cc.ifCollision(cir);
                 System.out.println("P3");
                 // cc.getCircleList().remove(i);

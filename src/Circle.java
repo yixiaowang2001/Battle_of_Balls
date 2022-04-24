@@ -7,14 +7,14 @@ public class Circle {
 
     private CanvasWindow canvas;
 
-    private static final double CIRCLE_RAIDUS = 10;
+    private static final double CIRCLE_RAIDUS = 5;
 
     private Ellipse circleShape;
 
     public Circle(CanvasWindow canvas) {
         this.canvas = canvas;
         Point randPoint = createRandPos();
-        circleShape = new Ellipse(randPoint.getX(), randPoint.getY(), CIRCLE_RAIDUS, CIRCLE_RAIDUS);
+        circleShape = new Ellipse(randPoint.getX(), randPoint.getY(), CIRCLE_RAIDUS * 2, CIRCLE_RAIDUS * 2);
         circleShape.setFillColor(createRandColor());
         circleShape.setStroked(false);
     }
@@ -47,6 +47,6 @@ public class Circle {
     }
 
     public double getR() {
-        return CIRCLE_RAIDUS / 2;
+        return CIRCLE_RAIDUS;
     }
 }
