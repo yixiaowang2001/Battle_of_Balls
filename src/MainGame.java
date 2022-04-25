@@ -98,19 +98,10 @@ public class MainGame {
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
                         / event.getPosition().distance(canvas.getCenter());
                 if (event.getPosition() != canvas.getCenter()) {
-<<<<<<< Updated upstream
                     double moveX = -cos * ballSpeed;
                     double moveY = -sin * ballSpeed;
-                    offsetX += moveX;
-                    offsetY += moveY;
-                    if ((offsetX < -5 * CANVAS_WIDTH + pb.getDiameter() ||
-                            offsetX > 5 * CANVAS_WIDTH - pb.getDiameter()) && boundFlag) {
-=======
-                    double moveX = -cos * BALL_SPEED;
-                    double moveY = -sin * BALL_SPEED;
-                    if ((offsetX + moveX <= -5 * CANVAS_WIDTH + pb.getDiameter() / 2 ||
-                            offsetX >= 5 * CANVAS_WIDTH - pb.getDiameter() / 2)) {
->>>>>>> Stashed changes
+                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 ||
+                            offsetX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2)) {
                         moveX = 0;
                     }
                     if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 ||
