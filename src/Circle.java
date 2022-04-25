@@ -7,7 +7,7 @@ public class Circle {
 
     private CanvasWindow canvas;
 
-    private static final double CIRCLE_RAIDUS = 5;
+    static final double CIRCLE_RAIDUS = 5;
 
     private Ellipse circleShape;
 

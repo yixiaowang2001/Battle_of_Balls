@@ -8,7 +8,7 @@ import edu.macalester.graphics.ui.Button;
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 750;
-    public static final int BALL_SPEED = 5;
+    public double ballSpeed = 3;
 
     private CanvasWindow canvas;
     private GameMap map;
@@ -98,8 +98,8 @@ public class MainGame {
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
                         / event.getPosition().distance(canvas.getCenter());
                 if (event.getPosition() != canvas.getCenter()) {
-                    double moveX = -cos * BALL_SPEED;
-                    double moveY = -sin * BALL_SPEED;
+                    double moveX = -cos * ballSpeed;
+                    double moveY = -sin * ballSpeed;
                     offsetX += moveX;
                     offsetY += moveY;
                     if ((offsetX < -5 * CANVAS_WIDTH + pb.getDiameter() ||
