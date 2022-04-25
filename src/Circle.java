@@ -49,4 +49,12 @@ public class Circle {
     public double getR() {
         return CIRCLE_RAIDUS;
     }
+
+    /**
+     * Test method
+     * @param canvas
+     */
+    public void setColor() {
+        circleShape.setFillColor(Color.BLACK);
+    }
 }

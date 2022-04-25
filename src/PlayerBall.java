@@ -13,6 +13,7 @@ import edu.macalester.graphics.Point;
 public class PlayerBall {
 
     private static final int CIRCLE_RAIDUS = 20;
+    private static final double RESIZE_CIR = 0.1;
     private CanvasWindow canvas;
     private Ellipse circleShape;
     private CircleControl cc;
@@ -65,18 +66,20 @@ public class PlayerBall {
         while(itrCir.hasNext()) {
             Circle cir = itrCir.next();
             cir.getShape().moveBy(dx, dy);
-            if (circleShape.getCenter().distance(cir.getCtr()) <= CIRCLE_RAIDUS - cir.getR()) {
+            if (circleShape.getCenter().distance(cir.getCtr()) <= circleShape.getHeight() / 2 + cir.getR()) {
                 cc.ifCollision(cir);
                 System.out.println("P3");
                 itrCir.remove();
+                System.out.println("Ball Size: " + circleShape.getWidth());
+                resizeCir();
             }
         }
         cc.controlNum();
     }
 
     private void resizeCir() {
-        // TODO
-        
+        circleShape.setSize(circleShape.getHeight() + RESIZE_CIR, circleShape.getHeight() + RESIZE_CIR);
+        circleShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
     }
 
     public void collisionBall() {

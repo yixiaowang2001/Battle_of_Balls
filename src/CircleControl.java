@@ -32,6 +32,7 @@ public class CircleControl {
             System.out.println("Control Num");
             for (int i = 0; i < randInBound() - circleList.size(); i++) {
                 Circle cir = new Circle(canvas);
+                cir.setColor();
                 canvas.add(cir.getShape());
                 circleList.add(cir);
             }
