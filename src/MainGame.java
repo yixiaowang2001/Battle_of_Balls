@@ -18,7 +18,7 @@ public class MainGame {
     private Image window;
     private GraphicsGroup graphicsGroup;
     private PlayerBall pb;
-    private boolean isStart, boundFlag;
+    private boolean isStart;
     private double offsetX, offsetY;
 
     public MainGame() {
@@ -98,18 +98,27 @@ public class MainGame {
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
                         / event.getPosition().distance(canvas.getCenter());
                 if (event.getPosition() != canvas.getCenter()) {
+<<<<<<< Updated upstream
                     double moveX = -cos * ballSpeed;
                     double moveY = -sin * ballSpeed;
                     offsetX += moveX;
                     offsetY += moveY;
                     if ((offsetX < -5 * CANVAS_WIDTH + pb.getDiameter() ||
                             offsetX > 5 * CANVAS_WIDTH - pb.getDiameter()) && boundFlag) {
+=======
+                    double moveX = -cos * BALL_SPEED;
+                    double moveY = -sin * BALL_SPEED;
+                    if ((offsetX + moveX <= -5 * CANVAS_WIDTH + pb.getDiameter() / 2 ||
+                            offsetX >= 5 * CANVAS_WIDTH - pb.getDiameter() / 2)) {
+>>>>>>> Stashed changes
                         moveX = 0;
                     }
-                    if ((offsetY < -5 * CANVAS_HEIGHT + pb.getDiameter() ||
-                            offsetY > 5 * CANVAS_HEIGHT - pb.getDiameter()) && boundFlag) {
+                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 ||
+                            offsetY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2)) {
                         moveY = 0;
                     }
+                    offsetX += moveX;
+                    offsetY += moveY;
                     graphicsGroup.moveBy(moveX, moveY);
                     pb.collisionCircle(moveX, moveY);
                     pb.returnCC().controlNum(offsetX, offsetY);
