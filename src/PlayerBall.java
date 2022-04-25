@@ -48,11 +48,11 @@ public class PlayerBall {
     }
 
     public void resize() {
-    //resize the ball in the canvas
-    if (flag) {
-        circleShape.setSize(circleShape.getWidth() + 10, circleShape.getHeight() + 10);
-        flag =  false;
-    }
+        // resize the ball in the canvas
+        if (flag) {
+            circleShape.setSize(circleShape.getWidth() + 10, circleShape.getHeight() + 10);
+            flag = false;
+        }
     }
 
     public void collision() {
@@ -62,19 +62,18 @@ public class PlayerBall {
 
     public void collisionCircle(double dx, double dy) {
 
-        Iterator<Circle> itrCir = cc.getCircleList().iterator(); 
-        while(itrCir.hasNext()) {
+        Iterator<Circle> itrCir = cc.getCircleList().iterator();
+        while (itrCir.hasNext()) {
             Circle cir = itrCir.next();
             cir.getShape().moveBy(dx, dy);
             if (circleShape.getCenter().distance(cir.getCtr()) <= circleShape.getHeight() / 2 + cir.getR()) {
-                cc.ifCollision(cir);
+                canvas.remove(cir.getShape());
                 System.out.println("P3");
                 itrCir.remove();
                 System.out.println("Ball Size: " + circleShape.getWidth());
                 resizeCir();
             }
         }
-        cc.controlNum();
     }
 
     private void resizeCir() {

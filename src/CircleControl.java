@@ -27,12 +27,12 @@ public class CircleControl {
         }
     }
 
-    public void controlNum() {
+    public void controlNum(double offsetX, double offsetY) {
         if (circleList.size() < LOWER_BOUND) {
             System.out.println("Control Num");
             for (int i = 0; i < randInBound() - circleList.size(); i++) {
                 Circle cir = new Circle(canvas);
-                cir.setColor();
+                cir.getShape().moveBy(offsetX, offsetY);
                 canvas.add(cir.getShape());
                 circleList.add(cir);
             }
@@ -42,11 +42,6 @@ public class CircleControl {
     private int randInBound() {
         Random rand = new Random();
         return rand.nextInt(UPPER_BOUND - LOWER_BOUND) + LOWER_BOUND;
-    }
-
-    public void ifCollision(Circle cir) {
-        canvas.remove(cir.getShape());
-        System.out.println("checked");
     }
 
     public List<Circle> getCircleList() {

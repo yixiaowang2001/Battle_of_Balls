@@ -10,8 +10,7 @@
 + 球和boundary的互动（球不能出bound）
 
 待解决问题：
-+ Back To Menu 有时候会报错（Concurrent Exception？）
-+ `controlNum()`会把球创建在外面：需要动态更新CanvasWindow的位置
++ Back To Menu 有时候会报错（`Exception in thread "AWT-EventQueue-0" java.util.NoSuchElementException: The object to remove is not part of this graphics group. Either it is already removed, or it was never originally added.`）
 
 待讨论：
 + Resize变大的速率（目前是constant，是否需要改成非线性）

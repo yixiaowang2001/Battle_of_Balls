@@ -19,6 +19,7 @@ public class MainGame {
     private GraphicsGroup graphicsGroup;
     private PlayerBall pb;
     private boolean isStart;
+    private double offsetX, offsetY;
 
     public MainGame() {
         canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -89,7 +90,7 @@ public class MainGame {
     }
 
     private void inGame() {
-        
+
         canvas.onMouseMove(event -> {
             if (isStart) {
                 double cos = (event.getPosition().getX() - canvas.getCenter().getX())
@@ -97,8 +98,13 @@ public class MainGame {
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
                         / event.getPosition().distance(canvas.getCenter());
                 if (event.getPosition() != canvas.getCenter()) {
-                    graphicsGroup.moveBy(-cos * BALL_SPEED, -sin * BALL_SPEED);
-                    pb.collisionCircle(-cos * BALL_SPEED, -sin * BALL_SPEED);
+                    double moveX = -cos * BALL_SPEED;
+                    double moveY = -sin * BALL_SPEED;
+                    offsetX += moveX;
+                    offsetY += moveY;
+                    graphicsGroup.moveBy(moveX, moveY);
+                    pb.collisionCircle(moveX, moveY);
+                    pb.returnCC().controlNum(offsetX, offsetY);
                 }
             }
         });
