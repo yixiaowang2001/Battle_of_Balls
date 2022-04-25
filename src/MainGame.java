@@ -8,7 +8,7 @@ import edu.macalester.graphics.ui.Button;
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 750;
-    public static final int BALL_SPEED = 5;
+    public static final int BALL_SPEED = 1;
 
     private CanvasWindow canvas;
     private GameMap map;
@@ -17,7 +17,6 @@ public class MainGame {
     private GraphicsText scoreBoard1, scoreBoard2, gameOver, caption;
     private Image window;
     private GraphicsGroup graphicsGroup;
-    private CircleControl cc;
     private PlayerBall pb;
     private boolean isStart;
 
@@ -57,13 +56,8 @@ public class MainGame {
         map.getGraphcs().setCenter(0.5 * CANVAS_WIDTH, 0.5 * CANVAS_HEIGHT);
     }
 
-    private void createCirs() {
-        cc = new CircleControl(canvas, graphicsGroup);
-    }
-
     private void createPB() {
-        pb = new PlayerBall(canvas, graphicsGroup);
-        pb.create();
+        pb = new PlayerBall(canvas);
     }
 
     private void resetGame() {
@@ -89,7 +83,6 @@ public class MainGame {
 
     private void startGame() {
         createMap();
-        createCirs();
         canvas.add(graphicsGroup);
         createPB();
         isStart = true;
@@ -97,20 +90,21 @@ public class MainGame {
 
     private void inGame() {
         // canvas.animate(() -> {
-        //     if (isStart) {
-        //         pb.collisionCircle();
-        //     }
+        // if (isStart) {
+        // pb.collisionCircle();
+        // }
         // });
 
         canvas.onMouseMove(event -> {
             if (isStart) {
-                pb.collisionCircle();
                 double cos = (event.getPosition().getX() - canvas.getCenter().getX())
                         / event.getPosition().distance(canvas.getCenter());
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
                         / event.getPosition().distance(canvas.getCenter());
-                if(event.getPosition()!=canvas.getCenter())
-                graphicsGroup.moveBy(-cos * BALL_SPEED, -sin * BALL_SPEED);
+                if (event.getPosition() != canvas.getCenter()) {
+                    graphicsGroup.moveBy(-cos * BALL_SPEED, -sin * BALL_SPEED);
+                    pb.collisionCircle(-cos * BALL_SPEED, -sin * BALL_SPEED);
+                }
             }
         });
     }

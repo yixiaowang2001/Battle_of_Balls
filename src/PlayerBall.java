@@ -19,15 +19,15 @@ public class PlayerBall {
     private AIBall aiBall;
     private Boolean flag;
 
-    public PlayerBall(CanvasWindow canvas, GraphicsGroup gg) {
-        cc = new CircleControl(canvas, gg);
+    public PlayerBall(CanvasWindow canvas) {
+        cc = new CircleControl(canvas);
         this.canvas = canvas;
         create();
     }
 
     public void create() {
-        Point randPoint = new Point(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
-        circleShape = new Ellipse(randPoint.getX(), randPoint.getY(), CIRCLE_RAIDUS * 2, CIRCLE_RAIDUS * 2);
+        Point startPoint = new Point(canvas.getWidth() * 0.5 - CIRCLE_RAIDUS, canvas.getHeight() * 0.5 - CIRCLE_RAIDUS);
+        circleShape = new Ellipse(startPoint.getX(), startPoint.getY(), CIRCLE_RAIDUS * 2, CIRCLE_RAIDUS * 2);
         circleShape.setFillColor(createRandColor());
         circleShape.setStroked(false);
         canvas.add(circleShape);
@@ -59,28 +59,18 @@ public class PlayerBall {
 
     }
 
-    public void collisionCircle() {
+    public void collisionCircle(double dx, double dy) {
 
         Iterator<Circle> itrCir = cc.getCircleList().iterator(); 
         while(itrCir.hasNext()) {
             Circle cir = itrCir.next();
+            cir.getShape().moveBy(dx, dy);
             if (circleShape.getCenter().distance(cir.getCtr()) <= CIRCLE_RAIDUS - cir.getR()) {
-                // cc.ifCollision(cir);
+                cc.ifCollision(cir);
                 System.out.println("P3");
                 itrCir.remove();
             }
         }
-
-        // for(int i = 0; i < cc.getCircleList().size(); i++) {
-        //     Circle cir = cc.getCircleList().get(i);
-        //     if (circleShape.getCenter().distance(cir.getCtr()) <= CIRCLE_RAIDUS - cir.getR()) {
-        //         // cc.ifCollision(cir);
-        //         System.out.println("P3");
-        //         // cc.getCircleList().remove(i);
-        //         // i -= 1;
-        //     }
-        // }
-
     }
 
     public void collisionBall() {
@@ -92,6 +82,10 @@ public class PlayerBall {
                 flag = true;
             }
         }
+    }
+
+    public CircleControl returnCC() {
+        return cc;
     }
 
     public double getDiameter() {

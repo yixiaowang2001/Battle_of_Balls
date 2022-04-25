@@ -13,10 +13,8 @@ public class CircleControl {
 
     private List<Circle> circleList;
     private CanvasWindow canvas;
-    private GraphicsGroup gg;
 
-    public CircleControl(CanvasWindow canvas, GraphicsGroup gg) {
-        this.gg = gg;
+    public CircleControl(CanvasWindow canvas) {
         this.canvas = canvas;
         circleList = new ArrayList<>();
         initialize();
@@ -25,16 +23,16 @@ public class CircleControl {
     private void initialize() {
         for (int i = 0; i < randInBound(); i++) {
             Circle cir = new Circle(canvas);
-            gg.add(cir.getShape());
+            canvas.add(cir.getShape());
             circleList.add(cir);
         }
     }
 
-    public void controlNum() {
+    private void controlNum() {
         if (circleList.size() < LOWER_BOUND) {
             for (int i = 0; i < randInBound() - circleList.size(); i++) {
                 Circle cir = new Circle(canvas);
-                gg.add(cir.getShape());
+                canvas.add(cir.getShape());
                 circleList.add(cir);
             }
         }
@@ -46,12 +44,13 @@ public class CircleControl {
     }
 
     public void ifCollision(Circle cir) {
-        gg.remove(cir.getShape());
-        circleList.remove(cir);
+        canvas.remove(cir.getShape());
         System.out.println("checked");
     }
 
     public List<Circle> getCircleList() {
         return circleList;
     }
+
+    
 }
