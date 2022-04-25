@@ -27,8 +27,9 @@ public class CircleControl {
         }
     }
 
-    private void controlNum() {
+    public void controlNum() {
         if (circleList.size() < LOWER_BOUND) {
+            System.out.println("Control Num");
             for (int i = 0; i < randInBound() - circleList.size(); i++) {
                 Circle cir = new Circle(canvas);
                 canvas.add(cir.getShape());

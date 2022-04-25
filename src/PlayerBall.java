@@ -71,6 +71,12 @@ public class PlayerBall {
                 itrCir.remove();
             }
         }
+        cc.controlNum();
+    }
+
+    private void resizeCir() {
+        // TODO
+        
     }
 
     public void collisionBall() {
