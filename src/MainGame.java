@@ -18,7 +18,7 @@ public class MainGame {
     private Image window;
     private GraphicsGroup graphicsGroup;
     private PlayerBall pb;
-    private boolean isStart;
+    private boolean isStart, boundFlag;
     private double offsetX, offsetY;
 
     public MainGame() {
@@ -102,6 +102,14 @@ public class MainGame {
                     double moveY = -sin * BALL_SPEED;
                     offsetX += moveX;
                     offsetY += moveY;
+                    if ((offsetX < -5 * CANVAS_WIDTH + pb.getDiameter() ||
+                            offsetX > 5 * CANVAS_WIDTH - pb.getDiameter()) && boundFlag) {
+                        moveX = 0;
+                    }
+                    if ((offsetY < -5 * CANVAS_HEIGHT + pb.getDiameter() ||
+                            offsetY > 5 * CANVAS_HEIGHT - pb.getDiameter()) && boundFlag) {
+                        moveY = 0;
+                    }
                     graphicsGroup.moveBy(moveX, moveY);
                     pb.collisionCircle(moveX, moveY);
                     pb.returnCC().controlNum(offsetX, offsetY);
