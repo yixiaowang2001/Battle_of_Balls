@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
-import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Point;
 
 public class PlayerBall {
@@ -44,22 +43,11 @@ public class PlayerBall {
         return color;
     }
 
-    public void move() {
-        // move the ball in the canvas
-
-    }
-
-    public void resize() {
-        // resize the ball in the canvas
+    private void resizeAIBall() {
         if (flag) {
             circleShape.setSize(circleShape.getWidth() + 10, circleShape.getHeight() + 10);
             flag = false;
         }
-    }
-
-    public void collision() {
-        // check for collision with other balls
-
     }
 
     public void collisionCircle(double dx, double dy) {

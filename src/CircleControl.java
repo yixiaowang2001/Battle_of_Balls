@@ -47,6 +47,4 @@ public class CircleControl {
     public List<Circle> getCircleList() {
         return circleList;
     }
-
-    
 }
