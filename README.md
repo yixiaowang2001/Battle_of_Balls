@@ -5,7 +5,6 @@
 待完成任务：
 + AI ball
 + 游戏逻辑
-+ Ball stroke
 + 球速函数（调整球速）
 + 球和boundary的互动（球不能出bound）
 

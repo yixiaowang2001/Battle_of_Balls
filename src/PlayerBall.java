@@ -27,10 +27,12 @@ public class PlayerBall {
     }
 
     public void create() {
+        Color randColor = createRandColor();
         Point startPoint = new Point(canvas.getWidth() * 0.5 - CIRCLE_RAIDUS, canvas.getHeight() * 0.5 - CIRCLE_RAIDUS);
         circleShape = new Ellipse(startPoint.getX(), startPoint.getY(), CIRCLE_RAIDUS * 2, CIRCLE_RAIDUS * 2);
-        circleShape.setFillColor(createRandColor());
-        circleShape.setStroked(false);
+        circleShape.setFillColor(randColor);
+        circleShape.setStrokeColor(randColor.darker());
+        circleShape.setStrokeWidth(5);
         canvas.add(circleShape);
     }
 
