@@ -2,6 +2,7 @@
 
 ![game](https://github.com/yixiaowang2001/COMP-128_FP/blob/main/res/Pic1.png)
 
+待解决问题：
 1. AI ball
 2. 游戏的结束
 3. Ball stroke
