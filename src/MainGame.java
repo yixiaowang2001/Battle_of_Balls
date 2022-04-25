@@ -89,12 +89,7 @@ public class MainGame {
     }
 
     private void inGame() {
-        // canvas.animate(() -> {
-        // if (isStart) {
-        // pb.collisionCircle();
-        // }
-        // });
-
+        
         canvas.onMouseMove(event -> {
             if (isStart) {
                 double cos = (event.getPosition().getX() - canvas.getCenter().getX())
