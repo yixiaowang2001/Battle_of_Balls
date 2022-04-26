@@ -53,8 +53,10 @@ public class MainGame {
 
     private void createMap() {
         map = new GameMap();
-        graphicsGroup.add(map.getGraphcs());
+        canvas.add(map.getGraphcs());
+        // graphicsGroup.add(map.getGraphcs());
         map.getGraphcs().setCenter(0.5 * CANVAS_WIDTH, 0.5 * CANVAS_HEIGHT);
+        // canvas.add(graphicsGroup);
     }
 
     private void createPB() {
@@ -67,8 +69,8 @@ public class MainGame {
         offsetX = 0;
         offsetY = 0;
 
+        // graphicsGroup.removeAll();
         canvas.removeAll();
-        graphicsGroup.removeAll();
         isStart = false;
 
         window = new Image("Background.jpg");
@@ -90,7 +92,6 @@ public class MainGame {
 
     private void startGame() {
         createMap();
-        canvas.add(graphicsGroup);
         createPB();
         isStart = true;
     }
@@ -121,7 +122,7 @@ public class MainGame {
                     offsetY += moveY;
 
                     pb.collisionCircle(moveX, moveY);
-                    graphicsGroup.moveBy(moveX, moveY);
+                    map.getGraphcs().moveBy(moveX, moveY);
                     System.out.println(graphicsGroup.getX());
 
                     if (isBound) {
