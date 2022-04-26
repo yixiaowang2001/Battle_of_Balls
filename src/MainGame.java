@@ -1,7 +1,3 @@
-import java.util.List;
-import java.util.Random;
-import java.awt.Color;
-
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.ui.Button;
 
@@ -14,7 +10,7 @@ public class MainGame {
     private GameMap map;
     private Button start, menu, quit;
     private int score;
-    private GraphicsText scoreBoard1, scoreBoard2, gameOver, caption;
+    private GraphicsText scoreBoard1, gameOver, caption;
     private Image window;
     private GraphicsGroup graphicsGroup;
     private PlayerBall pb;
@@ -145,18 +141,10 @@ public class MainGame {
     }
 
     /**
-     * Starts the next game when some player dies
-     */
-    private void nextGame() {
-
-    }
-
-    /**
      * Ends the game when one of the players reaches the winning point.
      */
     private void endGame() {
         isStart = false;
-        canvas.removeAll();
 
         gameOver = new GraphicsText("Game Over! Your score is: " + (int)pb.getArea());
         gameOver.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.05);
