@@ -102,14 +102,6 @@ public class MainGame {
 
     private void inGame() {
 
-        canvas.animate(() -> {
-            if (isStart) {
-                pb.returnAC().getBallList().forEach(ball -> {
-                    ball.autoMove(offsetX, offsetY);
-                });
-            }
-        });
-
         canvas.onMouseMove(event -> {
             if (isStart) {
                 updateBallSpeed();
