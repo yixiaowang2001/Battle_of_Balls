@@ -53,7 +53,7 @@ public class MainGame {
 
         canvas.animate(() -> {
             if (isStart) {
-                if (pb.getArea() > 20000) {
+                if (pb.getArea() > 200000) {
                     endGame();
                 }
             }
