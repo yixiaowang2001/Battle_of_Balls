@@ -27,7 +27,7 @@ public class MainGame {
 
     public void run() {
         menu = new Button("Back to Menu");
-        start = new Button("Start Game");
+        start = new Button("New Game");
         quit = new Button("Quit");
         graphicsGroup = new GraphicsGroup();
         isStart = false;
@@ -49,6 +49,14 @@ public class MainGame {
         });
 
         inGame();
+
+        canvas.animate(() -> {
+            if (isStart) {
+                if (pb.getArea() > 20000) {
+                    endGame();
+                }
+            }
+        });
     }
 
     private void createMap() {
@@ -123,11 +131,11 @@ public class MainGame {
 
                     pb.collisionCircle(moveX, moveY);
                     map.getGraphcs().moveBy(moveX, moveY);
-                    System.out.println(graphicsGroup.getX());
+                    // System.out.println(map.getGraphcs().getX());
 
                     if (isBound) {
                         // 判断bound在哪
-                        // 下： 
+                        // 下：
                     }
 
                     pb.returnCC().controlNum(offsetX, offsetY);
@@ -147,17 +155,18 @@ public class MainGame {
      * Ends the game when one of the players reaches the winning point.
      */
     private void endGame() {
+        isStart = false;
         canvas.removeAll();
 
-        gameOver = new GraphicsText("Game Over! Your score is: " + score);
-        gameOver.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.06);
+        gameOver = new GraphicsText("Game Over! Your score is: " + (int)pb.getArea());
+        gameOver.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.05);
         gameOver.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.45);
         canvas.add(gameOver);
 
-        menu.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.6);
+        menu.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.8375);
         canvas.add(menu);
 
-        quit.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.65);
+        quit.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.8875);
         canvas.add(quit);
     }
 
