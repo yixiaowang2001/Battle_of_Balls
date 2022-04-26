@@ -18,7 +18,7 @@ public class MainGame {
     private Image window;
     private GraphicsGroup graphicsGroup;
     private PlayerBall pb;
-    private boolean isStart;
+    private boolean isStart, isBound;
     private double offsetX, offsetY;
 
     public MainGame() {
@@ -62,6 +62,11 @@ public class MainGame {
     }
 
     private void resetGame() {
+
+        isBound = false;
+        offsetX = 0;
+        offsetY = 0;
+
         canvas.removeAll();
         graphicsGroup.removeAll();
 
@@ -100,18 +105,29 @@ public class MainGame {
                 if (event.getPosition() != canvas.getCenter()) {
                     double moveX = -cos * ballSpeed;
                     double moveY = -sin * ballSpeed;
+                    isBound = false;
                     if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 ||
                             offsetX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2)) {
                         moveX = 0;
+                        isBound = true;
                     }
                     if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 ||
                             offsetY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2)) {
                         moveY = 0;
+                        isBound = true;
                     }
                     offsetX += moveX;
                     offsetY += moveY;
-                    graphicsGroup.moveBy(moveX, moveY);
+
                     pb.collisionCircle(moveX, moveY);
+                    graphicsGroup.moveBy(moveX, moveY);
+                    System.out.println(graphicsGroup.getX());
+
+                    if (isBound) {
+                        // 判断bound在哪
+                        // 下： 
+                    }
+
                     pb.returnCC().controlNum(offsetX, offsetY);
                 }
             }
@@ -141,6 +157,10 @@ public class MainGame {
 
         quit.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.65);
         canvas.add(quit);
+    }
+
+    private Point boundWhere() {
+
     }
 
     public static void main(String[] args) {

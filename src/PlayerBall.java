@@ -18,6 +18,7 @@ public class PlayerBall {
     private CircleControl cc;
     private AIBall aiBall;
     private Boolean flag;
+    private double resizeValue;
 
     public PlayerBall(CanvasWindow canvas) {
         cc = new CircleControl(canvas);
@@ -62,20 +63,26 @@ public class PlayerBall {
                 itrCir.remove();
                 System.out.println("Ball Size: " + getArea());
                 resizeCir();
+
             }
         }
     }
 
+    public void moveCir(double dx, double dy) {
+        Iterator<Circle> itrCir = cc.getCircleList().iterator();
+        while (itrCir.hasNext()) {
+            Circle cir = itrCir.next();
+            cir.getShape().moveBy(dx, dy);
+        }
+    }
+
     private void resizeCir() {
-        // circleShape.setSize(circleShape.getHeight() + RESIZE_CIR,
-        // circleShape.getHeight() + RESIZE_CIR);
         circleShape.setSize(Math.sqrt(Math.pow(circleShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
                 Math.sqrt(Math.pow(circleShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
         circleShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
     }
 
     public void collisionBall() {
-        // check for collision with other balls
         for (Point point : aiBall.aiBallPoint) {
             if (Math.sqrt(Math.pow(point.getX() - circleShape.getX(), 2)
                     + Math.pow(point.getY() - circleShape.getY(), 2)) <= (getDiameter() / 2
@@ -95,5 +102,9 @@ public class PlayerBall {
 
     public double getArea() {
         return Math.PI * Math.pow(circleShape.getHeight(), 2);
+    }
+
+    public double getResizeVal() {
+        return resizeValue;
     }
 }
