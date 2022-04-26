@@ -16,7 +16,7 @@ public class PlayerBall {
     private CanvasWindow canvas;
     private Ellipse circleShape;
     private CircleControl cc;
-    private AIBall aiBall;
+    private AIBallManage aiBall;
     private Boolean flag;
     private double resizeValue;
 
@@ -63,7 +63,6 @@ public class PlayerBall {
                 itrCir.remove();
                 System.out.println("Ball Size: " + getArea());
                 resizeCir();
-
             }
         }
     }

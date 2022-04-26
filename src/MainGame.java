@@ -14,6 +14,7 @@ public class MainGame {
     private Image window;
     private GraphicsGroup graphicsGroup;
     private PlayerBall pb;
+    private AIBallManage ai;
     private boolean isStart, isBound;
     private double offsetX, offsetY;
 
@@ -67,6 +68,10 @@ public class MainGame {
         pb = new PlayerBall(canvas);
     }
 
+    private void createAI() {
+        ai = new AIBallManage(canvas);
+    }
+
     private void resetGame() {
 
         isBound = false;
@@ -97,6 +102,7 @@ public class MainGame {
     private void startGame() {
         createMap();
         createPB();
+        createAI();
         isStart = true;
     }
 
@@ -127,6 +133,7 @@ public class MainGame {
 
                     pb.collisionCircle(moveX, moveY);
                     map.getGraphcs().moveBy(moveX, moveY);
+                    
                     // System.out.println(map.getGraphcs().getX());
 
                     if (isBound) {
