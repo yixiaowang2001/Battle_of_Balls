@@ -20,7 +20,7 @@ public class CircleControl {
     }
 
     private void initialize() {
-        for (int i = 0; i < randInBound(); i++) {
+        for (int i = 0; i < 10000; i++) {
             Circle cir = new Circle(canvas);
             canvas.add(cir.getShape());
             circleList.add(cir);
