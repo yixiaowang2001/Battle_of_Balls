@@ -102,13 +102,13 @@ public class MainGame {
 
     private void inGame() {
 
-        canvas.animate(() -> {
-            if (isStart) {
-                pb.returnAC().getBallList().forEach(ball -> {
-                    ball.autoMove();
-                });
-            }
-        });
+        // canvas.animate(() -> {
+        //     if (isStart) {
+        //         pb.returnAC().getBallList().forEach(ball -> {
+        //             ball.autoMove();
+        //         });
+        //     }
+        // });
 
         canvas.onMouseMove(event -> {
             if (isStart) {

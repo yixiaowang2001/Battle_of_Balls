@@ -68,11 +68,10 @@ public class PlayerBall {
         Iterator<AIBall> itrBall = ac.getBallList().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
-            // ball.autoMove();
+            ball.autoMove();
             ball.getGraphics().moveBy(dx, dy);
             if (ballShape.getCenter().distance(ball.getCtr()) <= Math.abs(getDiameter() / 2 - ball.getRadius())) {
                 if (getDiameter() / 2 > ball.getRadius()) {
-                    // 把吃
                     System.out.println("牛逼！");
                     resizeBall(ball);
                     canvas.remove(ball.getGraphics());
