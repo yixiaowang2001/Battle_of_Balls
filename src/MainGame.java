@@ -102,6 +102,14 @@ public class MainGame {
 
     private void inGame() {
 
+        canvas.animate(() -> {
+            if (isStart) {
+                pb.returnAC().getBallList().forEach(ball -> {
+                    ball.autoMove();
+                });
+            }
+        });
+
         canvas.onMouseMove(event -> {
             if (isStart) {
                 updateBallSpeed();
@@ -112,6 +120,7 @@ public class MainGame {
                 if (event.getPosition() != canvas.getCenter()) {
                     double moveX = -cos * ballSpeed;
                     double moveY = -sin * ballSpeed;
+                    
                     isBound = false;
                     if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 + 5||
                             offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 - 5)) {
@@ -163,23 +172,23 @@ public class MainGame {
             double moveDisY = 0;
             if (boundSide.get(0) == 1) {
                 moveDisX = map.getGraphcs().getX() + pb.getDiameter() / 2 - 500;
-                pb.moveCir(-moveDisX, 0);
+                pb.returnCC().moveCir(-moveDisX, 0);
                 map.getGraphcs().moveBy(-moveDisX, 0);
                 offsetX -= moveDisX;
             } else if (boundSide.get(0) == 2) {
                 moveDisX = -9500 + pb.getDiameter() / 2 - map.getGraphcs().getX();
-                pb.moveCir(moveDisX, 0);
+                pb.returnCC().moveCir(moveDisX, 0);
                 map.getGraphcs().moveBy(moveDisX, 0);
                 offsetX += moveDisX;
             }
             if (boundSide.get(1) == 1) {
                 moveDisY = map.getGraphcs().getY() + pb.getDiameter() / 2 - 375;
-                pb.moveCir(0, -moveDisY);
+                pb.returnCC().moveCir(0, -moveDisY);
                 map.getGraphcs().moveBy(0, -moveDisY);
                 offsetY -= moveDisY;
             } else if (boundSide.get(1) == 2) {
                 moveDisY = -7125 + pb.getDiameter() / 2 - map.getGraphcs().getY();
-                pb.moveCir(0, moveDisY);
+                pb.returnCC().moveCir(0, moveDisY);
                 map.getGraphcs().moveBy(0, moveDisY);
                 offsetY += moveDisY;
             }

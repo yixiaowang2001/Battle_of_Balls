@@ -9,7 +9,8 @@ import java.awt.Color;
 public class AIBall {
     private Ellipse ballShape;
     private CanvasWindow canvas;
-    private double radius, moveSpeed;
+    private double radius, moveSpeed, randCos, randSin;
+    private int moveCount;
     private Color color;
 
     public AIBall(CanvasWindow canvas) {
@@ -18,6 +19,9 @@ public class AIBall {
         Point randPoint = createRandPos();
         color = createRandColor();
         moveSpeed = 0;
+        moveCount = 0;
+        randCos = 0;
+        randSin = 0;
         ballShape = new Ellipse(randPoint.getX(), randPoint.getY(), radius, radius);
         ballShape.setFillColor(color);
         ballShape.setStrokeColor(color.darker());
@@ -26,11 +30,20 @@ public class AIBall {
 
     public void autoMove() {
         updateBallSpeed();
-
+        Random rand = new Random();
+        if (moveCount == 0) {
+            randCos = -1 + 2 * rand.nextDouble();
+            randSin = -1 + 2 * rand.nextDouble();
+            ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+            moveCount = 500;
+        } else {
+            ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+            moveCount--;
+        }
     }
 
     private void updateBallSpeed() {
-        moveSpeed = 100 * 1 / (getRadius() * 2) + 0.8;
+        moveSpeed = 50 * 1 / (getRadius() * 2) + 1.6;
     }
 
     private Point createRandPos() {

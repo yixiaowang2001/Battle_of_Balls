@@ -57,18 +57,31 @@ public class PlayerBall {
             Circle cir = itrCir.next();
             cir.getGraphics().moveBy(dx, dy);
             if (ballShape.getCenter().distance(cir.getCtr()) <= ballShape.getHeight() / 2 + cir.getRadius()) {
+                resizeCir();
                 canvas.remove(cir.getGraphics());
                 itrCir.remove();
-                resizeCir();
             }
         }
     }
 
-    public void moveCir(double dx, double dy) {
-        Iterator<Circle> itrCir = cc.getCircleList().iterator();
-        while (itrCir.hasNext()) {
-            Circle cir = itrCir.next();
-            cir.getGraphics().moveBy(dx, dy);
+    public void collisionBall(double dx, double dy) {
+        Iterator<AIBall> itrBall = ac.getBallList().iterator();
+        while (itrBall.hasNext()) {
+            AIBall ball = itrBall.next();
+            // ball.autoMove();
+            ball.getGraphics().moveBy(dx, dy);
+            if (ballShape.getCenter().distance(ball.getCtr()) <= Math.abs(getDiameter() / 2 - ball.getRadius())) {
+                if (getDiameter() / 2 > ball.getRadius()) {
+                    // 把吃
+                    System.out.println("牛逼！");
+                    resizeBall(ball);
+                    canvas.remove(ball.getGraphics());
+                    itrBall.remove();
+                } else {
+                    // 被吃
+                    System.out.println("废物！");
+                }
+            }
         }
     }
 
@@ -78,28 +91,18 @@ public class PlayerBall {
         ballShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
     }
 
-    public void collisionBall(double dx, double dy) {
-        Iterator<AIBall> itrBall = ac.getBallList().iterator();
-        while (itrBall.hasNext()) {
-            AIBall ball = itrBall.next();
-            ball.getGraphics().moveBy(dx, dy);
-            if (ballShape.getCenter().distance(ball.getCtr()) <= Math.abs(getDiameter() / 2 - ball.getRadius())) {
-                if (getDiameter() / 2 > ball.getRadius()) {
-                    // 把吃
-                    System.out.println("牛逼！");
-                    canvas.remove(ball.getGraphics());
-                    itrBall.remove();
-                    // 球变大
-                } else {
-                    // 被吃
-                    System.out.println("废物！");
-                }
-            }
-        }
+    private void resizeBall(AIBall aiBall) {
+        double resizeRate = 1;
+        ballShape.setSize(ballShape.getWidth() + aiBall.getRadius() * resizeRate, ballShape.getWidth() + aiBall.getRadius() * resizeRate);
+        ballShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
     }
 
     public CircleControl returnCC() {
         return cc;
+    }
+
+    public AIBallControl returnAC() {
+        return ac;
     }
 
     public double getDiameter() {
