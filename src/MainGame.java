@@ -8,7 +8,7 @@ import edu.macalester.graphics.ui.Button;
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 750;
-    public double ballSpeed = 3;
+    public double ballSpeed = 4;
 
     private CanvasWindow canvas;
     private GameMap map;
@@ -69,6 +69,7 @@ public class MainGame {
 
         canvas.removeAll();
         graphicsGroup.removeAll();
+        isStart = false;
 
         window = new Image("Background.jpg");
         canvas.add(window);
