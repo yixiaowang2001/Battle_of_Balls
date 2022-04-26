@@ -34,6 +34,7 @@ public class AIBallControl {
         Iterator<AIBall> itrBall = ballList.iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
+            ball.autoMove();
             ball.getGraphics().moveBy(dx, dy);
         }
         
