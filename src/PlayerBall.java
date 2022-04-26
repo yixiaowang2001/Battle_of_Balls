@@ -20,7 +20,9 @@ public class PlayerBall {
 
     public PlayerBall(CanvasWindow canvas) {
         cc = new CircleControl(canvas);
+        cc.initialize();
         ac = new AIBallControl(canvas);
+        ac.initialize();
         this.canvas = canvas;
         speed = 0;
         create();

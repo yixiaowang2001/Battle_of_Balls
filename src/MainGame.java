@@ -15,6 +15,7 @@ public class MainGame {
     private GraphicsText scoreBoard1, gameOver, caption;
     private Image window;
     private PlayerBall pb;
+    private AIBall ai;
     private boolean isStart, isBound;
     private double offsetX, offsetY;
 
@@ -64,6 +65,10 @@ public class MainGame {
     private void createPB() {
         pb = new PlayerBall(canvas);
     }
+
+    private void creatAI() {
+        ai = new AIBall(canvas);
+    }
     private void resetGame() {
         isBound = false;
         offsetX = 0;
@@ -92,6 +97,7 @@ public class MainGame {
     private void startGame() {
         createMap();
         createPB();
+        creatAI();
         isStart = true;
     }
 
@@ -123,6 +129,9 @@ public class MainGame {
                     map.getGraphcs().moveBy(moveX, moveY);
                     pb.collisionCircle(moveX, moveY);
                     pb.collisionBall(moveX, moveY);
+                    ai.collisionAiBall(moveX, moveY);
+                    
+                    
 
                     ifHitBound();
 
@@ -202,6 +211,14 @@ public class MainGame {
             retList.set(1, 1);
         }
         return retList;
+    }
+
+    private void updateBallSpeed() {
+        ballSpeed = 100 * 1 / pb.getDiameter() + 0.8;
+    }
+
+    public PlayerBall getPb() {
+        return pb;
     }
 
     public static void main(String[] args) {

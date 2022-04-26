@@ -17,10 +17,10 @@ public class CircleControl {
     public CircleControl(CanvasWindow canvas) {
         this.canvas = canvas;
         circleList = new ArrayList<>();
-        initialize();
+        
     }
 
-    private void initialize() {
+    public void initialize() {
         for (int i = 0; i < 10000; i++) {
             Circle cir = new Circle(canvas);
             canvas.add(cir.getGraphics());

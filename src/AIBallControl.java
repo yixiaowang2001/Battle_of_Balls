@@ -14,10 +14,10 @@ public class AIBallControl {
     public AIBallControl(CanvasWindow canvas) {
         this.canvas = canvas;
         ballList = new ArrayList<>();
-        initialize();
+        
     }
 
-    private void initialize() {
+    public void initialize() {
         for (int i = 0; i < 200; i++) {
             AIBall ball = new AIBall(canvas);
             canvas.add(ball.getGraphics());
@@ -33,4 +33,6 @@ public class AIBallControl {
     public List<AIBall> getBallList() {
         return ballList;
     }
+
+    
 }
