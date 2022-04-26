@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -22,20 +23,27 @@ public class CircleControl {
     private void initialize() {
         for (int i = 0; i < 10000; i++) {
             Circle cir = new Circle(canvas);
-            canvas.add(cir.getShape());
+            canvas.add(cir.getGraphics());
             circleList.add(cir);
         }
     }
 
     public void controlNum(double offsetX, double offsetY) {
         if (circleList.size() < LOWER_BOUND) {
-            System.out.println("Control Num");
             for (int i = 0; i < randInBound() - circleList.size(); i++) {
                 Circle cir = new Circle(canvas);
-                cir.getShape().moveBy(offsetX, offsetY);
-                canvas.add(cir.getShape());
+                cir.getGraphics().moveBy(offsetX, offsetY);
+                canvas.add(cir.getGraphics());
                 circleList.add(cir);
             }
+        }
+    }
+
+    public void moveCir(double dx, double dy) {
+        Iterator<Circle> itrCir = circleList.iterator();
+        while (itrCir.hasNext()) {
+            Circle cir = itrCir.next();
+            cir.getGraphics().moveBy(dx, dy);
         }
     }
 

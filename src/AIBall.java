@@ -48,7 +48,7 @@ public class AIBall {
 
     private double createRandRadius() {
         Random rand = new Random();
-        double randR = 300 * (rand.nextDouble()) + 2 * Circle.CIRCLE_RAIDUS;
+        double randR = 150 * (rand.nextDouble()) + 2 * Circle.CIRCLE_RAIDUS;
         return randR;
     }
 
@@ -60,5 +60,7 @@ public class AIBall {
         return ballShape;
     }
 
-    
+    public Point getCtr() {
+        return ballShape.getCenter();
+    }
 }

@@ -42,11 +42,11 @@ public class Circle {
         return circleShape.getCenter();
     }
 
-    public Ellipse getShape() {
+    public Ellipse getGraphics() {
         return circleShape;
     }
 
-    public double getR() {
+    public double getRadius() {
         return CIRCLE_RAIDUS;
     }
 }

@@ -15,12 +15,13 @@ public class PlayerBall {
     private CanvasWindow canvas;
     private Ellipse circleShape;
     private CircleControl cc;
-    private AIBallManage aiBall;
+    private AIBallControl ac;
     private Boolean flag;
     private double resizeValue;
 
     public PlayerBall(CanvasWindow canvas) {
         cc = new CircleControl(canvas);
+        ac = new AIBallControl(canvas);
         this.canvas = canvas;
         create();
     }
@@ -51,16 +52,13 @@ public class PlayerBall {
     }
 
     public void collisionCircle(double dx, double dy) {
-
         Iterator<Circle> itrCir = cc.getCircleList().iterator();
         while (itrCir.hasNext()) {
             Circle cir = itrCir.next();
-            cir.getShape().moveBy(dx, dy);
-            if (circleShape.getCenter().distance(cir.getCtr()) <= circleShape.getHeight() / 2 + cir.getR()) {
-                canvas.remove(cir.getShape());
-                System.out.println("P3");
+            cir.getGraphics().moveBy(dx, dy);
+            if (circleShape.getCenter().distance(cir.getCtr()) <= circleShape.getHeight() / 2 + cir.getRadius()) {
+                canvas.remove(cir.getGraphics());
                 itrCir.remove();
-                System.out.println("Ball Size: " + getArea());
                 resizeCir();
             }
         }
@@ -70,7 +68,7 @@ public class PlayerBall {
         Iterator<Circle> itrCir = cc.getCircleList().iterator();
         while (itrCir.hasNext()) {
             Circle cir = itrCir.next();
-            cir.getShape().moveBy(dx, dy);
+            cir.getGraphics().moveBy(dx, dy);
         }
     }
 
@@ -80,12 +78,14 @@ public class PlayerBall {
         circleShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
     }
 
-    public void collisionBall() {
-        for (Point point : aiBall.aiBallPoint) {
-            if (Math.sqrt(Math.pow(point.getX() - circleShape.getX(), 2)
-                    + Math.pow(point.getY() - circleShape.getY(), 2)) <= (getDiameter() / 2
-                            + aiBall.getDiameter() / 2)) {
-                flag = true;
+    public void collisionBall(double dx, double dy) {
+        Iterator<AIBall> itrBall = ac.getBallList().iterator();
+        while (itrBall.hasNext()) {
+            AIBall ball = itrBall.next();
+            ball.getGraphics().moveBy(dx, dy);
+            if (circleShape.getCenter().distance(ball.getCtr()) <= circleShape.getHeight() / 2 - ball.getRadius()) {
+                canvas.remove(ball.getGraphics());
+                itrBall.remove();
             }
         }
     }

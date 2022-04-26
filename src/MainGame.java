@@ -18,7 +18,6 @@ public class MainGame {
     private GraphicsText scoreBoard1, gameOver, caption;
     private Image window;
     private PlayerBall pb;
-    private AIBallManage ai;
     private boolean isStart, isBound;
     private double offsetX, offsetY;
 
@@ -68,11 +67,6 @@ public class MainGame {
     private void createPB() {
         pb = new PlayerBall(canvas);
     }
-
-    private void createAI() {
-        ai = new AIBallManage(canvas);
-    }
-
     private void resetGame() {
 
         isBound = false;
@@ -102,7 +96,6 @@ public class MainGame {
     private void startGame() {
         createMap();
         createPB();
-        createAI();
         isStart = true;
     }
 
@@ -111,7 +104,6 @@ public class MainGame {
         canvas.onMouseMove(event -> {
             if (isStart) {
                 updateBallSpeed();
-                System.out.println(ballSpeed);
                 double cos = (event.getPosition().getX() - canvas.getCenter().getX())
                         / event.getPosition().distance(canvas.getCenter());
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
@@ -120,21 +112,22 @@ public class MainGame {
                     double moveX = -cos * ballSpeed;
                     double moveY = -sin * ballSpeed;
                     isBound = false;
-                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 ||
-                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2)) {
+                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 + 5||
+                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 - 5)) {
                         moveX = 0;
                         isBound = true;
                     }
-                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 ||
-                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2)) {
+                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 + 5||
+                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2 - 5)) {
                         moveY = 0;
                         isBound = true;
                     }
                     offsetX += moveX;
                     offsetY += moveY;
 
-                    pb.collisionCircle(moveX, moveY);
                     map.getGraphcs().moveBy(moveX, moveY);
+                    pb.collisionCircle(moveX, moveY);
+                    pb.collisionBall(moveX, moveY);
 
                     ifHitBound();
 
