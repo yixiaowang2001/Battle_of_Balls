@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.awt.Color;
 
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.ui.Button;
@@ -9,7 +7,6 @@ import edu.macalester.graphics.ui.Button;
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 750;
-    public double ballSpeed;
 
     private CanvasWindow canvas;
     private GameMap map;
@@ -68,11 +65,9 @@ public class MainGame {
         pb = new PlayerBall(canvas);
     }
     private void resetGame() {
-
         isBound = false;
         offsetX = 0;
         offsetY = 0;
-        ballSpeed = 0;
 
         canvas.removeAll();
         isStart = false;
@@ -101,17 +96,16 @@ public class MainGame {
     }
 
     private void inGame() {
-
         canvas.onMouseMove(event -> {
             if (isStart) {
-                updateBallSpeed();
+                pb.updateSpeed();
                 double cos = (event.getPosition().getX() - canvas.getCenter().getX())
                         / event.getPosition().distance(canvas.getCenter());
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
                         / event.getPosition().distance(canvas.getCenter());
                 if (event.getPosition() != canvas.getCenter()) {
-                    double moveX = -cos * ballSpeed;
-                    double moveY = -sin * ballSpeed;
+                    double moveX = -cos * pb.getSpeed();
+                    double moveY = -sin * pb.getSpeed();
                     isBound = false;
                     if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 + 5||
                             offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 - 5)) {
@@ -208,10 +202,6 @@ public class MainGame {
             retList.set(1, 1);
         }
         return retList;
-    }
-
-    private void updateBallSpeed() {
-        ballSpeed = 100 * 1 / pb.getDiameter() + 0.8;
     }
 
     public static void main(String[] args) {

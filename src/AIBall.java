@@ -1,54 +1,67 @@
+import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsObject;
+import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 import java.awt.Color;
 
 public class AIBall {
     private Ellipse ballShape;
+    private GraphicsText nameText;
     private CanvasWindow canvas;
     private double radius, moveSpeed, randCos, randSin;
     private int moveCount;
     private Color color;
+    private String name;
 
     public AIBall(CanvasWindow canvas) {
         this.canvas = canvas;
         radius = createRandRadius();
         Point randPoint = createRandPos();
         color = createRandColor();
+        name = createRandName();
         moveSpeed = 0;
         moveCount = 0;
         randCos = 0;
         randSin = 0;
+
         ballShape = new Ellipse(randPoint.getX(), randPoint.getY(), radius, radius);
         ballShape.setFillColor(color);
         ballShape.setStrokeColor(color.darker());
         ballShape.setStrokeWidth(5);
+
+        nameText = new GraphicsText(name);
+        
+        nameText.setFontSize(radius * 0.4);
+        nameText.setCenter(ballShape.getCenter());  
     }
 
     public void autoMove(double offsetX, double offsetY) {
         updateBound();
-        updateBallSpeed();
+        updateSpeed();
         Random rand = new Random();
         if (moveCount == 0) {
             randCos = -1 + 2 * rand.nextDouble();
             randSin = -1 + 2 * rand.nextDouble();
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+            nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             moveCount = 500;
         } else {
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+            nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             moveCount--;
         }
     }
 
     private void updateBound() {
-        
+
     }
 
-    private void updateBallSpeed() {
-        moveSpeed = 50 * 1 / (getRadius() * 2) + 1.6;
+    private void updateSpeed() {
+        moveSpeed = 100 * 1 / (getRadius() * 2) + 0.8;
     }
 
     private Point createRandPos() {
@@ -72,8 +85,21 @@ public class AIBall {
 
     private double createRandRadius() {
         Random rand = new Random();
-        double randR = 150 * (rand.nextDouble()) + 2 * Circle.CIRCLE_RAIDUS;
+        double randR = 100 * (rand.nextDouble()) + 5 * Circle.CIRCLE_RAIDUS;
         return randR;
+    }
+
+    private String createRandName() {
+        StringBuilder sb = new StringBuilder();
+        List<String> namelist = List.of("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+                "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+        Random rand = new Random();
+        int length = 3 + rand.nextInt(3);
+        for (int i = 0; i < length; i++) {
+            String str = namelist.get(rand.nextInt(namelist.size()));
+            sb.append(str);
+        }
+        return sb.toString();
     }
 
     public double getRadius() {
@@ -86,5 +112,9 @@ public class AIBall {
 
     public Point getCtr() {
         return ballShape.getCenter();
+    }
+
+    public GraphicsText getGraphicsName() {
+        return nameText;
     }
 }

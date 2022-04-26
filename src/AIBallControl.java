@@ -1,20 +1,15 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.Ellipse;
-import edu.macalester.graphics.Point;
 
 public class AIBallControl {
 
     private static final double CIRCLE_RAIDUS = 20;
     private CanvasWindow canvas;
-    private Ellipse circleShape;
     private Boolean flag;
     private List<AIBall> ballList;
+
 
     public AIBallControl(CanvasWindow canvas) {
         this.canvas = canvas;
@@ -26,6 +21,7 @@ public class AIBallControl {
         for (int i = 0; i < 200; i++) {
             AIBall ball = new AIBall(canvas);
             canvas.add(ball.getGraphics());
+            canvas.add(ball.getGraphicsName());
             ballList.add(ball);
         }
     }

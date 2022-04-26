@@ -1,5 +1,3 @@
-import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import java.util.Iterator;
@@ -12,6 +10,7 @@ import edu.macalester.graphics.Point;
 public class PlayerBall {
 
     private static final int CIRCLE_RAIDUS = 20;
+    private double speed;
     private CanvasWindow canvas;
     private Ellipse ballShape;
     private CircleControl cc;
@@ -23,6 +22,7 @@ public class PlayerBall {
         cc = new CircleControl(canvas);
         ac = new AIBallControl(canvas);
         this.canvas = canvas;
+        speed = 0;
         create();
     }
 
@@ -70,11 +70,13 @@ public class PlayerBall {
             AIBall ball = itrBall.next();
             ball.autoMove(0, 0);
             ball.getGraphics().moveBy(dx, dy);
+            ball.getGraphicsName().moveBy(dx, dy);
             if (ballShape.getCenter().distance(ball.getCtr()) <= Math.abs(getDiameter() / 2 - ball.getRadius())) {
                 if (getDiameter() / 2 > ball.getRadius()) {
                     System.out.println("牛逼！");
                     resizeBall(ball);
                     canvas.remove(ball.getGraphics());
+                    canvas.remove(ball.getGraphicsName());
                     itrBall.remove();
                 } else {
                     // 被吃
@@ -91,9 +93,17 @@ public class PlayerBall {
     }
 
     private void resizeBall(AIBall aiBall) {
-        double resizeRate = 1;
-        ballShape.setSize(ballShape.getWidth() + aiBall.getRadius() * resizeRate, ballShape.getWidth() + aiBall.getRadius() * resizeRate);
+        ballShape.setSize(Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(aiBall.getRadius(), 2)),
+                Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(aiBall.getRadius(), 2)));
         ballShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
+    }
+
+    public void updateSpeed() {
+        speed = 100 * 1 / ballShape.getHeight() + 0.8;
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 
     public CircleControl returnCC() {
