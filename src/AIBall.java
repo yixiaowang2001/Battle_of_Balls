@@ -28,7 +28,8 @@ public class AIBall {
         ballShape.setStrokeWidth(5);
     }
 
-    public void autoMove() {
+    public void autoMove(double offsetX, double offsetY) {
+        updateBound();
         updateBallSpeed();
         Random rand = new Random();
         if (moveCount == 0) {
@@ -40,6 +41,10 @@ public class AIBall {
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             moveCount--;
         }
+    }
+
+    private void updateBound() {
+        
     }
 
     private void updateBallSpeed() {

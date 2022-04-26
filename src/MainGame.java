@@ -102,13 +102,13 @@ public class MainGame {
 
     private void inGame() {
 
-        // canvas.animate(() -> {
-        //     if (isStart) {
-        //         pb.returnAC().getBallList().forEach(ball -> {
-        //             ball.autoMove();
-        //         });
-        //     }
-        // });
+        canvas.animate(() -> {
+            if (isStart) {
+                pb.returnAC().getBallList().forEach(ball -> {
+                    ball.autoMove(offsetX, offsetY);
+                });
+            }
+        });
 
         canvas.onMouseMove(event -> {
             if (isStart) {
@@ -120,7 +120,6 @@ public class MainGame {
                 if (event.getPosition() != canvas.getCenter()) {
                     double moveX = -cos * ballSpeed;
                     double moveY = -sin * ballSpeed;
-                    
                     isBound = false;
                     if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 + 5||
                             offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 - 5)) {
