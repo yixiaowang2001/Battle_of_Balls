@@ -17,7 +17,6 @@ public class MainGame {
     private int score;
     private GraphicsText scoreBoard1, gameOver, caption;
     private Image window;
-    private GraphicsGroup graphicsGroup;
     private PlayerBall pb;
     private boolean isStart, isBound;
     private double offsetX, offsetY;
@@ -30,7 +29,6 @@ public class MainGame {
         menu = new Button("Back to Menu");
         start = new Button("New Game");
         quit = new Button("Quit");
-        graphicsGroup = new GraphicsGroup();
         isStart = false;
         resetGame();
 
@@ -63,9 +61,7 @@ public class MainGame {
     private void createMap() {
         map = new GameMap();
         canvas.add(map.getGraphcs());
-        // graphicsGroup.add(map.getGraphcs());
         map.getGraphcs().setCenter(0.5 * CANVAS_WIDTH, 0.5 * CANVAS_HEIGHT);
-        // canvas.add(graphicsGroup);
     }
 
     private void createPB() {
@@ -78,7 +74,6 @@ public class MainGame {
         offsetX = 0;
         offsetY = 0;
 
-        // graphicsGroup.removeAll();
         canvas.removeAll();
         isStart = false;
 
@@ -109,6 +104,8 @@ public class MainGame {
 
         canvas.onMouseMove(event -> {
             if (isStart) {
+                updateBallSpeed();
+                System.out.println(ballSpeed);
                 double cos = (event.getPosition().getX() - canvas.getCenter().getX())
                         / event.getPosition().distance(canvas.getCenter());
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
@@ -132,7 +129,6 @@ public class MainGame {
 
                     pb.collisionCircle(moveX, moveY);
                     map.getGraphcs().moveBy(moveX, moveY);
-                    System.out.println(map.getGraphcs().getX());
 
                     ifHitBound();
 
@@ -212,6 +208,10 @@ public class MainGame {
             retList.set(1, 1);
         }
         return retList;
+    }
+
+    private void updateBallSpeed() {
+        ballSpeed = 150 * 1 / pb.getDiameter() + 0.8;
     }
 
     public static void main(String[] args) {

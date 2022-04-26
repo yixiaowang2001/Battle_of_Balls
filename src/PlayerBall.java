@@ -12,7 +12,6 @@ import edu.macalester.graphics.Point;
 public class PlayerBall {
 
     private static final int CIRCLE_RAIDUS = 20;
-    private static final double RESIZE_CIR = 0.5;
     private CanvasWindow canvas;
     private Ellipse circleShape;
     private CircleControl cc;
