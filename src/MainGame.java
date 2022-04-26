@@ -9,7 +9,7 @@ import edu.macalester.graphics.ui.Button;
 public class MainGame {
     public static final int CANVAS_WIDTH = 1000;
     public static final int CANVAS_HEIGHT = 750;
-    public double ballSpeed = 7;
+    public double ballSpeed;
 
     private CanvasWindow canvas;
     private GameMap map;
@@ -72,6 +72,7 @@ public class MainGame {
         isBound = false;
         offsetX = 0;
         offsetY = 0;
+        ballSpeed = 0;
 
         canvas.removeAll();
         isStart = false;
@@ -210,7 +211,7 @@ public class MainGame {
     }
 
     private void updateBallSpeed() {
-        ballSpeed = 150 * 1 / pb.getDiameter() + 0.8;
+        ballSpeed = 100 * 1 / pb.getDiameter() + 0.8;
     }
 
     public static void main(String[] args) {

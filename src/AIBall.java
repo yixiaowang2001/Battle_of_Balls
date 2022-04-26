@@ -53,7 +53,7 @@ public class AIBall {
     }
 
     public double getRadius() {
-        return radius;
+        return ballShape.getHeight() / 2;
     }
 
     public GraphicsObject getGraphics() {

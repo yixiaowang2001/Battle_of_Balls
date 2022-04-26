@@ -13,7 +13,7 @@ public class PlayerBall {
 
     private static final int CIRCLE_RAIDUS = 20;
     private CanvasWindow canvas;
-    private Ellipse circleShape;
+    private Ellipse ballShape;
     private CircleControl cc;
     private AIBallControl ac;
     private Boolean flag;
@@ -29,11 +29,11 @@ public class PlayerBall {
     public void create() {
         Color randColor = createRandColor();
         Point startPoint = new Point(canvas.getWidth() * 0.5 - CIRCLE_RAIDUS, canvas.getHeight() * 0.5 - CIRCLE_RAIDUS);
-        circleShape = new Ellipse(startPoint.getX(), startPoint.getY(), CIRCLE_RAIDUS * 2, CIRCLE_RAIDUS * 2);
-        circleShape.setFillColor(randColor);
-        circleShape.setStrokeColor(randColor.darker());
-        circleShape.setStrokeWidth(5);
-        canvas.add(circleShape);
+        ballShape = new Ellipse(startPoint.getX(), startPoint.getY(), CIRCLE_RAIDUS * 2, CIRCLE_RAIDUS * 2);
+        ballShape.setFillColor(randColor);
+        ballShape.setStrokeColor(randColor.darker());
+        ballShape.setStrokeWidth(5);
+        canvas.add(ballShape);
     }
 
     public Color createRandColor() {
@@ -46,7 +46,7 @@ public class PlayerBall {
 
     private void resizeAIBall() {
         if (flag) {
-            circleShape.setSize(circleShape.getWidth() + 10, circleShape.getHeight() + 10);
+            ballShape.setSize(ballShape.getWidth() + 10, ballShape.getHeight() + 10);
             flag = false;
         }
     }
@@ -56,7 +56,7 @@ public class PlayerBall {
         while (itrCir.hasNext()) {
             Circle cir = itrCir.next();
             cir.getGraphics().moveBy(dx, dy);
-            if (circleShape.getCenter().distance(cir.getCtr()) <= circleShape.getHeight() / 2 + cir.getRadius()) {
+            if (ballShape.getCenter().distance(cir.getCtr()) <= ballShape.getHeight() / 2 + cir.getRadius()) {
                 canvas.remove(cir.getGraphics());
                 itrCir.remove();
                 resizeCir();
@@ -73,9 +73,9 @@ public class PlayerBall {
     }
 
     private void resizeCir() {
-        circleShape.setSize(Math.sqrt(Math.pow(circleShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
-                Math.sqrt(Math.pow(circleShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
-        circleShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
+        ballShape.setSize(Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
+                Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
+        ballShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
     }
 
     public void collisionBall(double dx, double dy) {
@@ -83,9 +83,17 @@ public class PlayerBall {
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
             ball.getGraphics().moveBy(dx, dy);
-            if (circleShape.getCenter().distance(ball.getCtr()) <= circleShape.getHeight() / 2 - ball.getRadius()) {
-                canvas.remove(ball.getGraphics());
-                itrBall.remove();
+            if (ballShape.getCenter().distance(ball.getCtr()) <= Math.abs(getDiameter() / 2 - ball.getRadius())) {
+                if (getDiameter() / 2 > ball.getRadius()) {
+                    // 把吃
+                    System.out.println("牛逼！");
+                    canvas.remove(ball.getGraphics());
+                    itrBall.remove();
+                    // 球变大
+                } else {
+                    // 被吃
+                    System.out.println("废物！");
+                }
             }
         }
     }
@@ -95,11 +103,11 @@ public class PlayerBall {
     }
 
     public double getDiameter() {
-        return circleShape.getHeight();
+        return ballShape.getHeight();
     }
 
     public double getArea() {
-        return Math.PI * Math.pow(circleShape.getHeight(), 2);
+        return Math.PI * Math.pow(ballShape.getHeight(), 2);
     }
 
     public double getResizeVal() {
