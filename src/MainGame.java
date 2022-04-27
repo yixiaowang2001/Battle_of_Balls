@@ -125,11 +125,13 @@ public class MainGame {
                             offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 - 5)) {
                         moveX = 0;
                         isBound = true;
+                        System.out.println("X好碰！");
                     }
                     if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 + 5||
                             offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2 - 5)) {
                         moveY = 0;
                         isBound = true;
+                        System.out.println("Y好碰！");
                     }
                     offsetX += moveX;
                     offsetY += moveY;
@@ -138,8 +140,6 @@ public class MainGame {
                     pb.collisionCircle(moveX, moveY, cc);
                     pb.collisionBall(moveX, moveY, ac);
                     ai.collisionAiBall(ac);
-                    
-                    
 
                     ifHitBound();
 
