@@ -124,17 +124,15 @@ public class MainGame {
                     double moveX = -cos * pb.getSpeed();
                     double moveY = -sin * pb.getSpeed();
                     isBound = false;
-                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 + 5 ||
-                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 - 5)) {
+                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2||
+                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2)) {
                         moveX = 0;
                         isBound = true;
-                        System.out.println("X好碰！");
                     }
-                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 + 5 ||
-                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2 - 5)) {
+                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2||
+                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2)) {
                         moveY = 0;
                         isBound = true;
-                        System.out.println("Y好碰！");
                     }
                     offsetX += moveX;
                     offsetY += moveY;
@@ -145,7 +143,6 @@ public class MainGame {
                     ai.collisionAiBall(ac);
 
                     ifHitBound();
-
                     cc.controlNum(offsetX, offsetY);
                 }
             }
@@ -211,14 +208,14 @@ public class MainGame {
         List<Integer> retList = new ArrayList<>();
         retList.add(0);
         retList.add(0);
-        if (map.getGraphcs().getX() - (-9500) < pb.getDiameter() / 2) {
+        if (map.getGraphcs().getX() - (-9500) < pb.getDiameter()) {
             retList.set(0, 2);
-        } else if (500 - map.getGraphcs().getX() < pb.getDiameter() / 2) {
+        } else if (500 - map.getGraphcs().getX() < pb.getDiameter()) {
             retList.set(0, 1);
         }
-        if (map.getGraphcs().getY() - (-7125) < pb.getDiameter() / 2) {
+        if (map.getGraphcs().getY() - (-7125) < pb.getDiameter()) {
             retList.set(1, 2);
-        } else if (375 - map.getGraphcs().getY() < pb.getDiameter() / 2) {
+        } else if (375 - map.getGraphcs().getY() < pb.getDiameter()) {
             retList.set(1, 1);
         }
         return retList;
