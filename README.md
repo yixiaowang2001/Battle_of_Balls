@@ -16,3 +16,16 @@
 待讨论：
 + 是否要用animate
 + Player Ball吃AI Ball的增长速率
+
+Presentation
++ Classes created
+  + 用思维导图来解释class之间的内容和关系
++ Data structure
+  + ArrayList
+    + 作用：用来存储所有小球；用来存储所有AI Ball
+    + 我们需要可以很快速的遍历这个数据结构，同时删减特定元素的速度相对较快，所以选择ArrayList
+  + PriorityQueue
+    + 作用：记分板
+    + 我们需要对所有Ball进行排序展现，同时进入数据需要随时排序
++ Demo to show functionality
+  + 一个加速过的视频

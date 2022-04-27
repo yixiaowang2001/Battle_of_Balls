@@ -13,7 +13,7 @@ public class AIBall extends Ball {
     private Ellipse ballShape;
     private GraphicsText nameText;
     private CanvasWindow canvas;
-    private double radius, moveSpeed, randCos, randSin;
+    private double radius, moveSpeed, randCos, randSin, nextX, nextY;
     private int moveCount;
     private Color color;
     private String name;
@@ -28,6 +28,8 @@ public class AIBall extends Ball {
         moveCount = 0;
         randCos = 0;
         randSin = 0;
+        nextX = Double.MAX_VALUE;
+        nextY = Double.MAX_VALUE;
 
         ballShape = new Ellipse(randPoint.getX(), randPoint.getY(), radius, radius);
         ballShape.setFillColor(color);
@@ -42,12 +44,15 @@ public class AIBall extends Ball {
     }
 
     public void autoMove(double offsetX, double offsetY) {
-        updateBound();
         updateSpeed();
         Random rand = new Random();
+        double ballX = ballShape.getCenter().getX();
+        double ballY = ballShape.getCenter().getY();
         if (moveCount == 0) {
             randCos = -1 + 2 * rand.nextDouble();
             randSin = -1 + 2 * rand.nextDouble();
+            nextX = ballX - randCos * moveSpeed;
+            nextY = ballY - randSin * moveSpeed;
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             moveCount = 500;
@@ -58,8 +63,41 @@ public class AIBall extends Ball {
         }
     }
 
-    private void updateBound() {
+    // public void autoMove(double offsetX, double offsetY) {
+    //     updateSpeed();
+    //     Random rand = new Random();
+    //     double ballX = ballShape.getCenter().getX();
+    //     double ballY = ballShape.getCenter().getY();
+    //     if (moveCount == 0) {
+    //         while (!testBound(offsetX, offsetY, 50, nextX, nextY)) {
+    //             System.out.println("你在写锤子");
+    //             randCos = -1 + 2 * rand.nextDouble();
+    //             randSin = -1 + 2 * rand.nextDouble();
+    //             nextX = ballX - randCos * moveSpeed;
+    //             nextY = ballY - randSin * moveSpeed;
+    //         }
+    //         ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+    //         nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+    //         moveCount = 500;
+    //     } else {
+    //         while (!testBound(offsetX, offsetY, 0, nextX, nextY)) {
+    //             randCos = -1 + 2 * rand.nextDouble();
+    //             randSin = -1 + 2 * rand.nextDouble();
+    //             nextX = ballX - randCos * moveSpeed;
+    //             nextY = ballY - randSin * moveSpeed;
+    //         }
+    //         ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+    //         nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+    //         moveCount--;
+    //     }
+    // }
 
+    private boolean testBound(double offsetX, double offsetY, double margin, double nextX, double nextY) {
+        double leftX = canvas.getCenter().getX() + offsetX - canvas.getWidth() * 10 / 2 + margin - radius;
+        double rightX = canvas.getCenter().getX() + offsetX + canvas.getWidth() * 10 / 2 - margin + radius;
+        double upY = canvas.getCenter().getY() + offsetY - canvas.getHeight() * 10 / 2 + margin - radius;
+        double lowY = canvas.getCenter().getY() + offsetY + canvas.getHeight() * 10 / 2 - margin + radius;
+        return (nextX > rightX && nextX < leftX) && (nextY > lowY && nextY < upY) ? true : false;
     }
 
     private void updateSpeed() {
