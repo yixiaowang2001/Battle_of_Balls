@@ -18,7 +18,7 @@ public class AIBallControl {
     }
 
     public void initialize() {
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 500; i++) {
             AIBall ball = new AIBall(canvas);
             canvas.add(ball.getGraphics());
             canvas.add(ball.getGraphicsName());

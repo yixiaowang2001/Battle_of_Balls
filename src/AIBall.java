@@ -17,9 +17,6 @@ public class AIBall {
     private int moveCount;
     private Color color;
     private String name;
-    private PlayerBall playerBall;
-    private AIBallControl ac;
-    private CircleControl cc;
 
     public AIBall(CanvasWindow canvas) {
         this.canvas = canvas;
@@ -42,8 +39,7 @@ public class AIBall {
         nameText.setFontSize(radius * 0.4);
         nameText.setCenter(ballShape.getCenter());  
         
-        ac = playerBall.returnAC();
-        cc = playerBall.returnCC();
+        
     }
 
     public void autoMove(double offsetX, double offsetY) {
@@ -107,33 +103,29 @@ public class AIBall {
             sb.append(str);
         }
         return sb.toString();
-    public void collisionAiBall(double dx, double dy) {
+    }
+    public void collisionAiBall(AIBallControl ac) {
         Iterator<AIBall> itrBall = ac.getBallList().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
-            ball.autoMove(0, 0);
-            ball.getGraphics().moveBy(dx, dy);
             if (ballShape.getCenter().distance(ball.getCtr()) <= Math.abs(getRadius() - ball.getRadius())) {
                 if (getRadius() > ball.getRadius()) {
-                    resizeBall(ball.getBall(), true);
+                    System.out.println("x");
+                    resizeBall(ball.getBall());
                     canvas.remove(ball.getGraphics());
+                    canvas.remove(ball.getGraphicsName());
                     itrBall.remove();
-                } else {
-                    // 被吃
-                    resizeBall(ballShape, false);
-                    canvas.remove(ballShape);
-                }
+                    
+                } 
             }
         }
     }
 
-    private void resizeBall(Ellipse otherBall, boolean flag) {
+    private void resizeBall(Ellipse otherBall) {
         double resizeRate = 1;
-        if (flag) {
+
             ballShape.setSize(ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate, ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate);
-        }else{
-            otherBall.setSize(otherBall.getWidth() + ballShape.getHeight() / 2 * resizeRate, otherBall.getWidth() + ballShape.getHeight() / 2 * resizeRate);
-        }
+
         
     }
 

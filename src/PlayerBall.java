@@ -13,16 +13,12 @@ public class PlayerBall {
     private double speed;
     private CanvasWindow canvas;
     private Ellipse ballShape;
-    private CircleControl cc;
-    private AIBallControl ac;
     private Boolean flag;
     private double resizeValue;
 
     public PlayerBall(CanvasWindow canvas) {
-        cc = new CircleControl(canvas);
-        cc.initialize();
-        ac = new AIBallControl(canvas);
-        ac.initialize();
+        
+        
         this.canvas = canvas;
         speed = 0;
         create();
@@ -53,7 +49,7 @@ public class PlayerBall {
         }
     }
 
-    public void collisionCircle(double dx, double dy) {
+    public void collisionCircle(double dx, double dy, CircleControl cc) {
         Iterator<Circle> itrCir = cc.getCircleList().iterator();
         while (itrCir.hasNext()) {
             Circle cir = itrCir.next();
@@ -66,7 +62,7 @@ public class PlayerBall {
         }
     }
 
-    public void collisionBall(double dx, double dy) {
+    public void collisionBall(double dx, double dy, AIBallControl ac) {
         Iterator<AIBall> itrBall = ac.getBallList().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
@@ -108,13 +104,13 @@ public class PlayerBall {
         return speed;
     }
 
-    public CircleControl returnCC() {
-        return cc;
-    }
+    // public CircleControl returnCC() {
+    //     return cc;
+    // }
 
-    public AIBallControl returnAC() {
-        return ac;
-    }
+    // public AIBallControl returnAC() {
+    //     return ac;
+    // }
 
     public double getDiameter() {
         return ballShape.getHeight();

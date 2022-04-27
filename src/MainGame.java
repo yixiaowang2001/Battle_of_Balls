@@ -17,7 +17,9 @@ public class MainGame {
     private PlayerBall pb;
     private AIBall ai;
     private boolean isStart, isBound;
-    private double offsetX, offsetY;
+    private double offsetX, offsetY, ballSpeed;
+    private AIBallControl ac;
+    private CircleControl cc;
 
     public MainGame() {
         canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -63,10 +65,16 @@ public class MainGame {
     }
 
     private void createPB() {
+        
+        cc = new CircleControl(canvas);
+        cc.initialize();
         pb = new PlayerBall(canvas);
     }
 
     private void creatAI() {
+        ac = new AIBallControl(canvas);
+        ac.initialize();
+
         ai = new AIBall(canvas);
     }
     private void resetGame() {
@@ -127,15 +135,15 @@ public class MainGame {
                     offsetY += moveY;
 
                     map.getGraphcs().moveBy(moveX, moveY);
-                    pb.collisionCircle(moveX, moveY);
-                    pb.collisionBall(moveX, moveY);
-                    ai.collisionAiBall(moveX, moveY);
+                    pb.collisionCircle(moveX, moveY, cc);
+                    pb.collisionBall(moveX, moveY, ac);
+                    ai.collisionAiBall(ac);
                     
                     
 
                     ifHitBound();
 
-                    pb.returnCC().controlNum(offsetX, offsetY);
+                    cc.controlNum(offsetX, offsetY);
                 }
             }
         });
@@ -166,23 +174,23 @@ public class MainGame {
             double moveDisY = 0;
             if (boundSide.get(0) == 1) {
                 moveDisX = map.getGraphcs().getX() + pb.getDiameter() / 2 - 500;
-                pb.returnCC().moveCir(-moveDisX, 0);
+                cc.moveCir(-moveDisX, 0);
                 map.getGraphcs().moveBy(-moveDisX, 0);
                 offsetX -= moveDisX;
             } else if (boundSide.get(0) == 2) {
                 moveDisX = -9500 + pb.getDiameter() / 2 - map.getGraphcs().getX();
-                pb.returnCC().moveCir(moveDisX, 0);
+                cc.moveCir(moveDisX, 0);
                 map.getGraphcs().moveBy(moveDisX, 0);
                 offsetX += moveDisX;
             }
             if (boundSide.get(1) == 1) {
                 moveDisY = map.getGraphcs().getY() + pb.getDiameter() / 2 - 375;
-                pb.returnCC().moveCir(0, -moveDisY);
+                cc.moveCir(0, -moveDisY);
                 map.getGraphcs().moveBy(0, -moveDisY);
                 offsetY -= moveDisY;
             } else if (boundSide.get(1) == 2) {
                 moveDisY = -7125 + pb.getDiameter() / 2 - map.getGraphcs().getY();
-                pb.returnCC().moveCir(0, moveDisY);
+                cc.moveCir(0, moveDisY);
                 map.getGraphcs().moveBy(0, moveDisY);
                 offsetY += moveDisY;
             }
