@@ -1,7 +1,7 @@
 import java.util.Random;
 
 import java.util.Iterator;
-
+import java.util.PriorityQueue;
 import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
@@ -68,7 +68,7 @@ public class PlayerBall extends Ball {
             ball.autoMove(0, 0);
             ball.getGraphics().moveBy(dx, dy);
             ball.getGraphicsName().moveBy(dx, dy);
-            if (ballShape.getCenter().distance(ball.getCtr()) <= Math.abs(getDiameter() / 2 - ball.getRadius())) {
+            if (isCollision(ballShape.getCenter(), ball.getCtr(), getDiameter() / 2, ball.getRadius(), 0.85)) {
                 if (getDiameter() / 2 > ball.getRadius()) {
                     System.out.println("牛逼！");
                     resizeBall(ball);
@@ -81,6 +81,21 @@ public class PlayerBall extends Ball {
                 }
             }
         }
+    }
+
+    private boolean isCollision(Point ctr1, Point ctr2, double r1, double r2, double rate) {
+        double dis = ctr1.distance(ctr2);
+        PriorityQueue<Double> pq = new PriorityQueue<>();
+        pq.add(r1);
+        pq.add(r2);
+        double r = pq.poll();
+        double R = pq.poll();
+        if (r / R <= rate) {
+            if (dis <= R) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void resizeCir() {

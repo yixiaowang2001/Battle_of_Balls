@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -55,7 +56,7 @@ public class AIBall extends Ball {
             nextY = ballY - randSin * moveSpeed;
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
-            moveCount = 500;
+            moveCount = rand.nextInt(300) + 300;
         } else {
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
@@ -146,7 +147,7 @@ public class AIBall extends Ball {
         Iterator<AIBall> itrBall = ac.getBallList().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
-            if (ballShape.getCenter().distance(ball.getCtr()) <= Math.abs(getRadius() - ball.getRadius())) {
+            if (isCollision(ballShape.getCenter(), ball.getCtr(), getRadius(), ball.getRadius(), 0.85)) {
                 if (getRadius() > ball.getRadius()) {
                     System.out.println("x");
                     resizeBall(ball.getBall());
@@ -157,6 +158,21 @@ public class AIBall extends Ball {
                 }
             }
         }
+    }
+
+    private boolean isCollision(Point ctr1, Point ctr2, double r1, double r2, double rate) {
+        double dis = ctr1.distance(ctr2);
+        PriorityQueue<Double> pq = new PriorityQueue<>();
+        pq.add(r1);
+        pq.add(r2);
+        double r = pq.poll();
+        double R = pq.poll();
+        if (r / R <= rate) {
+            if (dis <= R + r) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void resizeBall(Ellipse otherBall) {

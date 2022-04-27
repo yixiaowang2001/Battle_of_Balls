@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.Point;
 
 public class AIBallControl {
     private CanvasWindow canvas;
@@ -14,13 +16,14 @@ public class AIBallControl {
     }
 
     public void initialize() {
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 200; i++) {
             AIBall ball = new AIBall(canvas);
             canvas.add(ball.getGraphics());
             canvas.add(ball.getGraphicsName());
             ballList.add(ball);
         }
     }
+
 
     private void resize() {
 
