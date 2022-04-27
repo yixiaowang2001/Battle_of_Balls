@@ -17,7 +17,7 @@ public class CircleControl {
     public CircleControl(CanvasWindow canvas) {
         this.canvas = canvas;
         circleList = new ArrayList<>();
-        
+
     }
 
     public void initialize() {

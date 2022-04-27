@@ -9,7 +9,7 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 import java.awt.Color;
 
-public class AIBall {
+public class AIBall extends Ball {
     private Ellipse ballShape;
     private GraphicsText nameText;
     private CanvasWindow canvas;
@@ -35,11 +35,10 @@ public class AIBall {
         ballShape.setStrokeWidth(5);
 
         nameText = new GraphicsText(name);
-        
+
         nameText.setFontSize(radius * 0.4);
-        nameText.setCenter(ballShape.getCenter());  
-        
-        
+        nameText.setCenter(ballShape.getCenter());
+
     }
 
     public void autoMove(double offsetX, double offsetY) {
@@ -104,6 +103,7 @@ public class AIBall {
         }
         return sb.toString();
     }
+
     public void collisionAiBall(AIBallControl ac) {
         Iterator<AIBall> itrBall = ac.getBallList().iterator();
         while (itrBall.hasNext()) {
@@ -115,8 +115,8 @@ public class AIBall {
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
                     itrBall.remove();
-                    
-                } 
+
+                }
             }
         }
     }
@@ -124,9 +124,9 @@ public class AIBall {
     private void resizeBall(Ellipse otherBall) {
         double resizeRate = 1;
 
-            ballShape.setSize(ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate, ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate);
+        ballShape.setSize(ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate,
+                ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate);
 
-        
     }
 
     private Ellipse getBall() {

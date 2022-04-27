@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.ui.Button;
@@ -11,15 +12,16 @@ public class MainGame {
     private CanvasWindow canvas;
     private GameMap map;
     private Button start, menu, quit;
-    private int score;
-    private GraphicsText scoreBoard1, gameOver, caption;
+    private int rank;
+    private GraphicsText scoreBoard, gameOver, caption;
     private Image window;
     private PlayerBall pb;
     private AIBall ai;
     private boolean isStart, isBound;
-    private double offsetX, offsetY, ballSpeed;
+    private double offsetX, offsetY;
     private AIBallControl ac;
     private CircleControl cc;
+    private Queue<Ball> rankQueue;
 
     public MainGame() {
         canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -65,7 +67,7 @@ public class MainGame {
     }
 
     private void createPB() {
-        
+
         cc = new CircleControl(canvas);
         cc.initialize();
         pb = new PlayerBall(canvas);
@@ -77,6 +79,7 @@ public class MainGame {
 
         ai = new AIBall(canvas);
     }
+
     private void resetGame() {
         isBound = false;
         offsetX = 0;
@@ -99,7 +102,7 @@ public class MainGame {
         canvas.add(quit);
         quit.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.8875);
 
-        score = 0;
+        rank = 0;
     }
 
     private void startGame() {
@@ -121,12 +124,12 @@ public class MainGame {
                     double moveX = -cos * pb.getSpeed();
                     double moveY = -sin * pb.getSpeed();
                     isBound = false;
-                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 + 5||
+                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 + 5 ||
                             offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 - 5)) {
                         moveX = 0;
                         isBound = true;
                     }
-                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 + 5||
+                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 + 5 ||
                             offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2 - 5)) {
                         moveY = 0;
                         isBound = true;
@@ -138,8 +141,6 @@ public class MainGame {
                     pb.collisionCircle(moveX, moveY, cc);
                     pb.collisionBall(moveX, moveY, ac);
                     ai.collisionAiBall(ac);
-                    
-                    
 
                     ifHitBound();
 
@@ -155,7 +156,7 @@ public class MainGame {
     private void endGame() {
         isStart = false;
 
-        gameOver = new GraphicsText("Game Over! Your score is: " + (int)pb.getArea());
+        gameOver = new GraphicsText("Game Over! Your score is: " + (int) pb.getArea());
         gameOver.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.05);
         gameOver.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.45);
         canvas.add(gameOver);
@@ -202,7 +203,7 @@ public class MainGame {
      * ball. 0 represents no collision, 1 represents the left one or upper one, and
      * 2 represents the right one or bottom one.
      * 
-     * @return 
+     * @return
      */
     private List<Integer> boundWhere() {
         List<Integer> retList = new ArrayList<>();
@@ -219,10 +220,6 @@ public class MainGame {
             retList.set(1, 1);
         }
         return retList;
-    }
-
-    private void updateBallSpeed() {
-        ballSpeed = 100 * 1 / pb.getDiameter() + 0.8;
     }
 
     public PlayerBall getPb() {

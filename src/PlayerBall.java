@@ -7,7 +7,7 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.Point;
 
-public class PlayerBall {
+public class PlayerBall extends Ball {
 
     private static final int CIRCLE_RAIDUS = 20;
     private double speed;
@@ -17,8 +17,7 @@ public class PlayerBall {
     private double resizeValue;
 
     public PlayerBall(CanvasWindow canvas) {
-        
-        
+
         this.canvas = canvas;
         speed = 0;
         create();
@@ -105,11 +104,11 @@ public class PlayerBall {
     }
 
     // public CircleControl returnCC() {
-    //     return cc;
+    // return cc;
     // }
 
     // public AIBallControl returnAC() {
-    //     return ac;
+    // return ac;
     // }
 
     public double getDiameter() {

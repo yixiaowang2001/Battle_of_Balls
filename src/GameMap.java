@@ -11,7 +11,6 @@ public class GameMap {
             setStrokeColor(color);
             setStrokeWidth(1);
         }
-
     }
 
     public static final int MAP_WIDTH = 10 * MainGame.CANVAS_WIDTH;
