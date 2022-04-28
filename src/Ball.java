@@ -1,5 +1,5 @@
-public class Ball {
-    public Ball() {
-        
-    }
+public interface Ball {
+    public double getRadius();
+
+    public String getName();
 }

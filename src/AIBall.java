@@ -10,7 +10,7 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 import java.awt.Color;
 
-public class AIBall extends Ball {
+public class AIBall implements Ball {
     private Ellipse ballShape;
     private GraphicsText nameText;
     private CanvasWindow canvas;
@@ -65,32 +65,32 @@ public class AIBall extends Ball {
     }
 
     // public void autoMove(double offsetX, double offsetY) {
-    //     updateSpeed();
-    //     Random rand = new Random();
-    //     double ballX = ballShape.getCenter().getX();
-    //     double ballY = ballShape.getCenter().getY();
-    //     if (moveCount == 0) {
-    //         while (!testBound(offsetX, offsetY, 50, nextX, nextY)) {
-    //             System.out.println("你在写锤子");
-    //             randCos = -1 + 2 * rand.nextDouble();
-    //             randSin = -1 + 2 * rand.nextDouble();
-    //             nextX = ballX - randCos * moveSpeed;
-    //             nextY = ballY - randSin * moveSpeed;
-    //         }
-    //         ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
-    //         nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
-    //         moveCount = 500;
-    //     } else {
-    //         while (!testBound(offsetX, offsetY, 0, nextX, nextY)) {
-    //             randCos = -1 + 2 * rand.nextDouble();
-    //             randSin = -1 + 2 * rand.nextDouble();
-    //             nextX = ballX - randCos * moveSpeed;
-    //             nextY = ballY - randSin * moveSpeed;
-    //         }
-    //         ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
-    //         nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
-    //         moveCount--;
-    //     }
+    // updateSpeed();
+    // Random rand = new Random();
+    // double ballX = ballShape.getCenter().getX();
+    // double ballY = ballShape.getCenter().getY();
+    // if (moveCount == 0) {
+    // while (!testBound(offsetX, offsetY, 50, nextX, nextY)) {
+    // System.out.println("你在写锤子");
+    // randCos = -1 + 2 * rand.nextDouble();
+    // randSin = -1 + 2 * rand.nextDouble();
+    // nextX = ballX - randCos * moveSpeed;
+    // nextY = ballY - randSin * moveSpeed;
+    // }
+    // ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+    // nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+    // moveCount = 500;
+    // } else {
+    // while (!testBound(offsetX, offsetY, 0, nextX, nextY)) {
+    // randCos = -1 + 2 * rand.nextDouble();
+    // randSin = -1 + 2 * rand.nextDouble();
+    // nextX = ballX - randCos * moveSpeed;
+    // nextY = ballY - randSin * moveSpeed;
+    // }
+    // ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+    // nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+    // moveCount--;
+    // }
     // }
 
     private boolean testBound(double offsetX, double offsetY, double margin, double nextX, double nextY) {
@@ -102,7 +102,7 @@ public class AIBall extends Ball {
     }
 
     private void updateSpeed() {
-        moveSpeed = 100 * 1 / (getRadius() * 2) + 0.8;
+        moveSpeed = 100 * 1 / (getRadius() * 2) + 1.2;
     }
 
     private Point createRandPos() {
@@ -207,6 +207,10 @@ public class AIBall extends Ball {
 
     public Point getCtr() {
         return ballShape.getCenter();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public GraphicsText getGraphicsName() {

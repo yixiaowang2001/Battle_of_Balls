@@ -7,7 +7,7 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.Point;
 
-public class PlayerBall extends Ball {
+public class PlayerBall implements Ball {
 
     private static final int CIRCLE_RAIDUS = 20;
     private double speed;
@@ -15,10 +15,12 @@ public class PlayerBall extends Ball {
     private Ellipse ballShape;
     private Boolean flag;
     private double resizeValue;
+    private String name;
 
     public PlayerBall(CanvasWindow canvas) {
 
         this.canvas = canvas;
+        name = "hello";
         speed = 0;
         create();
     }
@@ -111,7 +113,7 @@ public class PlayerBall extends Ball {
     }
 
     public void updateSpeed() {
-        speed = 100 * 1 / ballShape.getHeight() + 0.8;
+        speed = 100 * 1 / ballShape.getHeight() + 1.2;
     }
 
     public double getSpeed() {
@@ -136,5 +138,14 @@ public class PlayerBall extends Ball {
 
     public double getResizeVal() {
         return resizeValue;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public double getRadius() {
+        return ballShape.getHeight() / 2;
     }
 }

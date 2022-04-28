@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
-import java.util.Queue;
+import java.awt.Color;
+import java.awt.Font;
 
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.ui.Button;
@@ -14,14 +16,16 @@ public class MainGame {
     private GameMap map;
     private Button start, menu, quit;
     private int rank;
-    private GraphicsText scoreBoard, gameOver, caption;
+    private GraphicsText leaderBoard, gameOver, caption, rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,
+            rank10, rankPlayer;
     private Image window;
     private PlayerBall pb;
     private boolean isStart, isBound;
     private double offsetX, offsetY;
     private AIBallControl ac;
     private CircleControl cc;
-    private Queue<Ball> rankQueue;
+    private List<Ball> rankList;
+    private Rectangle board;
 
     public MainGame() {
         canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -56,6 +60,7 @@ public class MainGame {
                 if (pb.getArea() > 200000) {
                     endGame();
                 }
+                updateLeaderBoard();
             }
         });
     }
@@ -103,9 +108,16 @@ public class MainGame {
     }
 
     private void startGame() {
+        rankList = new ArrayList<>();
         createMap();
         createPB();
         creatAI();
+
+        rankList.add(pb);
+        rankList.addAll(ac.getBallList());
+        Collections.sort(rankList, new SizeComparator());
+        createLeaderBoard();
+
         isStart = true;
     }
 
@@ -121,12 +133,12 @@ public class MainGame {
                     double moveX = -cos * pb.getSpeed();
                     double moveY = -sin * pb.getSpeed();
                     isBound = false;
-                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2||
+                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 ||
                             offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2)) {
                         moveX = 0;
                         isBound = true;
                     }
-                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2||
+                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 ||
                             offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2)) {
                         moveY = 0;
                         isBound = true;
@@ -134,10 +146,8 @@ public class MainGame {
                     offsetX += moveX;
                     offsetY += moveY;
 
-
-
                     map.getGraphcs().moveBy(moveX, moveY);
-                    
+
                     pb.collisionCircle(moveX, moveY, cc);
                     pb.collisionBall(moveX, moveY, ac);
 
@@ -150,8 +160,7 @@ public class MainGame {
 
                     ac.controlNum(offsetX, offsetY);
                     cc.controlNum(offsetX, offsetY);
-                    
-                    
+
                     ifHitBound();
                 }
             }
@@ -204,6 +213,114 @@ public class MainGame {
                 offsetY += moveDisY;
             }
         }
+    }
+
+    private void createLeaderBoard() {
+        for (int i = 0; i < rankList.size(); i++) {
+            if (rankList.get(i) == pb) {
+                rank = i + 1;
+            }
+        }
+
+        board = new Rectangle(0.8 * CANVAS_WIDTH, 0, 0.2 * CANVAS_WIDTH, 0.35 * CANVAS_HEIGHT);
+        Color color = new Color(0, 0, 0, 100);
+        board.setFillColor(color);
+        board.setStroked(false);
+        canvas.add(board);
+
+        leaderBoard = new GraphicsText("Leader Board");
+        leaderBoard.setFillColor(Color.white);
+        leaderBoard.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.025);
+        leaderBoard.setCenter(board.getCenter().getX(), board.getHeight() * 0.1);
+        canvas.add(leaderBoard);
+
+        rank1 = new GraphicsText(String.format("1. %s", rankList.get(0).getName()));
+        rank1.setFillColor(Color.white);
+        rank1.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank1.setPosition(board.getX() + 10, 60);
+        canvas.add(rank1);
+
+        rank2 = new GraphicsText(String.format("2. %s", rankList.get(1).getName()));
+        rank2.setFillColor(Color.white);
+        rank2.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank2.setPosition(board.getX() + 10, 80);
+        canvas.add(rank2);
+
+        rank3 = new GraphicsText(String.format("3. %s", rankList.get(2).getName()));
+        rank3.setFillColor(Color.white);
+        rank3.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank3.setPosition(board.getX() + 10, 100);
+        canvas.add(rank3);
+
+        rank4 = new GraphicsText(String.format("4. %s", rankList.get(3).getName()));
+        rank4.setFillColor(Color.white);
+        rank4.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank4.setPosition(board.getX() + 10, 120);
+        canvas.add(rank4);
+
+        rank5 = new GraphicsText(String.format("5. %s", rankList.get(4).getName()));
+        rank5.setFillColor(Color.white);
+        rank5.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank5.setPosition(board.getX() + 10, 140);
+        canvas.add(rank5);
+
+        rank6 = new GraphicsText(String.format("6. %s", rankList.get(5).getName()));
+        rank6.setFillColor(Color.white);
+        rank6.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank6.setPosition(board.getX() + 10, 160);
+        canvas.add(rank6);
+
+        rank7 = new GraphicsText(String.format("7. %s", rankList.get(6).getName()));
+        rank7.setFillColor(Color.white);
+        rank7.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank7.setPosition(board.getX() + 10, 180);
+        canvas.add(rank7);
+
+        rank8 = new GraphicsText(String.format("8. %s", rankList.get(7).getName()));
+        rank8.setFillColor(Color.white);
+        rank8.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank8.setPosition(board.getX() + 10, 200);
+        canvas.add(rank8);
+
+        rank9 = new GraphicsText(String.format("9. %s", rankList.get(8).getName()));
+        rank9.setFillColor(Color.white);
+        rank9.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank9.setPosition(board.getX() + 10, 220);
+        canvas.add(rank9);
+
+        rank10 = new GraphicsText(String.format("10. %s", rankList.get(9).getName()));
+        rank10.setFillColor(Color.white);
+        rank10.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rank10.setPosition(board.getX() + 10, 240);
+        canvas.add(rank10);
+
+        rankPlayer = new GraphicsText(String.format("%d. %s", rank, pb.getName()));
+        rankPlayer.setFillColor(Color.blue);
+        rankPlayer.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
+        rankPlayer.setPosition(board.getX() + 10, 260);
+        canvas.add(rankPlayer);
+
+    }
+
+    private void updateLeaderBoard() {
+        Collections.sort(rankList, new SizeComparator());
+        for (int i = 0; i < rankList.size(); i++) {
+            if (rankList.get(i) == pb) {
+                rank = i + 1;
+            }
+        }
+
+        rank1.setText(String.format("1. %s", rankList.get(0).getName()));
+        rank2.setText(String.format("2. %s", rankList.get(1).getName()));
+        rank3.setText(String.format("3. %s", rankList.get(2).getName()));
+        rank4.setText(String.format("4. %s", rankList.get(3).getName()));
+        rank5.setText(String.format("5. %s", rankList.get(4).getName()));
+        rank6.setText(String.format("6. %s", rankList.get(5).getName()));
+        rank7.setText(String.format("7. %s", rankList.get(6).getName()));
+        rank8.setText(String.format("8. %s", rankList.get(7).getName()));
+        rank9.setText(String.format("9. %s", rankList.get(8).getName()));
+        rank10.setText(String.format("10. %s", rankList.get(9).getName()));
+        rankPlayer.setText(String.format("%d. %s", rank, pb.getName()));
     }
 
     /**

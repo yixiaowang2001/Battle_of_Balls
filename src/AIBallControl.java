@@ -1,10 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.Point;
 
 public class AIBallControl {
 
@@ -21,7 +19,7 @@ public class AIBallControl {
     }
 
     public void initialize() {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 50; i++) {
             AIBall ball = new AIBall(canvas);
             canvas.add(ball.getGraphics());
             canvas.add(ball.getGraphicsName());
