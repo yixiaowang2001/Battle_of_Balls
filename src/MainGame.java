@@ -67,7 +67,6 @@ public class MainGame {
     }
 
     private void createPB() {
-
         cc = new CircleControl(canvas);
         cc.initialize();
         pb = new PlayerBall(canvas);
@@ -76,7 +75,6 @@ public class MainGame {
     private void creatAI() {
         ac = new AIBallControl(canvas);
         ac.initialize();
-
         ai = new AIBall(canvas);
     }
 
@@ -137,11 +135,16 @@ public class MainGame {
                     offsetX += moveX;
                     offsetY += moveY;
 
+
+
                     map.getGraphcs().moveBy(moveX, moveY);
+                    
                     pb.collisionCircle(moveX, moveY, cc);
                     pb.collisionBall(moveX, moveY, ac);
-                    ai.collisionAiBall(ac);
 
+                    ai.collisionAiBall(ac);
+                    ai.collisionCircle(cc);
+                    
                     ifHitBound();
                     cc.controlNum(offsetX, offsetY);
                 }

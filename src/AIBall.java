@@ -149,13 +149,25 @@ public class AIBall extends Ball {
             AIBall ball = itrBall.next();
             if (isCollision(ballShape.getCenter(), ball.getCtr(), getRadius(), ball.getRadius(), 0.85)) {
                 if (getRadius() > ball.getRadius()) {
-                    System.out.println("x");
                     resizeBall(ball.getBall());
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
                     itrBall.remove();
-
+                    System.out.println("collisionAiBall");
                 }
+            }
+        }
+    }
+
+    public void collisionCircle(CircleControl cc) {
+        Iterator<Circle> itrCir = cc.getCircleList().iterator();
+        while (itrCir.hasNext()) {
+            Circle cir = itrCir.next();
+            if (ballShape.getCenter().distance(cir.getCtr()) <= ballShape.getHeight() / 2 + cir.getRadius()) {
+                // resizeCir();
+                canvas.remove(cir.getGraphics());
+                itrCir.remove();
+                System.out.println("collisionCircle");
             }
         }
     }
