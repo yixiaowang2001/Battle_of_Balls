@@ -143,6 +143,7 @@ public class MainGame {
                     for (AIBall ball : ac.getBallList()) {
                         ball.collisionAiBall(ac);
                         ball.collisionCircle(cc);
+                        ac.controlNum(offsetX, offsetY);
                     }
                     
                     ifHitBound();
