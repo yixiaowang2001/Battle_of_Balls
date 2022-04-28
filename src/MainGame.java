@@ -16,7 +16,6 @@ public class MainGame {
     private GraphicsText scoreBoard, gameOver, caption;
     private Image window;
     private PlayerBall pb;
-    private AIBall ai;
     private boolean isStart, isBound;
     private double offsetX, offsetY;
     private AIBallControl ac;
@@ -75,7 +74,6 @@ public class MainGame {
     private void creatAI() {
         ac = new AIBallControl(canvas);
         ac.initialize();
-        ai = new AIBall(canvas);
     }
 
     private void resetGame() {
@@ -142,8 +140,10 @@ public class MainGame {
                     pb.collisionCircle(moveX, moveY, cc);
                     pb.collisionBall(moveX, moveY, ac);
 
-                    ai.collisionAiBall(ac);
-                    ai.collisionCircle(cc);
+                    for (AIBall ball : ac.getBallList()) {
+                        ball.collisionAiBall(ac);
+                        ball.collisionCircle(cc);
+                    }
                     
                     ifHitBound();
                     cc.controlNum(offsetX, offsetY);
