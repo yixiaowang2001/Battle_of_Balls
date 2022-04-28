@@ -36,6 +36,7 @@ public class AIBallControl {
                 ball.getGraphics().moveBy(offsetX, offsetY);
                 canvas.add(ball.getGraphics());
                 ballList.add(ball);
+                System.out.println("add");
             }
         }
     }

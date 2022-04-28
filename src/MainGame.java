@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 
@@ -140,14 +141,17 @@ public class MainGame {
                     pb.collisionCircle(moveX, moveY, cc);
                     pb.collisionBall(moveX, moveY, ac);
 
-                    for (AIBall ball : ac.getBallList()) {
+                    Iterator<AIBall> ballItr = ac.getBallList().iterator();
+                    while (ballItr.hasNext()) {
+                        AIBall ball = ballItr.next();
                         ball.collisionAiBall(ac);
                         ball.collisionCircle(cc);
-                        ac.controlNum(offsetX, offsetY);
                     }
+
+                    ac.controlNum(offsetX, offsetY);
+                    cc.controlNum(offsetX, offsetY);
                     
                     ifHitBound();
-                    cc.controlNum(offsetX, offsetY);
                 }
             }
         });

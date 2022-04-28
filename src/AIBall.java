@@ -153,7 +153,6 @@ public class AIBall extends Ball {
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
                     itrBall.remove();
-                    System.out.println("collisionAiBall");
                 }
             }
         }
@@ -167,7 +166,6 @@ public class AIBall extends Ball {
                 // resizeCir();
                 canvas.remove(cir.getGraphics());
                 itrCir.remove();
-                System.out.println("collisionCircle");
             }
         }
     }
