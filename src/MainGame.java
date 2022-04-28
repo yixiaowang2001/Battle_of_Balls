@@ -151,6 +151,7 @@ public class MainGame {
                     ac.controlNum(offsetX, offsetY);
                     cc.controlNum(offsetX, offsetY);
                     
+                    
                     ifHitBound();
                 }
             }
