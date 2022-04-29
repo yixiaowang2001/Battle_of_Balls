@@ -190,7 +190,8 @@ public class AIBall implements Ball {
 
         ballShape.setSize(ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate,
                 ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate);
-
+        nameText.setFontSize(radius * 0.4);
+        nameText.setCenter(ballShape.getCenter());
     }
 
     private Ellipse getBall() {

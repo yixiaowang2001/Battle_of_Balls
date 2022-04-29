@@ -3,7 +3,6 @@ import java.util.Iterator;
 import java.util.Collections;
 import java.util.List;
 import java.awt.Color;
-import java.awt.Font;
 
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.ui.Button;
@@ -57,10 +56,9 @@ public class MainGame {
 
         canvas.animate(() -> {
             if (isStart) {
-                if (pb.getArea() > 200000) {
+                if (pb.getArea() > 30000) {
                     endGame();
                 }
-                updateLeaderBoard();
             }
         });
     }
@@ -163,6 +161,7 @@ public class MainGame {
 
                     ifHitBound();
                 }
+                updateLeaderBoard();
             }
         });
     }

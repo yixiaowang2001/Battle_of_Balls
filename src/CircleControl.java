@@ -8,8 +8,8 @@ import edu.macalester.graphics.CanvasWindow;
 
 public class CircleControl {
 
-    private static final int LOWER_BOUND = 9500;
-    private static final int UPPER_BOUND = 10000;
+    private static final int LOWER_BOUND = 4500;
+    private static final int UPPER_BOUND = 5000;
 
     private List<Circle> circleList;
     private CanvasWindow canvas;
@@ -21,7 +21,7 @@ public class CircleControl {
     }
 
     public void initialize() {
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 5000; i++) {
             Circle cir = new Circle(canvas);
             canvas.add(cir.getGraphics());
             circleList.add(cir);
