@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import edu.macalester.graphics.CanvasWindow;
 
@@ -10,11 +12,11 @@ public class AIBallControl {
     private static final int UPPER_BOUND = 30;
 
     private CanvasWindow canvas;
-    private List<AIBall> ballList;
+    private Queue<AIBall> ballList;
 
     public AIBallControl(CanvasWindow canvas) {
         this.canvas = canvas;
-        ballList = new ArrayList<>();
+        ballList = new ConcurrentLinkedDeque<>();
 
     }
 
@@ -48,7 +50,7 @@ public class AIBallControl {
 
     }
 
-    public List<AIBall> getBallList() {
+    public Queue<AIBall> getBallList() {
         return ballList;
     }
 
