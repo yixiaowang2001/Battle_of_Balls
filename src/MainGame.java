@@ -76,7 +76,7 @@ public class MainGame {
     }
 
     private void creatAI() {
-        ac = new AIBallControl(canvas);
+        ac = new AIBallControl(canvas, rankList);
         ac.initialize();
     }
 
@@ -112,7 +112,6 @@ public class MainGame {
         creatAI();
 
         rankList.add(pb);
-        rankList.addAll(ac.getBallList());
         Collections.sort(rankList, new SizeComparator());
         createLeaderBoard();
 
@@ -147,9 +146,13 @@ public class MainGame {
                     map.getGraphcs().moveBy(moveX, moveY);
 
                     pb.collisionCircle(moveX, moveY, cc);
-                    pb.collisionBall(moveX, moveY, ac);
+                    boolean end = pb.collisionBall(moveX, moveY, ac);
+                    if (end) {
+                        canvas.remove(pb.getGraphics());
+                        endGame();
+                    }
 
-                    Iterator<AIBall> ballItr = ac.getBallList().iterator();
+                    Iterator<AIBall> ballItr = ac.getBallQueue().iterator();
                     while (ballItr.hasNext()) {
                         AIBall ball = ballItr.next();
                         ball.collisionAiBall(ac);
@@ -230,73 +233,73 @@ public class MainGame {
         leaderBoard = new GraphicsText("Leader Board");
         leaderBoard.setFillColor(Color.white);
         leaderBoard.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.025);
-        leaderBoard.setCenter(board.getCenter().getX(), board.getHeight() * 0.1);
+        leaderBoard.setCenter(board.getCenter().getX(), board.getHeight() * 0.085);
         canvas.add(leaderBoard);
 
         rank1 = new GraphicsText(String.format("1. %s", rankList.get(0).getName()));
         rank1.setFillColor(Color.white);
         rank1.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank1.setPosition(board.getX() + 10, 60);
+        rank1.setPosition(board.getX() + 10, 55);
         canvas.add(rank1);
 
         rank2 = new GraphicsText(String.format("2. %s", rankList.get(1).getName()));
         rank2.setFillColor(Color.white);
         rank2.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank2.setPosition(board.getX() + 10, 80);
+        rank2.setPosition(board.getX() + 10, 75);
         canvas.add(rank2);
 
         rank3 = new GraphicsText(String.format("3. %s", rankList.get(2).getName()));
         rank3.setFillColor(Color.white);
         rank3.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank3.setPosition(board.getX() + 10, 100);
+        rank3.setPosition(board.getX() + 10, 95);
         canvas.add(rank3);
 
         rank4 = new GraphicsText(String.format("4. %s", rankList.get(3).getName()));
         rank4.setFillColor(Color.white);
         rank4.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank4.setPosition(board.getX() + 10, 120);
+        rank4.setPosition(board.getX() + 10, 115);
         canvas.add(rank4);
 
         rank5 = new GraphicsText(String.format("5. %s", rankList.get(4).getName()));
         rank5.setFillColor(Color.white);
         rank5.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank5.setPosition(board.getX() + 10, 140);
+        rank5.setPosition(board.getX() + 10, 135);
         canvas.add(rank5);
 
         rank6 = new GraphicsText(String.format("6. %s", rankList.get(5).getName()));
         rank6.setFillColor(Color.white);
         rank6.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank6.setPosition(board.getX() + 10, 160);
+        rank6.setPosition(board.getX() + 10, 155);
         canvas.add(rank6);
 
         rank7 = new GraphicsText(String.format("7. %s", rankList.get(6).getName()));
         rank7.setFillColor(Color.white);
         rank7.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank7.setPosition(board.getX() + 10, 180);
+        rank7.setPosition(board.getX() + 10, 175);
         canvas.add(rank7);
 
         rank8 = new GraphicsText(String.format("8. %s", rankList.get(7).getName()));
         rank8.setFillColor(Color.white);
         rank8.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank8.setPosition(board.getX() + 10, 200);
+        rank8.setPosition(board.getX() + 10, 195);
         canvas.add(rank8);
 
         rank9 = new GraphicsText(String.format("9. %s", rankList.get(8).getName()));
         rank9.setFillColor(Color.white);
         rank9.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank9.setPosition(board.getX() + 10, 220);
+        rank9.setPosition(board.getX() + 10, 215);
         canvas.add(rank9);
 
         rank10 = new GraphicsText(String.format("10. %s", rankList.get(9).getName()));
         rank10.setFillColor(Color.white);
         rank10.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rank10.setPosition(board.getX() + 10, 240);
+        rank10.setPosition(board.getX() + 10, 235);
         canvas.add(rank10);
 
         rankPlayer = new GraphicsText(String.format("%d. %s", rank, pb.getName()));
         rankPlayer.setFillColor(Color.blue);
         rankPlayer.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.0175);
-        rankPlayer.setPosition(board.getX() + 10, 260);
+        rankPlayer.setPosition(board.getX() + 10, 255);
         canvas.add(rankPlayer);
 
     }

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
@@ -9,33 +8,37 @@ import edu.macalester.graphics.CanvasWindow;
 public class AIBallControl {
 
     private static final int LOWER_BOUND = 20;
-    private static final int UPPER_BOUND = 30;
+    private static final int UPPER_BOUND = 21;
 
     private CanvasWindow canvas;
-    private Queue<AIBall> ballList;
+    private Queue<AIBall> ballQueue;
+    private List<Ball> rankList;
 
-    public AIBallControl(CanvasWindow canvas) {
+    public AIBallControl(CanvasWindow canvas, List<Ball> rankList) {
         this.canvas = canvas;
-        ballList = new ConcurrentLinkedDeque<>();
+        this.rankList = rankList;
+        ballQueue = new ConcurrentLinkedDeque<>();
 
     }
 
     public void initialize() {
-        for (int i = 0; i < 50; i++) {
-            AIBall ball = new AIBall(canvas);
+        for (int i = 0; i < 21; i++) {
+            AIBall ball = new AIBall(canvas, rankList);
             canvas.add(ball.getGraphics());
             canvas.add(ball.getGraphicsName());
-            ballList.add(ball);
+            ballQueue.add(ball);
+            rankList.add(ball);
         }
     }
 
     public void controlNum(double offsetX, double offsetY) {
-        if (ballList.size() < LOWER_BOUND) {
-            for (int i = 0; i < randInBound() - ballList.size(); i++) {
-                AIBall ball = new AIBall(canvas);
+        if (ballQueue.size() < LOWER_BOUND) {
+            for (int i = 0; i < randInBound() - ballQueue.size(); i++) {
+                AIBall ball = new AIBall(canvas, rankList);
                 ball.getGraphics().moveBy(offsetX, offsetY);
                 canvas.add(ball.getGraphics());
-                ballList.add(ball);
+                ballQueue.add(ball);
+                rankList.add(ball);
                 System.out.println("add");
             }
         }
@@ -50,8 +53,8 @@ public class AIBallControl {
 
     }
 
-    public Queue<AIBall> getBallList() {
-        return ballList;
+    public Queue<AIBall> getBallQueue() {
+        return ballQueue;
     }
 
 }

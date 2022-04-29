@@ -18,9 +18,11 @@ public class AIBall implements Ball {
     private int moveCount;
     private Color color;
     private String name;
+    private List<Ball> rankList;
 
-    public AIBall(CanvasWindow canvas) {
+    public AIBall(CanvasWindow canvas, List<Ball> rankList) {
         this.canvas = canvas;
+        this.rankList = rankList;
         radius = createRandRadius();
         Point randPoint = createRandPos();
         color = createRandColor();
@@ -144,12 +146,13 @@ public class AIBall implements Ball {
     }
 
     public void collisionAiBall(AIBallControl ac) {
-        Iterator<AIBall> itrBall = ac.getBallList().iterator();
+        Iterator<AIBall> itrBall = ac.getBallQueue().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
             if (isCollision(ballShape.getCenter(), ball.getCtr(), getRadius(), ball.getRadius(), 0.85)) {
                 if (getRadius() > ball.getRadius()) {
                     resizeBall(ball.getBall());
+                    rankList.remove(ball);
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
                     itrBall.remove();

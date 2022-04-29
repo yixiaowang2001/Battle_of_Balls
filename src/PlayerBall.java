@@ -5,11 +5,12 @@ import java.util.PriorityQueue;
 import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
+import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Point;
 
 public class PlayerBall implements Ball {
 
-    private static final int CIRCLE_RAIDUS = 20;
+    private static final int CIRCLE_RAIDUS = 30;
     private double speed;
     private CanvasWindow canvas;
     private Ellipse ballShape;
@@ -63,8 +64,8 @@ public class PlayerBall implements Ball {
         }
     }
 
-    public void collisionBall(double dx, double dy, AIBallControl ac) {
-        Iterator<AIBall> itrBall = ac.getBallList().iterator();
+    public boolean collisionBall(double dx, double dy, AIBallControl ac) {
+        Iterator<AIBall> itrBall = ac.getBallQueue().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
             ball.autoMove(0, 0);
@@ -80,9 +81,11 @@ public class PlayerBall implements Ball {
                 } else {
                     // 被吃
                     System.out.println("废物！");
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     private boolean isCollision(Point ctr1, Point ctr2, double r1, double r2, double rate) {
@@ -147,5 +150,9 @@ public class PlayerBall implements Ball {
     @Override
     public double getRadius() {
         return ballShape.getHeight() / 2;
+    }
+
+    public GraphicsObject getGraphics() {
+        return ballShape;
     }
 }
