@@ -56,7 +56,7 @@ public class MainGame {
 
         canvas.animate(() -> {
             if (isStart) {
-                if (pb.getArea() > 30000) {
+                if (pb.getArea() > 100000000) {
                     endGame();
                 }
             }
@@ -330,7 +330,7 @@ public class MainGame {
 
     /**
      * Be called if the player ball hit the bound. Detect which bound collides the
-     * ball. 0 represents no collision, 1 represents the left one or upper one, and
+     * ball. (X, Y) and  0 represents no collision, 1 represents the left one or upper one, and
      * 2 represents the right one or bottom one.
      * 
      * @return

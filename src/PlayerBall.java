@@ -98,8 +98,8 @@ public class PlayerBall extends Ball {
     }
 
     private void resizeCir() {
-        ballShape.setSize(Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
-                Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
+        ballShape.setSize(1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
+                1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
         ballShape.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
     }
 

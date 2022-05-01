@@ -1,7 +1,10 @@
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
@@ -53,15 +56,17 @@ public class AIBall extends Ball {
         Random rand = new Random();
         double ballX = ballShape.getCenter().getX();
         double ballY = ballShape.getCenter().getY();
-        
+
         if (moveCount == 0) {
-            while (moveCount == 0 || !inBound(offsetX, offsetY, 0, nextX, nextY)) {
-                System.out.println("TTTT");
-                randCos = -1 + 2 * rand.nextDouble();
-                randSin = -1 + 2 * rand.nextDouble();
-                nextX = ballX - randCos * moveSpeed;
-                nextY = ballY - randSin * moveSpeed;
-                moveCount++;
+            randCos = -1 + 2 * rand.nextDouble();
+            randSin = -1 + 2 * rand.nextDouble();
+            nextX = ballX - randCos * moveSpeed;
+            nextY = ballY - randSin * moveSpeed;
+            if (hitBound(offsetX, offsetY, 20, nextX, nextY).get(0)) {
+                randCos = -randCos;
+            }
+            if (hitBound(offsetX, offsetY, 20, nextX, nextY).get(1)) {
+                randSin = -randSin;
             }
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
@@ -69,11 +74,11 @@ public class AIBall extends Ball {
         } else {
             nextX = ballX - randCos * moveSpeed;
             nextY = ballY - randSin * moveSpeed;
-            while (!inBound(offsetX, offsetY, 30, nextX, nextY)) {
-                randCos = -1 + 2 * rand.nextDouble();
-                randSin = -1 + 2 * rand.nextDouble();
-                nextX = ballX - randCos * moveSpeed;
-                nextY = ballY - randSin * moveSpeed;
+            if (hitBound(offsetX, offsetY, 20, nextX, nextY).get(0)) {
+                randCos = -randCos;
+            }
+            if (hitBound(offsetX, offsetY, 20, nextX, nextY).get(1)) {
+                randSin = -randSin;
             }
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
@@ -81,12 +86,27 @@ public class AIBall extends Ball {
         }
     }
 
-    private boolean inBound(double offsetX, double offsetY, double margin, double nextX, double nextY) {
+    /**
+     * Detect which bound collides the AI ball. (X, Y) and true means there is a collision.
+     * 
+     * @return
+     */
+    private List<Boolean> hitBound(double offsetX, double offsetY, double margin, double nextX, double nextY) {
+        List<Boolean> returnList = new ArrayList<>();
+        returnList.add(false);
+        returnList.add(false);
         double leftX = canvas.getCenter().getX() + offsetX - canvas.getWidth() * 5 - margin + radius;
         double rightX = canvas.getCenter().getX() + offsetX + canvas.getWidth() * 5 + margin - radius;
         double upY = canvas.getCenter().getY() + offsetY - canvas.getHeight() * 5 - margin + radius;
         double lowY = canvas.getCenter().getY() + offsetY + canvas.getHeight() * 5 + margin - radius;
-        return (nextX < rightX && nextX > leftX) && (nextY < lowY && nextY > upY) ? true : false;
+
+        if (nextX >= rightX || nextX <= leftX) {
+            returnList.set(0, true);
+        }
+        if (nextY >= lowY || nextY <= upY) {
+            returnList.set(1, true);
+        }
+        return returnList;
     }
 
     private void updateSpeed() {
@@ -186,8 +206,8 @@ public class AIBall extends Ball {
     }
 
     private void resizeCir() {
-        ballShape.setSize(Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
-                Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
+        ballShape.setSize(1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
+                1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
     }
 
     public double getRadius() {
