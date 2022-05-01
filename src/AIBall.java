@@ -14,7 +14,7 @@ public class AIBall implements Ball {
     private Ellipse ballShape;
     private GraphicsText nameText;
     private CanvasWindow canvas;
-    private double radius, moveSpeed, randCos, randSin, nextX, nextY;
+    private double radius, moveSpeed, randCos, randSin, moveX, moveY, offsetX, offsetY;
     private int moveCount;
     private Color color;
     private String name;
@@ -31,8 +31,10 @@ public class AIBall implements Ball {
         moveCount = 0;
         randCos = 0;
         randSin = 0;
-        nextX = Double.MAX_VALUE;
-        nextY = Double.MAX_VALUE;
+        offsetX = 0;
+        offsetY = 0;
+        // nextX = Double.MAX_VALUE;
+        // nextY = Double.MAX_VALUE;
 
         ballShape = new Ellipse(randPoint.getX(), randPoint.getY(), radius, radius);
         ballShape.setFillColor(color);
@@ -41,27 +43,43 @@ public class AIBall implements Ball {
 
         nameText = new GraphicsText(name);
 
-        nameText.setFontSize(radius * 0.4);
+        nameText.setFontSize(radius * 0.3);
         nameText.setCenter(ballShape.getCenter());
 
     }
 
-    public void autoMove(double offsetX, double offsetY) {
+    public void autoMove(double CANVAS_WIDTH, double CANVAS_HEIGHT) {
         updateSpeed();
         Random rand = new Random();
         double ballX = ballShape.getCenter().getX();
         double ballY = ballShape.getCenter().getY();
-        if (moveCount == 0) {
+        boolean bound = ballShape.getCenter().getX() < -10 * CANVAS_WIDTH + getRadius() ||
+        ballShape.getCenter().getX() > 10 * CANVAS_WIDTH - getRadius() ||
+        ballShape.getCenter().getY() < -10 * CANVAS_HEIGHT + getRadius()||
+        ballShape.getCenter().getY() > 10 * CANVAS_HEIGHT - getRadius();
+        if (moveCount == 0 && !bound) {
             randCos = -1 + 2 * rand.nextDouble();
             randSin = -1 + 2 * rand.nextDouble();
-            nextX = ballX - randCos * moveSpeed;
-            nextY = ballY - randSin * moveSpeed;
+            moveX =  - randCos * moveSpeed;
+            moveY =  - randSin * moveSpeed;
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+            offsetX += moveX;
+            offsetY += moveY;
             moveCount = rand.nextInt(300) + 300;
+        } else if (bound) {
+            System.out.println("out of bound");
+            // ballShape.moveBy(-moveX,-moveY);
+            // nameText.moveBy(-moveX,-moveY);
+            //碰到之后要怎么动，或者重置它的位置
+            offsetX = 0;
+            offsetY = 0;
+            moveCount = 0;
         } else {
             ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
             nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+            offsetX += moveX;
+            offsetY += moveY;
             moveCount--;
         }
     }
@@ -134,14 +152,15 @@ public class AIBall implements Ball {
 
     private String createRandName() {
         StringBuilder sb = new StringBuilder();
-        List<String> namelist = List.of("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
-                "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+        List<String> namelist = List.of("Joey", "Aurelio", "Evan", "Donny", "Foster", "Dwayne", "Grady", "Quinton", "Darin", "Mickey", "Hank", "Kim", "Peter", "Jeremy", "Jess", "Jimmie",
+                "Vern", "Pasquale", "Romeo", "Chris", "Dale", "Beau", "Cliff", "Timothy", "Raphael", "Brain");
+        List<String> adjlist = List.of("Compassionate", "Friendly", "Reliable", "Conscientious", "Funny", "Reserved");
         Random rand = new Random();
-        int length = 3 + rand.nextInt(3);
-        for (int i = 0; i < length; i++) {
-            String str = namelist.get(rand.nextInt(namelist.size()));
-            sb.append(str);
-        }
+        int nameIndex = rand.nextInt(namelist.size());
+        int adjIndex = rand.nextInt(adjlist.size());
+        sb.append(adjlist.get(adjIndex));
+        sb.append(" ");
+        sb.append(namelist.get(nameIndex));
         return sb.toString();
     }
 

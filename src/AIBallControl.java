@@ -22,7 +22,7 @@ public class AIBallControl {
     }
 
     public void initialize() {
-        for (int i = 0; i < 21; i++) {
+        for (int i = 0; i < 100; i++) {
             AIBall ball = new AIBall(canvas, rankList);
             canvas.add(ball.getGraphics());
             canvas.add(ball.getGraphicsName());

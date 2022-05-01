@@ -118,6 +118,8 @@ public class MainGame {
         isStart = true;
     }
 
+    
+
     private void inGame() {
         canvas.onMouseMove(event -> {
             if (isStart) {

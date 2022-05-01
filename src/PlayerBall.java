@@ -21,7 +21,7 @@ public class PlayerBall implements Ball {
     public PlayerBall(CanvasWindow canvas) {
 
         this.canvas = canvas;
-        name = "hello";
+        name = "Player";
         speed = 0;
         create();
     }
@@ -68,19 +68,16 @@ public class PlayerBall implements Ball {
         Iterator<AIBall> itrBall = ac.getBallQueue().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
-            ball.autoMove(0, 0);
+            ball.autoMove(1000, 750);
             ball.getGraphics().moveBy(dx, dy);
             ball.getGraphicsName().moveBy(dx, dy);
             if (isCollision(ballShape.getCenter(), ball.getCtr(), getDiameter() / 2, ball.getRadius(), 0.85)) {
                 if (getDiameter() / 2 > ball.getRadius()) {
-                    System.out.println("牛逼！");
                     resizeBall(ball);
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
                     itrBall.remove();
                 } else {
-                    // 被吃
-                    System.out.println("废物！");
                     return true;
                 }
             }
