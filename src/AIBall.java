@@ -10,7 +10,7 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 import java.awt.Color;
 
-public class AIBall implements Ball {
+public class AIBall extends Ball {
     private Ellipse ballShape;
     private GraphicsText nameText;
     private CanvasWindow canvas;
@@ -120,16 +120,16 @@ public class AIBall implements Ball {
 
     private String createRandName() {
         StringBuilder sb = new StringBuilder();
-        List<String> namelist = List.of("Joey", "Aurelio", "Evan", "Donny", "Foster", "Dwayne", "Grady", "Quinton",
-                "Darin", "Mickey", "Hank", "Kim", "Peter", "Jeremy", "Jess", "Jimmie",
-                "Vern", "Pasquale", "Romeo", "Chris", "Dale", "Beau", "Cliff", "Timothy", "Raphael", "Brain");
-        List<String> adjlist = List.of("Compassionate", "Friendly", "Reliable", "Conscientious", "Funny", "Reserved");
+        List<String> firstList = List.of("Joey", "Whit", "Evan", "Donny", "Foster", "Olia", "Grady", "Bella",
+                "Darin", "Mickey", "Hank", "Kim", "Peter", "Jeremy", "Jess", "Ezri",
+                "Vern", "Fran", "Romeo", "Chris", "Dale", "Beau", "Cliff", "Hamel", "Garv", "Brain");
+        List<String> lastList = List.of("Mayr", "Grace", "Sand", "Wood", "Dutra", "Flury");
         Random rand = new Random();
-        int nameIndex = rand.nextInt(namelist.size());
-        int adjIndex = rand.nextInt(adjlist.size());
-        sb.append(adjlist.get(adjIndex));
+        int firstIndex = rand.nextInt(firstList.size());
+        int lastIndex = rand.nextInt(lastList.size());
+        sb.append(firstList.get(firstIndex));
         sb.append(" ");
-        sb.append(namelist.get(nameIndex));
+        sb.append(lastList.get(lastIndex));
         return sb.toString();
     }
 
@@ -139,7 +139,7 @@ public class AIBall implements Ball {
             AIBall ball = itrBall.next();
             if (isCollision(ballShape.getCenter(), ball.getCtr(), getRadius(), ball.getRadius(), 0.85)) {
                 if (getRadius() > ball.getRadius()) {
-                    resizeBall(ball.getBall());
+                    resizeBall(getGraphics());
                     rankList.remove(ball);
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
@@ -176,7 +176,7 @@ public class AIBall implements Ball {
         return false;
     }
 
-    private void resizeBall(Ellipse otherBall) {
+    private void resizeBall(GraphicsObject otherBall) {
         double resizeRate = 1;
 
         ballShape.setSize(ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate,
@@ -188,10 +188,6 @@ public class AIBall implements Ball {
     private void resizeCir() {
         ballShape.setSize(Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
                 Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
-    }
-
-    private Ellipse getBall() {
-        return ballShape;
     }
 
     public double getRadius() {

@@ -8,8 +8,7 @@ import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Point;
 
-public class PlayerBall implements Ball {
-
+public class PlayerBall extends Ball {
     private static final int CIRCLE_RAIDUS = 30;
     private double speed;
     private CanvasWindow canvas;
@@ -19,7 +18,6 @@ public class PlayerBall implements Ball {
     private String name;
 
     public PlayerBall(CanvasWindow canvas) {
-
         this.canvas = canvas;
         name = "Player";
         speed = 0;
@@ -70,8 +68,8 @@ public class PlayerBall implements Ball {
             AIBall ball = itrBall.next();
             ball.getGraphics().moveBy(dx, dy);
             ball.getGraphicsName().moveBy(dx, dy);
-            if (isCollision(ballShape.getCenter(), ball.getCtr(), getDiameter() / 2, ball.getRadius(), 0.85)) {
-                if (getDiameter() / 2 > ball.getRadius()) {
+            if (isCollision(ballShape.getCenter(), ball.getCtr(), getRadius(), ball.getRadius(), 0.85)) {
+                if (getRadius() > ball.getRadius()) {
                     resizeBall(ball);
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
@@ -117,18 +115,6 @@ public class PlayerBall implements Ball {
 
     public double getSpeed() {
         return speed;
-    }
-
-    // public CircleControl returnCC() {
-    // return cc;
-    // }
-
-    // public AIBallControl returnAC() {
-    // return ac;
-    // }
-
-    public double getDiameter() {
-        return ballShape.getHeight();
     }
 
     public double getArea() {

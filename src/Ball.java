@@ -1,5 +1,8 @@
-public interface Ball {
-    public double getRadius();
+public abstract class Ball {
+    public Ball() {
+        
+    }
 
-    public String getName();
+    abstract public double getRadius();
+    abstract public String getName();
 }

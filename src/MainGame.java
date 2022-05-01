@@ -132,13 +132,13 @@ public class MainGame {
                     double moveX = -cos * pb.getSpeed();
                     double moveY = -sin * pb.getSpeed();
                     isBound = false;
-                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 - 2||
-                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 + 2)) {
+                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getRadius() - 2||
+                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getRadius() + 2)) {
                         moveX = 0;
                         isBound = true;
                     }
-                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 - 2||
-                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2 + 2)) {
+                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getRadius() - 2||
+                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getRadius() + 2)) {
                         moveY = 0;
                         isBound = true;
                     }
@@ -196,23 +196,23 @@ public class MainGame {
             double moveDisX = 0;
             double moveDisY = 0;
             if (boundSide.get(0) == 1) {
-                moveDisX = map.getGraphcs().getX() + pb.getDiameter() / 2 - 500;
+                moveDisX = map.getGraphcs().getX() + pb.getRadius() - 500;
                 cc.moveCir(-moveDisX, 0);
                 map.getGraphcs().moveBy(-moveDisX, 0);
                 offsetX -= moveDisX;
             } else if (boundSide.get(0) == 2) {
-                moveDisX = -9500 + pb.getDiameter() / 2 - map.getGraphcs().getX();
+                moveDisX = -9500 + pb.getRadius() - map.getGraphcs().getX();
                 cc.moveCir(moveDisX, 0);
                 map.getGraphcs().moveBy(moveDisX, 0);
                 offsetX += moveDisX;
             }
             if (boundSide.get(1) == 1) {
-                moveDisY = map.getGraphcs().getY() + pb.getDiameter() / 2 - 375;
+                moveDisY = map.getGraphcs().getY() + pb.getRadius() - 375;
                 cc.moveCir(0, -moveDisY);
                 map.getGraphcs().moveBy(0, -moveDisY);
                 offsetY -= moveDisY;
             } else if (boundSide.get(1) == 2) {
-                moveDisY = -7125 + pb.getDiameter() / 2 - map.getGraphcs().getY();
+                moveDisY = -7125 + pb.getRadius() - map.getGraphcs().getY();
                 cc.moveCir(0, moveDisY);
                 map.getGraphcs().moveBy(0, moveDisY);
                 offsetY += moveDisY;
@@ -339,14 +339,14 @@ public class MainGame {
         List<Integer> retList = new ArrayList<>();
         retList.add(0);
         retList.add(0);
-        if (map.getGraphcs().getX() - (-9500) < pb.getDiameter()) {
+        if (map.getGraphcs().getX() - (-9500) < pb.getRadius() * 2) {
             retList.set(0, 2);
-        } else if (500 - map.getGraphcs().getX() < pb.getDiameter()) {
+        } else if (500 - map.getGraphcs().getX() < pb.getRadius() * 2) {
             retList.set(0, 1);
         }
-        if (map.getGraphcs().getY() - (-7125) < pb.getDiameter()) {
+        if (map.getGraphcs().getY() - (-7125) < pb.getRadius() * 2) {
             retList.set(1, 2);
-        } else if (375 - map.getGraphcs().getY() < pb.getDiameter()) {
+        } else if (375 - map.getGraphcs().getY() < pb.getRadius() * 2) {
             retList.set(1, 1);
         }
         return retList;
