@@ -132,13 +132,13 @@ public class MainGame {
                     double moveX = -cos * pb.getSpeed();
                     double moveY = -sin * pb.getSpeed();
                     isBound = false;
-                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 ||
-                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2)) {
+                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getDiameter() / 2 - 2||
+                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getDiameter() / 2 + 2)) {
                         moveX = 0;
                         isBound = true;
                     }
-                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 ||
-                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2)) {
+                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getDiameter() / 2 - 2||
+                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getDiameter() / 2 + 2)) {
                         moveY = 0;
                         isBound = true;
                     }
@@ -157,6 +157,7 @@ public class MainGame {
                     Iterator<AIBall> ballItr = ac.getBallQueue().iterator();
                     while (ballItr.hasNext()) {
                         AIBall ball = ballItr.next();
+                        ball.autoMove(offsetX, offsetY);
                         ball.collisionAiBall(ac);
                         ball.collisionCircle(cc);
                     }

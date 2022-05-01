@@ -68,7 +68,6 @@ public class PlayerBall implements Ball {
         Iterator<AIBall> itrBall = ac.getBallQueue().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
-            ball.autoMove(1000, 750);
             ball.getGraphics().moveBy(dx, dy);
             ball.getGraphicsName().moveBy(dx, dy);
             if (isCollision(ballShape.getCenter(), ball.getCtr(), getDiameter() / 2, ball.getRadius(), 0.85)) {
