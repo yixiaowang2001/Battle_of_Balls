@@ -67,7 +67,8 @@ public class AIBall extends Ball {
     }
 
     /**
-     * Detect which bound collides the AI ball. (X, Y) and true means there is a collision.
+     * Detect which bound collides the AI ball. (X, Y) and true means there is a
+     * collision.
      * 
      * @return
      */
@@ -178,14 +179,16 @@ public class AIBall extends Ball {
         ballShape.setStrokeColor(color.darker());
         ballShape.setStrokeWidth(5);
         nameText = new GraphicsText(name);
-        nameText.setFontSize(radius * 0.3);
+        nameText.setFontSize(radius * 0.4);
         nameText.setCenter(ballShape.getCenter());
     }
 
     @Override
-    protected void resizeCir() {
-        ballShape.setSize(1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
-                1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
+    void resizeCir() {
+        ballShape.setSize(Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS * 2, 2)),
+                Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS * 2, 2)));
+        nameText.setFontSize(radius * 0.4);
+        nameText.setCenter(ballShape.getCenter());
     }
 
     @Override

@@ -27,7 +27,7 @@ public class MainGame {
     private Rectangle board;
 
     public MainGame() {
-        canvas = new CanvasWindow("Test", CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas = new CanvasWindow("Battle of Balls", CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
     public void run() {
@@ -56,7 +56,7 @@ public class MainGame {
 
         canvas.animate(() -> {
             if (isStart) {
-                if (pb.getArea() > 100000000) {
+                if (pb.getArea() > 10000000) {
                     endGame();
                 }
             }
@@ -117,8 +117,6 @@ public class MainGame {
 
         isStart = true;
     }
-
-    
 
     private void inGame() {
         canvas.onMouseMove(event -> {
