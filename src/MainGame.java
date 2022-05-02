@@ -138,7 +138,7 @@ public class MainGame {
                     map.getGraphcs().moveBy(moveX, moveY);
 
                     pb.collisionCircle(moveX, moveY, cc);
-                    boolean end = pb.collisionBall(moveX, moveY, ac);
+                    boolean end = pb.collisionBall(moveX, moveY, ac, rankList);
                     if (end) {
                         canvas.remove(pb.getGraphics());
                         endGame();
@@ -159,7 +159,7 @@ public class MainGame {
                 }
                 updateLeaderBoard();
 
-                if (pb.getArea() > 50000) {
+                if (pb.getArea() > 500000) {
                     endGame();
                 }
             }

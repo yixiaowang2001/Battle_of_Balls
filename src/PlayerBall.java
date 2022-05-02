@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.List;
 import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
@@ -28,7 +29,7 @@ public class PlayerBall extends Ball {
         }
     }
 
-    public boolean collisionBall(double dx, double dy, AIBallControl ac) {
+    public boolean collisionBall(double dx, double dy, AIBallControl ac, List<Ball> rankList) {
         Iterator<AIBall> itrBall = ac.getBallQueue().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
@@ -39,6 +40,7 @@ public class PlayerBall extends Ball {
                     resizeBall(ball);
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
+                    rankList.remove(ball);
                     itrBall.remove();
                 } else {
                     return true;

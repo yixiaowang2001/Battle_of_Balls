@@ -16,7 +16,7 @@ public class AIBall extends Ball {
     private double radius, randCos, randSin, nextX, nextY;
     private int moveCount;
 
-    public AIBall(CanvasWindow canvas, List<Ball> rankList) {
+    public AIBall(CanvasWindow canvas) {
         super(canvas);
         radius = createRandRadius();
         moveCount = 0;

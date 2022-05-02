@@ -7,8 +7,8 @@ import edu.macalester.graphics.CanvasWindow;
 
 public class AIBallControl {
 
-    private static final int LOWER_BOUND = 20;
-    private static final int UPPER_BOUND = 21;
+    private static final int LOWER_BOUND = 15;
+    private static final int UPPER_BOUND = 16;
 
     private CanvasWindow canvas;
     private Queue<AIBall> ballQueue;
@@ -22,7 +22,7 @@ public class AIBallControl {
 
     public void initialize() {
         for (int i = 0; i < 20; i++) {
-            AIBall ball = new AIBall(canvas, rankList);
+            AIBall ball = new AIBall(canvas);
             canvas.add(ball.getGraphics());
             canvas.add(ball.getGraphicsName());
             ballQueue.add(ball);
@@ -33,7 +33,7 @@ public class AIBallControl {
     public void controlNum(double offsetX, double offsetY) {
         if (ballQueue.size() < LOWER_BOUND) {
             for (int i = 0; i < randInBound() - ballQueue.size(); i++) {
-                AIBall ball = new AIBall(canvas, rankList);
+                AIBall ball = new AIBall(canvas);
                 ball.getGraphics().moveBy(offsetX, offsetY);
                 canvas.add(ball.getGraphics());
                 canvas.add(ball.getGraphicsName());
