@@ -1,10 +1,7 @@
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
@@ -16,21 +13,14 @@ import java.awt.Color;
 public class AIBall extends Ball {
     private Ellipse ballShape;
     private GraphicsText nameText;
-    private CanvasWindow canvas;
-    private double radius, moveSpeed, randCos, randSin, nextX, nextY, offsetX, offsetY;
+    private double radius, randCos, randSin, nextX, nextY, offsetX, offsetY;
     private int moveCount;
-    private Color color;
-    private String name;
     private List<Ball> rankList;
 
     public AIBall(CanvasWindow canvas, List<Ball> rankList) {
-        this.canvas = canvas;
+        super(canvas);
         this.rankList = rankList;
         radius = createRandRadius();
-        Point randPoint = createRandPos();
-        color = createRandColor();
-        name = createRandName();
-        moveSpeed = 0;
         moveCount = 0;
         randCos = 0;
         randSin = 0;
@@ -38,16 +28,7 @@ public class AIBall extends Ball {
         offsetY = 0;
         nextX = Double.MAX_VALUE;
         nextY = Double.MAX_VALUE;
-
-        ballShape = new Ellipse(randPoint.getX(), randPoint.getY(), radius, radius);
-        ballShape.setFillColor(color);
-        ballShape.setStrokeColor(color.darker());
-        ballShape.setStrokeWidth(5);
-
-        nameText = new GraphicsText(name);
-
-        nameText.setFontSize(radius * 0.3);
-        nameText.setCenter(ballShape.getCenter());
+        create();
 
     }
 
@@ -56,32 +37,31 @@ public class AIBall extends Ball {
         Random rand = new Random();
         double ballX = ballShape.getCenter().getX();
         double ballY = ballShape.getCenter().getY();
-
         if (moveCount == 0) {
             randCos = -1 + 2 * rand.nextDouble();
             randSin = -1 + 2 * rand.nextDouble();
-            nextX = ballX - randCos * moveSpeed;
-            nextY = ballY - randSin * moveSpeed;
+            nextX = ballX - randCos * speed;
+            nextY = ballY - randSin * speed;
             if (hitBound(offsetX, offsetY, 20, nextX, nextY).get(0)) {
                 randCos = -randCos;
             }
             if (hitBound(offsetX, offsetY, 20, nextX, nextY).get(1)) {
                 randSin = -randSin;
             }
-            ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
-            nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+            ballShape.moveBy(-randCos * speed, -randSin * speed);
+            nameText.moveBy(-randCos * speed, -randSin * speed);
             moveCount = rand.nextInt(300) + 300;
         } else {
-            nextX = ballX - randCos * moveSpeed;
-            nextY = ballY - randSin * moveSpeed;
+            nextX = ballX - randCos * speed;
+            nextY = ballY - randSin * speed;
             if (hitBound(offsetX, offsetY, 20, nextX, nextY).get(0)) {
                 randCos = -randCos;
             }
             if (hitBound(offsetX, offsetY, 20, nextX, nextY).get(1)) {
                 randSin = -randSin;
             }
-            ballShape.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
-            nameText.moveBy(-randCos * moveSpeed, -randSin * moveSpeed);
+            ballShape.moveBy(-randCos * speed, -randSin * speed);
+            nameText.moveBy(-randCos * speed, -randSin * speed);
             moveCount--;
         }
     }
@@ -99,7 +79,6 @@ public class AIBall extends Ball {
         double rightX = canvas.getCenter().getX() + offsetX + canvas.getWidth() * 5 + margin - radius;
         double upY = canvas.getCenter().getY() + offsetY - canvas.getHeight() * 5 - margin + radius;
         double lowY = canvas.getCenter().getY() + offsetY + canvas.getHeight() * 5 + margin - radius;
-
         if (nextX >= rightX || nextX <= leftX) {
             returnList.set(0, true);
         }
@@ -110,7 +89,7 @@ public class AIBall extends Ball {
     }
 
     private void updateSpeed() {
-        moveSpeed = 100 * 1 / (getRadius() * 2) + 1.2;
+        speed = 100 * 1 / (getRadius() * 2) + 1.2;
     }
 
     private Point createRandPos() {
@@ -122,14 +101,6 @@ public class AIBall extends Ball {
         double randomX = minX + (maxX - minX) * rand.nextDouble();
         double randomY = minY + (maxY - minY) * rand.nextDouble();
         return new Point(randomX, randomY);
-    }
-
-    private Color createRandColor() {
-        Random rand = new Random();
-        float[] hsb = Color.RGBtoHSB(rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0, rand.nextInt(255 - 0) + 0,
-                null);
-        Color color = Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
-        return color;
     }
 
     private double createRandRadius() {
@@ -181,52 +152,54 @@ public class AIBall extends Ball {
         }
     }
 
-    private boolean isCollision(Point ctr1, Point ctr2, double r1, double r2, double rate) {
-        double dis = ctr1.distance(ctr2);
-        PriorityQueue<Double> pq = new PriorityQueue<>();
-        pq.add(r1);
-        pq.add(r2);
-        double r = pq.poll();
-        double R = pq.poll();
-        if (r / R <= rate) {
-            if (dis <= R + r) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void resizeBall(GraphicsObject otherBall) {
         double resizeRate = 1;
-
         ballShape.setSize(ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate,
                 ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate);
         nameText.setFontSize(radius * 0.4);
         nameText.setCenter(ballShape.getCenter());
     }
 
-    private void resizeCir() {
-        ballShape.setSize(1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
-                1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
-    }
-
-    public double getRadius() {
-        return ballShape.getHeight() / 2;
-    }
-
-    public GraphicsObject getGraphics() {
-        return ballShape;
-    }
-
     public Point getCtr() {
         return ballShape.getCenter();
     }
 
+    public GraphicsText getGraphicsName() {
+        return nameText;
+    }
+
+    @Override
+    protected void create() {
+        name = createRandName();
+        Color color = createRandColor();
+        Point randPoint = createRandPos();
+        ballShape = new Ellipse(randPoint.getX(), randPoint.getY(), radius, radius);
+        ballShape.setFillColor(color);
+        ballShape.setStrokeColor(color.darker());
+        ballShape.setStrokeWidth(5);
+        nameText = new GraphicsText(name);
+        nameText.setFontSize(radius * 0.3);
+        nameText.setCenter(ballShape.getCenter());
+    }
+
+    @Override
+    protected void resizeCir() {
+        ballShape.setSize(1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)),
+                1.005 * Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS, 2)));
+    }
+
+    @Override
     public String getName() {
         return name;
     }
 
-    public GraphicsText getGraphicsName() {
-        return nameText;
+    @Override
+    public double getRadius() {
+        return ballShape.getHeight() / 2;
+    }
+
+    @Override
+    public GraphicsObject getGraphics() {
+        return ballShape;
     }
 }
