@@ -1,22 +1,31 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Collections;
-import java.util.List;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
-import edu.macalester.graphics.*;
+import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.FontStyle;
+import edu.macalester.graphics.GraphicsText;
+import edu.macalester.graphics.Image;
+import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.Button;
 
+/**
+ * The main game class that creates the game and runs it.
+ * 
+ * @author Joseph, Eric, Dennis
+ */
 public class MainGame {
-    public static final int CANVAS_WIDTH = 1000;
-    public static final int CANVAS_HEIGHT = 750;
+    static final int CANVAS_WIDTH = 1000;
+    static final int CANVAS_HEIGHT = 750;
 
     private CanvasWindow canvas;
     private GameMap map;
     private Button start, menu, quit;
     private int rank;
     private GraphicsText leaderBoard, gameOver, gameRank, caption, rank1, rank2, rank3, rank4, rank5, rank6, rank7,
-            rank8, rank9, rank10, rankPlayer;
+        rank8, rank9, rank10, rankPlayer;
     private Image window;
     private PlayerBall pb;
     private boolean isStart, isBound;
@@ -26,10 +35,16 @@ public class MainGame {
     private List<Ball> rankList;
     private Rectangle board;
 
+    /**
+     * The constructor of the main game
+     */
     public MainGame() {
         canvas = new CanvasWindow("Battle of Balls", CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
+    /**
+     * Runs the program
+     */
     public void run() {
         menu = new Button("Back to Menu");
         start = new Button("New Game");
@@ -53,25 +68,45 @@ public class MainGame {
         });
 
         inGame();
+
+        canvas.animate(() -> {
+            if (isStart) {
+                if (pb.getArea() > 100000000) {
+                    endGame();
+                }
+            }
+        });
     }
 
+    /**
+     * Creates the map
+     */
     private void createMap() {
         map = new GameMap();
         canvas.add(map.getGraphcs());
         map.getGraphcs().setCenter(0.5 * CANVAS_WIDTH, 0.5 * CANVAS_HEIGHT);
     }
 
+    /**
+     * Creates the player ball
+     */
     private void createPB() {
         cc = new CircleControl(canvas);
         cc.initialize();
         pb = new PlayerBall(canvas);
     }
 
+    /**
+     * Creates the AI balls
+     */
     private void creatAI() {
         ac = new AIBallControl(canvas, rankList);
         ac.initialize();
     }
 
+    /**
+     * Creates the UIs
+     */
     private void resetGame() {
         isBound = false;
         offsetX = 0;
@@ -97,6 +132,9 @@ public class MainGame {
         rank = 0;
     }
 
+    /**
+     * Creates the game
+     */
     private void startGame() {
         rankList = new ArrayList<>();
         createMap();
@@ -110,25 +148,28 @@ public class MainGame {
         isStart = true;
     }
 
+    /**
+     * Action when the player moves the mouse
+     */
     private void inGame() {
         canvas.onMouseMove(event -> {
             if (isStart) {
                 pb.updateSpeed();
                 double cos = (event.getPosition().getX() - canvas.getCenter().getX())
-                        / event.getPosition().distance(canvas.getCenter());
+                    / event.getPosition().distance(canvas.getCenter());
                 double sin = (event.getPosition().getY() - canvas.getCenter().getY())
-                        / event.getPosition().distance(canvas.getCenter());
+                    / event.getPosition().distance(canvas.getCenter());
                 if (event.getPosition() != canvas.getCenter()) {
                     double moveX = -cos * pb.getSpeed();
                     double moveY = -sin * pb.getSpeed();
                     isBound = false;
                     if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getRadius() - 2 ||
-                            offsetX + moveX > 5 * CANVAS_WIDTH - pb.getRadius() + 2)) {
+                        offsetX + moveX > 5 * CANVAS_WIDTH - pb.getRadius() + 2)) {
                         moveX = 0;
                         isBound = true;
                     }
                     if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getRadius() - 2 ||
-                            offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getRadius() + 2)) {
+                        offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getRadius() + 2)) {
                         moveY = 0;
                         isBound = true;
                     }
@@ -158,10 +199,6 @@ public class MainGame {
                     ifHitBound();
                 }
                 updateLeaderBoard();
-
-                if (pb.getArea() > 500000) {
-                    endGame();
-                }
             }
         });
     }
@@ -174,7 +211,7 @@ public class MainGame {
 
         gameOver = new GraphicsText("Game Over! Your score is: " + (int) pb.getArea());
         gameOver.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.05);
-        gameOver.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.405);
+        gameOver.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.45);
         canvas.add(gameOver);
 
         gameRank = new GraphicsText("Your rank is: " + rank);
@@ -189,6 +226,9 @@ public class MainGame {
         canvas.add(quit);
     }
 
+    /**
+     * If the player hits the bound, the map will move to the opposite direction.
+     */
     private void ifHitBound() {
         if (isBound) {
             List<Integer> boundSide = boundWhere();
@@ -219,6 +259,9 @@ public class MainGame {
         }
     }
 
+    /**
+     * Creates the leader board
+     */
     private void createLeaderBoard() {
         for (int i = 0; i < rankList.size(); i++) {
             if (rankList.get(i) == pb) {
@@ -306,6 +349,9 @@ public class MainGame {
 
     }
 
+    /**
+     * Updates the leader board
+     */
     private void updateLeaderBoard() {
         Collections.sort(rankList, new SizeComparator());
         for (int i = 0; i < rankList.size(); i++) {
@@ -328,12 +374,11 @@ public class MainGame {
     }
 
     /**
-     * Be called if the player ball hit the bound. Detect which bound collides the
-     * ball. (X, Y) and 0 represents no collision, 1 represents the left one or
-     * upper one, and
-     * 2 represents the right one or bottom one.
+     * Be called if the player ball hit the bound. Detect which bound collides the ball. (X, Y) and 0
+     * represents no collision, 1 represents the left one or upper one, and 2 represents the right one
+     * or bottom one.
      * 
-     * @return
+     * @return the list of boundaries
      */
     private List<Integer> boundWhere() {
         List<Integer> retList = new ArrayList<>();
@@ -352,8 +397,26 @@ public class MainGame {
         return retList;
     }
 
+    /**
+     * Be called if the player ball hit the bound. Detect which bound collides the ball. (X, Y) and 0
+     * represents no collision, 1 represents the left one or upper one, and 2 represents the right one
+     * or bottom one.
+     * 
+     * @return the player ball
+     */
     public PlayerBall getPb() {
         return pb;
+    }
+
+    @Override
+    public String toString() {
+        return "MainGame [ac=" + ac + ", board=" + board + ", canvas=" + canvas + ", caption=" + caption + ", cc=" + cc
+            + ", gameOver=" + gameOver + ", gameRank=" + gameRank + ", isBound=" + isBound + ", isStart=" + isStart
+            + ", leaderBoard=" + leaderBoard + ", map=" + map + ", menu=" + menu + ", offsetX=" + offsetX + ", offsetY="
+            + offsetY + ", pb=" + pb + ", quit=" + quit + ", rank=" + rank + ", rank1=" + rank1 + ", rank10=" + rank10
+            + ", rank2=" + rank2 + ", rank3=" + rank3 + ", rank4=" + rank4 + ", rank5=" + rank5 + ", rank6=" + rank6
+            + ", rank7=" + rank7 + ", rank8=" + rank8 + ", rank9=" + rank9 + ", rankList=" + rankList + ", rankPlayer="
+            + rankPlayer + ", start=" + start + ", window=" + window + "]";
     }
 
     public static void main(String[] args) {

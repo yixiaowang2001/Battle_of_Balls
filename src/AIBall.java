@@ -1,6 +1,7 @@
-import java.util.List;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
@@ -8,14 +9,19 @@ import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
-import java.awt.Color;
 
+/**
+ * Create AI ball
+ */
 public class AIBall extends Ball {
     private Ellipse ballShape;
     private GraphicsText nameText;
     private double radius, randCos, randSin, nextX, nextY;
     private int moveCount;
 
+    /**
+     * The ball that is controlled by the program
+     */
     public AIBall(CanvasWindow canvas) {
         super(canvas);
         radius = createRandRadius();
@@ -27,6 +33,11 @@ public class AIBall extends Ball {
         create();
     }
 
+    /**
+     * The automatically AIball moving method
+     * 
+     * @param offsetX,offsetY prevent the balls from moving out of the boundry
+     */
     public void autoMove(double offsetX, double offsetY) {
         updateSpeed();
         Random rand = new Random();
@@ -62,10 +73,12 @@ public class AIBall extends Ball {
     }
 
     /**
-     * Detect which bound collides the AI ball. (X, Y) and true means there is a
-     * collision.
+     * Detect which bound collides the AI ball. (X, Y) and true means there is a collision.
      * 
-     * @return
+     * @param offsetX,offsetY prevent the balls from moving out of the boundry
+     * @param margin          the margin of the boundry
+     * @param nextX,nextY     the next position of the AI ball
+     * @return returnList the status of the boundry
      */
     private List<Boolean> hitBound(double offsetX, double offsetY, double margin, double nextX, double nextY) {
         List<Boolean> returnList = new ArrayList<>();
@@ -84,6 +97,9 @@ public class AIBall extends Ball {
         return returnList;
     }
 
+    /**
+     * updates the ball's speed
+     */
     private void updateSpeed() {
         speed = 100 * 1 / (getRadius() * 2) + 1.2;
     }
@@ -108,8 +124,8 @@ public class AIBall extends Ball {
     private String createRandName() {
         StringBuilder sb = new StringBuilder();
         List<String> firstList = List.of("Joey", "Whit", "Evan", "Donny", "Foster", "Olia", "Grady", "Bella",
-                "Darin", "Mickey", "Hank", "Kim", "Peter", "Jeremy", "Jess", "Ezri",
-                "Vern", "Fran", "Romeo", "Chris", "Dale", "Beau", "Cliff", "Hamel", "Garv", "Brain");
+            "Darin", "Mickey", "Hank", "Kim", "Peter", "Jeremy", "Jess", "Ezri",
+            "Vern", "Fran", "Romeo", "Chris", "Dale", "Beau", "Cliff", "Hamel", "Garv", "Brain");
         List<String> lastList = List.of("Mayr", "Grace", "Sand", "Wood", "Dutra", "Flury");
         Random rand = new Random();
         int firstIndex = rand.nextInt(firstList.size());
@@ -120,13 +136,18 @@ public class AIBall extends Ball {
         return sb.toString();
     }
 
+    /**
+     * Deals with the collision of the AI ball with the other balls
+     * 
+     * @param ac the list of the AI balls
+     */
     public void collisionAiBall(AIBallControl ac, List<Ball> rankList) {
         Iterator<AIBall> itrBall = ac.getBallQueue().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();
             if (isCollision(ballShape.getCenter(), ball.getCtr(), getRadius(), ball.getRadius(), 0.85)) {
                 if (getRadius() > ball.getRadius()) {
-                    resizeBall(getGraphics());
+                    resizeBall(ball);
                     rankList.remove(ball);
                     canvas.remove(ball.getGraphics());
                     canvas.remove(ball.getGraphicsName());
@@ -136,6 +157,11 @@ public class AIBall extends Ball {
         }
     }
 
+    /**
+     * Deals with the collision of the AI ball with the circles
+     * 
+     * @param cc the list of the circles
+     */
     public void collisionCircle(CircleControl cc) {
         Iterator<Circle> itrCir = cc.getCircleList().iterator();
         while (itrCir.hasNext()) {
@@ -148,24 +174,38 @@ public class AIBall extends Ball {
         }
     }
 
-    private void resizeBall(GraphicsObject otherBall) {
-        double resizeRate = 1;
-        ballShape.setSize(ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate,
-                ballShape.getWidth() + otherBall.getHeight() / 2 * resizeRate);
+    /**
+     * resize the AI ball
+     * 
+     * @param otherBall the ball that is eaten
+     */
+    private void resizeBall(Ball otherBall) {
+        ballShape.setSize(Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(otherBall.getRadius(), 2)),
+            Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(otherBall.getRadius(), 2)));
         nameText.setFontSize(radius * 0.4);
         nameText.setCenter(ballShape.getCenter());
     }
 
+    /**
+     * get the circle of the ball
+     * 
+     * @return the point of the center
+     */
     public Point getCtr() {
         return ballShape.getCenter();
     }
 
+    /**
+     * get the name of the ball
+     * 
+     * @return the name of the ball
+     */
     public GraphicsText getGraphicsName() {
         return nameText;
     }
 
     @Override
-    protected void create() {
+    void create() {
         name = createRandName();
         Color color = createRandColor();
         Point randPoint = createRandPos();
@@ -181,7 +221,7 @@ public class AIBall extends Ball {
     @Override
     void resizeCir() {
         ballShape.setSize(Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS * 2, 2)),
-                Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS * 2, 2)));
+            Math.sqrt(Math.pow(ballShape.getHeight(), 2) + Math.pow(Circle.CIRCLE_RAIDUS * 2, 2)));
         nameText.setFontSize(radius * 0.4);
         nameText.setCenter(ballShape.getCenter());
     }
@@ -199,5 +239,11 @@ public class AIBall extends Ball {
     @Override
     public GraphicsObject getGraphics() {
         return ballShape;
+    }
+
+    @Override
+    public String toString() {
+        return "AIBall [ballShape=" + ballShape + ", moveCount=" + moveCount + ", nameText=" + nameText + ", nextX="
+            + nextX + ", nextY=" + nextY + ", radius=" + radius + ", randCos=" + randCos + ", randSin=" + randSin + "]";
     }
 }

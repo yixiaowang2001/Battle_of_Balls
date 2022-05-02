@@ -1,31 +1,26 @@
 # Battle of Balls
 
-![game](https://github.com/yixiaowang2001/COMP-128_FP/blob/main/res/Pic1.png)
+## Team Members:
+Joseph Shao, Eric Wang, Dennis Qin
 
-待完成任务：
-+ 重量/半径/得分的显示
-+ 记分板
-+ 球的名字显示
-+ AI Ball
-  + AI Ball吃AI Ball
-  + AI Ball的boundary
-  + AI Ball吃Circle
+## Project Summary:
+In the game, players need to control their balls as they move around the map, eating up resources in the map to grow larger, in order to eat smaller balls and prevent themselves from being eaten by larger balls.
+ 
 
-待解决问题：
+## Game Guide:
+The player needs to use the arrow keys to move the balls around the map, eating circle resources and grow larger. The player can also eat smaller balls to prevent them from being eaten by larger balls.
 
-待讨论：
-+ 是否要用animate
-+ Player Ball吃AI Ball的增长速率
+**Start Menu:**
+![BasicUI](res/StartMenu.png)
 
-Presentation
-+ Classes created
-  + 用思维导图来解释class之间的内容和关系
-+ Data structure
-  + ArrayList
-    + 作用：用来存储所有小球；用来存储所有AI Ball
-    + 我们需要可以很快速的遍历这个数据结构，同时删减特定元素的速度相对较快，所以选择ArrayList
-  + PriorityQueue
-    + 作用：记分板
-    + 我们需要对所有Ball进行排序展现，同时进入数据需要随时排序
-+ Demo to show functionality
-  + 一个加速过的视频
+**MainGame UI:**
+![BasicUI](res/BasicUI.png)
+
+
+## Challenges:
+The Collision between objects
+
+The logic of map movement and boundary detection
+
+Concurrent Modification Exception
+

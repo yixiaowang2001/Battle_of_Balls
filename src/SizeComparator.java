@@ -1,5 +1,8 @@
 import java.util.Comparator;
 
+/**
+ * the abstract class of the comparator
+ */
 public class SizeComparator implements Comparator<Ball> {
 
     @Override
@@ -13,5 +16,10 @@ public class SizeComparator implements Comparator<Ball> {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "SizeComparator []";
     }
 }
