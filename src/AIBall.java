@@ -13,23 +13,18 @@ import java.awt.Color;
 public class AIBall extends Ball {
     private Ellipse ballShape;
     private GraphicsText nameText;
-    private double radius, randCos, randSin, nextX, nextY, offsetX, offsetY;
+    private double radius, randCos, randSin, nextX, nextY;
     private int moveCount;
-    private List<Ball> rankList;
 
     public AIBall(CanvasWindow canvas, List<Ball> rankList) {
         super(canvas);
-        this.rankList = rankList;
         radius = createRandRadius();
         moveCount = 0;
         randCos = 0;
         randSin = 0;
-        offsetX = 0;
-        offsetY = 0;
         nextX = Double.MAX_VALUE;
         nextY = Double.MAX_VALUE;
         create();
-
     }
 
     public void autoMove(double offsetX, double offsetY) {
@@ -125,7 +120,7 @@ public class AIBall extends Ball {
         return sb.toString();
     }
 
-    public void collisionAiBall(AIBallControl ac) {
+    public void collisionAiBall(AIBallControl ac, List<Ball> rankList) {
         Iterator<AIBall> itrBall = ac.getBallQueue().iterator();
         while (itrBall.hasNext()) {
             AIBall ball = itrBall.next();

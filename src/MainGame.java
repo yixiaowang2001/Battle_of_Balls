@@ -15,8 +15,8 @@ public class MainGame {
     private GameMap map;
     private Button start, menu, quit;
     private int rank;
-    private GraphicsText leaderBoard, gameOver, caption, rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,
-            rank10, rankPlayer;
+    private GraphicsText leaderBoard, gameOver, gameRank, caption, rank1, rank2, rank3, rank4, rank5, rank6, rank7,
+            rank8, rank9, rank10, rankPlayer;
     private Image window;
     private PlayerBall pb;
     private boolean isStart, isBound;
@@ -53,14 +53,6 @@ public class MainGame {
         });
 
         inGame();
-
-        canvas.animate(() -> {
-            if (isStart) {
-                if (pb.getArea() > 10000000) {
-                    endGame();
-                }
-            }
-        });
     }
 
     private void createMap() {
@@ -130,12 +122,12 @@ public class MainGame {
                     double moveX = -cos * pb.getSpeed();
                     double moveY = -sin * pb.getSpeed();
                     isBound = false;
-                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getRadius() - 2||
+                    if ((offsetX + moveX < -5 * CANVAS_WIDTH + pb.getRadius() - 2 ||
                             offsetX + moveX > 5 * CANVAS_WIDTH - pb.getRadius() + 2)) {
                         moveX = 0;
                         isBound = true;
                     }
-                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getRadius() - 2||
+                    if ((offsetY + moveY <= -5 * CANVAS_HEIGHT + pb.getRadius() - 2 ||
                             offsetY + moveY >= 5 * CANVAS_HEIGHT - pb.getRadius() + 2)) {
                         moveY = 0;
                         isBound = true;
@@ -156,7 +148,7 @@ public class MainGame {
                     while (ballItr.hasNext()) {
                         AIBall ball = ballItr.next();
                         ball.autoMove(offsetX, offsetY);
-                        ball.collisionAiBall(ac);
+                        ball.collisionAiBall(ac, rankList);
                         ball.collisionCircle(cc);
                     }
 
@@ -166,6 +158,10 @@ public class MainGame {
                     ifHitBound();
                 }
                 updateLeaderBoard();
+
+                if (pb.getArea() > 50000) {
+                    endGame();
+                }
             }
         });
     }
@@ -178,8 +174,13 @@ public class MainGame {
 
         gameOver = new GraphicsText("Game Over! Your score is: " + (int) pb.getArea());
         gameOver.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.05);
-        gameOver.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.45);
+        gameOver.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.405);
         canvas.add(gameOver);
+
+        gameRank = new GraphicsText("Your rank is: " + rank);
+        gameRank.setFont(FontStyle.BOLD, CANVAS_WIDTH * 0.05);
+        gameRank.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.495);
+        canvas.add(gameRank);
 
         menu.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT * 0.8375);
         canvas.add(menu);
@@ -328,7 +329,8 @@ public class MainGame {
 
     /**
      * Be called if the player ball hit the bound. Detect which bound collides the
-     * ball. (X, Y) and  0 represents no collision, 1 represents the left one or upper one, and
+     * ball. (X, Y) and 0 represents no collision, 1 represents the left one or
+     * upper one, and
      * 2 represents the right one or bottom one.
      * 
      * @return

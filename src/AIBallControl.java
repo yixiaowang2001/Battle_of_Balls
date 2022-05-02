@@ -18,7 +18,6 @@ public class AIBallControl {
         this.canvas = canvas;
         this.rankList = rankList;
         ballQueue = new ConcurrentLinkedDeque<>();
-
     }
 
     public void initialize() {
@@ -37,6 +36,7 @@ public class AIBallControl {
                 AIBall ball = new AIBall(canvas, rankList);
                 ball.getGraphics().moveBy(offsetX, offsetY);
                 canvas.add(ball.getGraphics());
+                canvas.add(ball.getGraphicsName());
                 ballQueue.add(ball);
                 rankList.add(ball);
             }

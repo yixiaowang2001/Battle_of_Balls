@@ -43,8 +43,12 @@ public abstract class Ball {
     }
 
     abstract void create();
+
     abstract void resizeCir();
+
     abstract public double getRadius();
+
     abstract public String getName();
+
     abstract public GraphicsObject getGraphics();
 }
