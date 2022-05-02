@@ -39,7 +39,6 @@ public class AIBallControl {
                 canvas.add(ball.getGraphics());
                 ballQueue.add(ball);
                 rankList.add(ball);
-                System.out.println("add");
             }
         }
     }
@@ -47,10 +46,6 @@ public class AIBallControl {
     private int randInBound() {
         Random rand = new Random();
         return rand.nextInt(UPPER_BOUND - LOWER_BOUND) + LOWER_BOUND;
-    }
-
-    private void resize() {
-
     }
 
     public Queue<AIBall> getBallQueue() {
